@@ -31,6 +31,17 @@ return [
         'done' => '¡Listo, @:username! Ya puedes empezar a apuntar juegos.',
     ],
 
+    'games' => [
+        'no_cover' => 'Sin portada',
+        'cover_alt' => 'Portada de :name',
+        'released' => 'Lanzamiento',
+        'release_unknown' => 'Fecha de lanzamiento desconocida',
+        'platforms' => 'Plataformas',
+        'genres' => 'Géneros',
+        'no_summary' => 'Todavía no hay descripción para este juego.',
+        'view_on_igdb' => 'Ver en IGDB',
+    ],
+
     'settings' => [
         'title' => 'Tu perfil',
         'name_label' => 'Nombre visible',

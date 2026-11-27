@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\Games\ShowGameController;
 use App\Http\Controllers\Onboarding\UsernameController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
+
+// Public: reads only our local catalog.
+Route::get('games/{game}', ShowGameController::class)->name('games.show');
 
 Route::middleware(['guest', 'throttle:10,1'])
     ->prefix('auth/{provider}')
