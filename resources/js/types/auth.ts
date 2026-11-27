@@ -1,14 +1,11 @@
-export type User = {
+// Mirrors the `auth.user` shared prop built in HandleInertiaRequests::share().
+export interface User {
     id: number;
     name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
-};
+    username: string | null;
+    avatar_url: string | null;
+}
 
-export type Auth = {
-    user: User;
-};
+export interface Auth {
+    user: User | null;
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Domain\Users\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,12 +36,31 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        /** @var User|null $user */
+        $user = $request->user();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
+            'locale' => app()->getLocale(),
             'auth' => [
-                'user' => $request->user(),
+                // Only what the UI needs; never serialize the whole model.
+                'user' => $user?->only(['id', 'name', 'username', 'avatar_url']),
             ],
+        ];
+    }
+
+    /**
+     * Translations rarely change, so they're sent once and remembered by the
+     * client across navigations instead of on every request.
+     *
+     * @return array<string, callable>
+     */
+    public function shareOnce(Request $request): array
+    {
+        return [
+            ...parent::shareOnce($request),
+            'translations' => fn (): mixed => trans('ui'),
         ];
     }
 }
