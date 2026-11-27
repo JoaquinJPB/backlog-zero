@@ -57,6 +57,28 @@ There are no passwords: users sign in with Google (Socialite). Tests fake the pr
 
 Enabled providers are listed in `AUTH_SOCIAL_PROVIDERS` (comma-separated). Adding another one means installing its Socialite driver, adding its credentials to `config/services.php` and listing it there.
 
+## IGDB game data (local)
+
+Game search uses the [IGDB API](https://api-docs.igdb.com/) through a Twitch developer app. Tests fake every IGDB call, so this is only needed to search from the browser.
+
+1. Have a Twitch account with two-factor authentication enabled.
+2. Register an app at https://dev.twitch.tv/console/apps/create: OAuth Redirect URL `http://localhost` (IGDB doesn't use it), Client Type **Confidential**.
+3. In _Manage_, press _New Secret_ and put both values in `.env` (never commit them):
+
+    ```dotenv
+    IGDB_CLIENT_ID=...
+    IGDB_CLIENT_SECRET=...
+    ```
+
+4. `sail artisan config:clear`, sign in and use _Buscar juegos_.
+
+The API is free for non-commercial use under the Twitch Developer Services Agreement. Searched games are stored in our database and pages read only from it; stale games are refreshed by a queued job, so run a worker and the scheduler while developing:
+
+```bash
+sail artisan queue:listen      # processes background refreshes
+sail artisan schedule:work     # runs games:refresh-stale daily
+```
+
 ## Everyday commands
 
 ```bash

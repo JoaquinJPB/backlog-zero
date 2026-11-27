@@ -84,6 +84,8 @@ Out of scope for now: reviews, likes, follows, feed, notifications, mobile app, 
 sail up -d                 # start containers
 sail artisan migrate       # run migrations
 sail npm run dev           # Vite dev server
+sail artisan queue:listen  # queue worker (background IGDB refreshes)
+sail artisan schedule:work # scheduler (games:refresh-stale daily)
 sail composer test        # Pint (check) + Larastan + Pest, same as CI
 sail composer lint        # format PHP with Pint
 sail npm run check        # frontend lint + format check (vite-plus)
