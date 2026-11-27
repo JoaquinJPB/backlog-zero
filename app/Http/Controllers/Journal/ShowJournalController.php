@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Journal;
 use App\Domain\Games\Models\Platform;
 use App\Domain\Journal\Actions\BuildYearJournalAction;
 use App\Domain\Library\Queries\FinishedGamesQuery;
+use App\Domain\Library\Queries\PlayingGamesQuery;
 use App\Domain\Users\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Journal\ShowJournalRequest;
@@ -20,6 +21,7 @@ class ShowJournalController extends Controller
     public function __invoke(
         ShowJournalRequest $request,
         FinishedGamesQuery $finishedGames,
+        PlayingGamesQuery $playingGames,
         BuildYearJournalAction $buildJournal,
     ): Response {
         /** @var User $user */
@@ -62,6 +64,8 @@ class ShowJournalController extends Controller
                 'average_rating' => $journal->averageRating,
             ],
             'months' => $months,
+            // What the user plays now, independent of the year shown.
+            'playing' => LibraryEntryResource::collection($playingGames->forUser($user))->resolve($request),
         ]);
     }
 }

@@ -1,0 +1,526 @@
+{
+    "schemaVersion": 2,
+    "generatedAt": "2026-11-27T23:07:44+00:00",
+    "title": "Design System: Backlog Zero",
+    "extensions": {
+        "colorMeta": {
+            "cabinet": {
+                "role": "neutral",
+                "displayName": "Cabinet",
+                "canonical": "#110f18",
+                "tonalRamp": [
+                    "#0c0a12",
+                    "#25232d",
+                    "#42404b",
+                    "#625f6b",
+                    "#83808d",
+                    "#a5a3b0",
+                    "#cac7d4",
+                    "#efecfa"
+                ]
+            },
+            "cabinet-raised": {
+                "role": "neutral",
+                "displayName": "Cabinet Raised",
+                "canonical": "#1a1726",
+                "tonalRamp": [
+                    "#0c0916",
+                    "#252332",
+                    "#42404e",
+                    "#615f6c",
+                    "#82818c",
+                    "#a5a4ad",
+                    "#c9c8cf",
+                    "#eeeef3"
+                ]
+            },
+            "cabinet-high": {
+                "role": "neutral",
+                "displayName": "Cabinet High",
+                "canonical": "#242036",
+                "tonalRamp": [
+                    "#0c0819",
+                    "#252137",
+                    "#423f54",
+                    "#615e72",
+                    "#828091",
+                    "#a5a3b1",
+                    "#c9c8d2",
+                    "#eeedf5"
+                ]
+            },
+            "rule": {
+                "role": "neutral",
+                "displayName": "Rule",
+                "canonical": "#2e2a42",
+                "tonalRamp": [
+                    "#0b0819",
+                    "#252138",
+                    "#423e56",
+                    "#615e73",
+                    "#828093",
+                    "#a5a3b3",
+                    "#c9c7d4",
+                    "#eeedf6"
+                ]
+            },
+            "rule-strong": {
+                "role": "neutral",
+                "displayName": "Strong Rule",
+                "canonical": "#443e60",
+                "tonalRamp": [
+                    "#0c071b",
+                    "#25203b",
+                    "#423c5e",
+                    "#615c7c",
+                    "#827e9b",
+                    "#a5a1ba",
+                    "#c9c6db",
+                    "#eeecfc"
+                ]
+            },
+            "ink": {
+                "role": "neutral",
+                "displayName": "Ink",
+                "canonical": "#f1edff",
+                "tonalRamp": [
+                    "#0b0b0d",
+                    "#252428",
+                    "#424146",
+                    "#626067",
+                    "#83818b",
+                    "#a6a3af",
+                    "#cac7d6",
+                    "#f0ecfd"
+                ]
+            },
+            "ink-muted": {
+                "role": "neutral",
+                "displayName": "Muted Ink",
+                "canonical": "#aaa3c6",
+                "tonalRamp": [
+                    "#0c0a12",
+                    "#262330",
+                    "#433f51",
+                    "#625d75",
+                    "#837e9a",
+                    "#a69fc2",
+                    "#cac4e4",
+                    "#efeaff"
+                ]
+            },
+            "ink-faint": {
+                "role": "neutral",
+                "displayName": "Faint Ink",
+                "canonical": "#857ea2",
+                "tonalRamp": [
+                    "#0c0915",
+                    "#262234",
+                    "#433e56",
+                    "#625c7a",
+                    "#837da0",
+                    "#a6a0c1",
+                    "#cac5e2",
+                    "#efebff"
+                ]
+            },
+            "gold": {
+                "role": "primary",
+                "displayName": "Marquee Gold",
+                "canonical": "#ffcf40",
+                "tonalRamp": [
+                    "#120a00",
+                    "#2f2301",
+                    "#514008",
+                    "#765e14",
+                    "#9d7e20",
+                    "#c6a02e",
+                    "#f1c33b",
+                    "#ffe971"
+                ]
+            },
+            "gold-deep": {
+                "role": "primary",
+                "displayName": "Deep Gold",
+                "canonical": "#e0ac12",
+                "tonalRamp": [
+                    "#140900",
+                    "#342200",
+                    "#563d00",
+                    "#7c5c00",
+                    "#a47b00",
+                    "#cd9d07",
+                    "#f2c24a",
+                    "#ffe988"
+                ]
+            },
+            "gold-bright": {
+                "role": "primary",
+                "displayName": "Hot Gold",
+                "canonical": "#ffd95f",
+                "tonalRamp": [
+                    "#110a00",
+                    "#2d2408",
+                    "#4e4116",
+                    "#725f25",
+                    "#988034",
+                    "#bfa245",
+                    "#e9c656",
+                    "#ffec7c"
+                ]
+            },
+            "gold-pale": {
+                "role": "primary",
+                "displayName": "Pale Gold",
+                "canonical": "#ffe7a0",
+                "tonalRamp": [
+                    "#0f0b02",
+                    "#292517",
+                    "#49422b",
+                    "#6b6141",
+                    "#8f8159",
+                    "#b5a471",
+                    "#ddc88a",
+                    "#ffeda8"
+                ]
+            },
+            "cyan": {
+                "role": "secondary",
+                "displayName": "Now-Playing Cyan",
+                "canonical": "#45cdf2",
+                "tonalRamp": [
+                    "#000e16",
+                    "#002b37",
+                    "#014a5b",
+                    "#146c82",
+                    "#2690ac",
+                    "#39b5d7",
+                    "#61dbff",
+                    "#9bffff"
+                ]
+            },
+            "red": {
+                "role": "tertiary",
+                "displayName": "Tilt Red",
+                "canonical": "#ff6464",
+                "tonalRamp": [
+                    "#220000",
+                    "#4a060b",
+                    "#761d20",
+                    "#a43537",
+                    "#d54e4f",
+                    "#ff6c6b",
+                    "#ff9b96",
+                    "#ffc9c2"
+                ]
+            },
+            "red-pale": {
+                "role": "tertiary",
+                "displayName": "Pale Red",
+                "canonical": "#ffb3b3",
+                "tonalRamp": [
+                    "#130708",
+                    "#331f1f",
+                    "#573839",
+                    "#7e5555",
+                    "#a77272",
+                    "#d19292",
+                    "#feb2b2",
+                    "#ffdada"
+                ]
+            },
+            "lilac": {
+                "role": "tertiary",
+                "displayName": "Backlog Lilac",
+                "canonical": "#ab9dff",
+                "tonalRamp": [
+                    "#0b071e",
+                    "#251e42",
+                    "#41396b",
+                    "#605696",
+                    "#8175c4",
+                    "#a396f4",
+                    "#c7bbff",
+                    "#ece3ff"
+                ]
+            }
+        },
+        "typographyMeta": {
+            "display": {
+                "displayName": "Display (font-marquee)",
+                "purpose": "Journal title and welcome headline; 2.6rem phone, 3.75rem sm, 3.4rem lg."
+            },
+            "headline": {
+                "displayName": "Headline (font-marquee)",
+                "purpose": "Page titles, 2rem to 3rem."
+            },
+            "score": {
+                "displayName": "Score (font-score)",
+                "purpose": "Every data numeral: ratings, figures, counts, years, ordinals. Sizes 1.25rem to 4.5rem."
+            },
+            "label": {
+                "displayName": "Label (font-label)",
+                "purpose": "Uppercase month headings, section titles, fact labels, the abandoned stamp."
+            },
+            "title": {
+                "displayName": "Row Title",
+                "purpose": "Game titles in rows."
+            },
+            "body": {
+                "displayName": "Body",
+                "purpose": "Reading text and field values (16px avoids iOS zoom)."
+            },
+            "ui": {
+                "displayName": "UI",
+                "purpose": "Buttons, nav, pills, labels."
+            },
+            "caption": {
+                "displayName": "Caption",
+                "purpose": "Row metadata, hints, figure labels."
+            }
+        },
+        "shadows": [
+            {
+                "name": "marquee-glow",
+                "value": "0 10px 30px -20px rgb(255 207 64 / 0.35)",
+                "purpose": "Under the sticky header."
+            },
+            {
+                "name": "gold-key",
+                "value": "inset 0 1px 0 0 rgb(255 255 255 / 0.35), 0 6px 16px -8px rgb(255 207 64 / 0.55)",
+                "purpose": "Primary button only."
+            },
+            {
+                "name": "cover-drop",
+                "value": "0 8px 20px -10px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(255 255 255 / 0.08)",
+                "purpose": "Every game cover."
+            },
+            {
+                "name": "hero-cover",
+                "value": "0 30px 60px -24px rgb(0 0 0 / 0.9)",
+                "purpose": "Large cover on the game page."
+            },
+            {
+                "name": "search-well",
+                "value": "0 12px 30px -18px rgb(0 0 0 / 0.9)",
+                "purpose": "The big search field."
+            },
+            {
+                "name": "focus-ring",
+                "value": "outline: 2px solid #ffcf40; outline-offset: 2px",
+                "purpose": "Global :focus-visible."
+            },
+            {
+                "name": "field-focus",
+                "value": "0 0 0 3px rgb(255 207 64 / 0.2)",
+                "purpose": "Field focus ring with gold border."
+            }
+        ],
+        "motion": [
+            {
+                "name": "ease-out-expo",
+                "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+                "purpose": "Entrances: score-tick, rise, flash-in."
+            },
+            {
+                "name": "ease-out-quart",
+                "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+                "purpose": "Declared in the theme; reserved."
+            },
+            {
+                "name": "state",
+                "value": "150ms ease-out",
+                "purpose": "Colour, border, background transitions; press scale 0.97."
+            },
+            {
+                "name": "lift",
+                "value": "200ms ease-out",
+                "purpose": "Cover lift (-2px) on row hover; status-dot scale."
+            },
+            {
+                "name": "score-tick",
+                "value": "220ms ease-out-expo",
+                "purpose": "Rating score remounts and ticks up from 0.18em, 92% scale, 40% opacity."
+            },
+            {
+                "name": "rise",
+                "value": "220ms ease-out-expo",
+                "purpose": "Field appearing (6px up, fade)."
+            },
+            {
+                "name": "flash-in",
+                "value": "220ms ease-out-expo",
+                "purpose": "Flash message entering (6px down, fade)."
+            },
+            {
+                "name": "reduced-motion",
+                "value": "1ms",
+                "purpose": "All animations and transitions collapse; score-tick becomes a 150ms opacity fade."
+            }
+        ],
+        "breakpoints": [
+            {
+                "name": "sm",
+                "value": "640px"
+            },
+            {
+                "name": "md",
+                "value": "768px",
+                "purpose": "Header nav replaces the bottom tab bar."
+            },
+            {
+                "name": "lg",
+                "value": "1024px",
+                "purpose": "Journal becomes two columns (300px | 1fr)."
+            }
+        ]
+    },
+    "components": [
+        {
+            "name": "Primary Button",
+            "kind": "button",
+            "refersTo": "button-primary",
+            "description": "The one main action per view (Añadir, Guardar, sign-in).",
+            "html": "<button class=\"ds-btn-primary\">Guardar</button>",
+            "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border:0;border-radius:6px;background:var(--color-gold, #ffcf40);color:var(--color-cabinet, #110f18);font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:15px;font-weight:600;cursor:pointer;box-shadow:inset 0 1px 0 0 rgb(255 255 255/.35),0 6px 16px -8px rgb(255 207 64/.55);transition:background-color 150ms ease-out,transform 150ms ease-out}.ds-btn-primary:hover{background:var(--color-gold-bright, #ffd95f)}.ds-btn-primary:active{transform:scale(.97)}.ds-btn-primary:focus-visible{outline:2px solid var(--color-gold, #ffcf40);outline-offset:2px}"
+        },
+        {
+            "name": "Secondary Button",
+            "kind": "button",
+            "refersTo": "button-secondary",
+            "description": "Pagination and secondary actions.",
+            "html": "<button class=\"ds-btn-secondary\">Siguiente</button>",
+            "css": ".ds-btn-secondary{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--color-rule-strong, #443e60);border-radius:6px;background:var(--color-cabinet-raised, #1a1726);color:var(--color-ink, #f1edff);font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:14px;font-weight:600;cursor:pointer;transition:background-color 150ms ease-out,border-color 150ms ease-out,transform 150ms ease-out}.ds-btn-secondary:hover{background:var(--color-cabinet-high, #242036);border-color:var(--color-ink-faint, #857ea2)}.ds-btn-secondary:active{transform:scale(.97)}.ds-btn-secondary:focus-visible{outline:2px solid var(--color-gold, #ffcf40);outline-offset:2px}"
+        },
+        {
+            "name": "Ghost and Danger Buttons",
+            "kind": "button",
+            "refersTo": "button-ghost",
+            "description": "Quiet actions and the remove action.",
+            "html": "<div class=\"ds-row\"><button class=\"ds-btn-ghost\">Cancelar</button><button class=\"ds-btn-danger\">Quitar de la biblioteca</button></div>",
+            "css": ".ds-row{display:flex;gap:8px}.ds-btn-ghost,.ds-btn-danger{height:36px;padding:0 14px;border:0;border-radius:6px;background:transparent;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:14px;font-weight:600;cursor:pointer;transition:background-color 150ms ease-out,color 150ms ease-out}.ds-btn-ghost{color:var(--color-ink-muted, #aaa3c6)}.ds-btn-ghost:hover{background:var(--color-cabinet-high, #242036);color:var(--color-ink, #f1edff)}.ds-btn-danger{color:var(--color-red, #ff6464)}.ds-btn-danger:hover{background:rgb(255 100 100/.1)}.ds-btn-ghost:focus-visible,.ds-btn-danger:focus-visible{outline:2px solid var(--color-gold, #ffcf40);outline-offset:2px}"
+        },
+        {
+            "name": "Field",
+            "kind": "input",
+            "refersTo": "field",
+            "description": "fieldClass: every text, date and select input.",
+            "html": "<label class=\"ds-label\">Nombre<input class=\"ds-field\" placeholder=\"Tu nombre\"></label>",
+            "css": ".ds-label{display:block;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:14px;font-weight:600;color:var(--color-ink, #f1edff)}.ds-field{display:block;margin-top:6px;height:44px;width:100%;box-sizing:border-box;padding:0 14px;border:1px solid var(--color-rule-strong, #443e60);border-radius:6px;background:var(--color-cabinet, #110f18);color:var(--color-ink, #f1edff);font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:16px;outline:none;transition:border-color 150ms ease-out,box-shadow 150ms ease-out}.ds-field::placeholder{color:var(--color-ink-faint, #857ea2)}.ds-field:hover{border-color:var(--color-ink-faint, #857ea2)}.ds-field:focus{border-color:var(--color-gold, #ffcf40);box-shadow:0 0 0 3px rgb(255 207 64/.2)}"
+        },
+        {
+            "name": "Pills",
+            "kind": "chip",
+            "refersTo": "pill-active",
+            "description": "pillClass: year pills, library status tabs.",
+            "html": "<div class=\"ds-pills\"><a class=\"ds-pill ds-pill-on\">2026 <span class=\"ds-n\">7</span></a><a class=\"ds-pill\"><span class=\"ds-dot\"></span>Jugando <span class=\"ds-n\">2</span></a></div>",
+            "css": ".ds-pills{display:flex;gap:8px}.ds-pill{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--color-rule-strong, #443e60);border-radius:9999px;color:var(--color-ink-muted, #aaa3c6);font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:14px;font-weight:600;cursor:pointer;transition:color 150ms,border-color 150ms}.ds-pill:hover{color:var(--color-ink, #f1edff);border-color:var(--color-ink-faint, #857ea2)}.ds-pill-on,.ds-pill-on:hover{background:var(--color-ink, #f1edff);border-color:var(--color-ink, #f1edff);color:var(--color-cabinet, #110f18)}.ds-n{font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:112%;font-weight:800;font-size:12px;opacity:.6;font-variant-numeric:tabular-nums}.ds-dot{width:8px;height:8px;border-radius:50%;background:var(--color-cyan, #45cdf2)}"
+        },
+        {
+            "name": "Status Badges",
+            "kind": "chip",
+            "refersTo": "status-badge",
+            "description": "One ink per status: 12% wash, 45% border, solid dot.",
+            "html": "<div class=\"ds-badges\"><span class=\"ds-badge ds-playing\"><i></i>Jugando</span><span class=\"ds-badge ds-finished\"><i></i>Terminado</span><span class=\"ds-badge ds-backlog\"><i></i>Pendiente</span></div>",
+            "css": ".ds-badges{display:flex;gap:8px}.ds-badge{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border:1px solid;border-radius:9999px;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:12px;font-weight:600}.ds-badge i{width:6px;height:6px;border-radius:50%;background:currentColor}.ds-playing{color:var(--color-cyan, #45cdf2);background:rgb(69 205 242/.12);border-color:rgb(69 205 242/.45)}.ds-finished{color:var(--color-gold, #ffcf40);background:rgb(255 207 64/.12);border-color:rgb(255 207 64/.45)}.ds-backlog{color:var(--color-lilac, #ab9dff);background:rgb(171 157 255/.12);border-color:rgb(171 157 255/.45)}"
+        },
+        {
+            "name": "Score Rows",
+            "kind": "custom",
+            "refersTo": "game-row",
+            "description": "The high-score table: ordinal, cover, title, score in status ink; abandoned rows struck and stamped.",
+            "html": "<ol class=\"ds-table\"><li class=\"ds-r\"><span class=\"ds-ord\">5º</span><span class=\"ds-cov\"></span><span class=\"ds-t\"><b>A Link Between Worlds</b><small>Terminado el 9 nov · en 10 días</small></span><span class=\"ds-score\">4½</span></li><li class=\"ds-r\"><span class=\"ds-ord ds-faint\">—</span><span class=\"ds-cov ds-gray\"></span><span class=\"ds-t\"><b class=\"ds-struck\">Crypt of the NecroDancer</b><small>Abandonado el 3 nov</small></span><span class=\"ds-stamp\">Abandonado</span></li></ol>",
+            "css": ".ds-table{list-style:none;margin:0;padding:0;border-top:1px solid var(--color-rule, #2e2a42);max-width:560px}.ds-r{display:grid;grid-template-columns:3.5rem auto 1fr auto;align-items:center;gap:16px;padding:12px;border-bottom:1px solid var(--color-rule, #2e2a42);border-radius:8px;transition:background-color 150ms ease-out}.ds-r:hover{background:var(--color-cabinet-raised, #1a1726)}.ds-ord{font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:112%;font-weight:800;font-size:24px;line-height:1;color:var(--color-ink-muted, #aaa3c6)}.ds-faint{color:var(--color-ink-faint, #857ea2)}.ds-cov{width:46px;height:64px;border-radius:5px;background:var(--color-cabinet-high, #242036);box-shadow:0 8px 20px -10px rgb(0 0 0/.8),0 0 0 1px rgb(255 255 255/.08)}.ds-gray{opacity:.55;filter:grayscale(1)}.ds-t{display:flex;flex-direction:column;gap:2px;min-width:0;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);color:var(--color-ink, #f1edff)}.ds-t b{font-weight:600}.ds-t small{font-size:14px;color:var(--color-ink-muted, #aaa3c6)}.ds-struck{color:var(--color-ink-muted, #aaa3c6);text-decoration:line-through;text-decoration-color:var(--color-red, #ff6464);text-decoration-thickness:2px}.ds-score{font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:112%;font-weight:800;font-size:30px;line-height:1;color:var(--color-gold, #ffcf40);font-variant-numeric:tabular-nums}.ds-stamp{display:inline-block;transform:rotate(-3deg);border:2px solid rgb(255 100 100/.8);border-radius:3px;padding:1px 6px;font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:125%;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-red, #ff6464)}"
+        },
+        {
+            "name": "Rating Tick",
+            "kind": "custom",
+            "refersTo": "score",
+            "description": "The rating input: gold stars and a score that ticks (220ms ease-out-expo) on every change.",
+            "html": "<div class=\"ds-rate\"><span class=\"ds-stars\">★★★★☆</span><span class=\"ds-tick\">4</span></div>",
+            "css": ".ds-rate{display:flex;align-items:baseline;gap:20px}.ds-stars{color:var(--color-gold, #ffcf40);font-size:32px;letter-spacing:4px}.ds-tick{display:inline-block;font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:112%;font-weight:800;font-size:36px;line-height:1;color:var(--color-gold, #ffcf40);animation:ds-tick 220ms cubic-bezier(.16,1,.3,1);cursor:pointer}.ds-rate:hover .ds-tick{animation:ds-tick 220ms cubic-bezier(.16,1,.3,1) infinite alternate}@keyframes ds-tick{from{transform:translateY(.18em) scale(.92);opacity:.4}to{transform:none;opacity:1}}@media (prefers-reduced-motion:reduce){.ds-tick,.ds-rate:hover .ds-tick{animation:ds-fade 150ms ease-out}@keyframes ds-fade{from{opacity:.4}}}"
+        },
+        {
+            "name": "Jugando Ahora",
+            "kind": "card",
+            "refersTo": "now-playing",
+            "description": "The only cyan surface: what is being played right now.",
+            "html": "<section class=\"ds-now\"><h2><i></i>Jugando ahora</h2><a class=\"ds-now-row\"><span class=\"ds-now-cov\"></span><span><b>Tri Force Heroes</b><small>Nintendo 3DS</small></span></a></section>",
+            "css": ".ds-now{max-width:300px;padding:10px;border:1px solid rgb(69 205 242/.35);border-radius:12px;background:rgb(69 205 242/.06)}.ds-now h2{display:flex;align-items:center;gap:8px;margin:0 4px;font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:125%;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-cyan, #45cdf2)}.ds-now h2 i{width:8px;height:8px;border-radius:50%;background:var(--color-cyan, #45cdf2)}.ds-now-row{display:flex;align-items:center;gap:12px;margin-top:8px;padding:4px;border-radius:8px;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);color:var(--color-ink, #f1edff);transition:background-color 150ms}.ds-now-row:hover{background:rgb(69 205 242/.1)}.ds-now-row b{display:block;font-size:14px;font-weight:600}.ds-now-row small{font-size:12px;color:var(--color-ink-muted, #aaa3c6)}.ds-now-cov{width:40px;height:56px;border-radius:5px;background:var(--color-cabinet-high, #242036)}"
+        },
+        {
+            "name": "Marquee Header",
+            "kind": "nav",
+            "refersTo": "marquee-header",
+            "description": "Sticky backlit header with gold rule; current link gets a gold bar. Below md, a bottom tab bar replaces the links.",
+            "html": "<header class=\"ds-mq\"><span class=\"ds-wm\">BACKLOG<em>ZERO</em></span><nav><a>Buscar juegos</a><a>Mi biblioteca</a><a class=\"ds-cur\" aria-current=\"page\">Journal</a></nav></header>",
+            "css": ".ds-mq{display:flex;align-items:stretch;gap:24px;height:64px;padding:0 32px;background:rgb(17 15 24/.88);backdrop-filter:blur(12px);border-bottom:1px solid rgb(255 207 64/.55);box-shadow:0 10px 30px -20px rgb(255 207 64/.35)}.ds-wm{align-self:center;font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:125%;font-weight:850;font-size:18px;letter-spacing:.02em;color:var(--color-ink, #f1edff)}.ds-wm em{font-style:normal;color:var(--color-gold, #ffcf40)}.ds-mq nav{display:flex;gap:4px}.ds-mq nav a{position:relative;display:flex;align-items:center;padding:0 12px;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);font-size:15px;font-weight:600;color:var(--color-ink-muted, #aaa3c6);cursor:pointer;transition:color 150ms}.ds-mq nav a:hover{color:var(--color-ink, #f1edff)}.ds-mq nav a.ds-cur{color:var(--color-ink, #f1edff)}.ds-mq nav a.ds-cur::after{content:'';position:absolute;left:12px;right:12px;bottom:-1px;height:2px;border-radius:9999px;background:var(--color-gold, #ffcf40)}"
+        }
+    ],
+    "narrative": {
+        "northStar": "The Hall of Fame",
+        "overview": "Backlog Zero reads a person's play history as an arcade high-score table. The ground is a dark cabinet; the header is a backlit marquee strip edged by a gold rule; every list is a ranked table of ruled rows, and every rating is set as a big tabular score in the ink of the game's status. The interface is a frame for the covers, which carry the colour: the chrome stays in violet-black neutrals so the box art and four status inks are the only saturated things on screen.\n\nDensity is that of a scoreboard, not a dashboard. Rows are compact and separated by hairline rules rather than boxed into cards; one figure or one chart owns each region. Numbers are the heroes: counts, years, ordinals and scores all speak in Anybody's wide, heavy display cut, while every word of UI text stays in the quiet Hanken Grotesk. Motion is operate-mode: short, state-only, never decorative.\n\nThe system refuses the category default of a cover grid on blue-grey slate with stat cards. Abandoned games are never greyed into invisibility: they are struck through in red and stamped.",
+        "keyCharacteristics": [
+            "Dark cabinet ground (#110f18) with two raised layers and violet-tinted hairline rules.",
+            "One ink per status: gold finished, cyan playing, red abandoned, lilac backlog.",
+            "Ratings shown as score numerals in the status ink, halves written as fractions (4½).",
+            "Ruled rows, ordinals and big figures instead of cards and stat tiles.",
+            "Anybody wide/heavy for display and every number; Hanken Grotesk for all UI text.",
+            "Operate-mode motion: 150ms colour, 200ms lift, 220ms ease-out-expo entrances."
+        ],
+        "rules": [
+            {
+                "name": "The One Ink, One Job Rule",
+                "body": "Each status owns exactly one ink, mapped once in `resources/js/lib/status.ts` (text, 12% background, 45% border, solid dot). Never colour a status any other way, and never use a status ink for something that is not that status, except gold, which also carries primary action and focus.",
+                "section": "colors"
+            },
+            {
+                "name": "The Cyan Is Playing Rule",
+                "body": "Cyan appears only where a game is currently being played. No links, info states, charts or highlights in cyan.",
+                "section": "colors"
+            },
+            {
+                "name": "The No New Accents Rule",
+                "body": "The palette is closed. A new screen uses these tokens; a new hue needs a design decision, not a hex literal.",
+                "section": "colors"
+            },
+            {
+                "name": "The Every Number Is a Score Rule",
+                "body": "Any numeral that is data (rating, count, year, ordinal, page number) is set in `font-score` with tabular figures. Numbers never appear in Hanken.",
+                "section": "typography"
+            },
+            {
+                "name": "The Fraction Rule",
+                "body": "Ratings are stored 1–10 and shown as stars with a fraction glyph for halves: 4½, ½, 5. Averages keep one Spanish decimal (4,3). Use `starsFraction` / `starsDecimal` from `components/score.tsx`.",
+                "section": "typography"
+            },
+            {
+                "name": "The Rules Not Boxes Rule",
+                "body": "Lists and stats are divided by 1px Rule lines, not wrapped in cards. The only container is the panel (forms) and the Jugando ahora block; the profile explicitly has \"no boxes, only rules\".",
+                "section": "elevation"
+            }
+        ],
+        "dos": [
+            "Do put every user-facing string in `lang/es/ui.php` (or another `lang/es/*.php` file) and read it with `t()` / `tc()`; never hard-code Spanish text in a component.",
+            "Do build buttons with `buttonClass`, inputs with `fieldClass`, selects with `Select`, tabs and filters with `pillClass`, containers with `panelClass`, and labels, hints and errors with `labelClass`, `hintClass`, `errorClass`.",
+            "Do take status colours from `STATUS_INK` in `resources/js/lib/status.ts` (text, 12% wash, 45% border, dot).",
+            "Do set every data numeral in `font-score`, ratings via `Score` / `starsFraction`, and page titles in `font-marquee`.",
+            "Do divide lists with 1px Rule lines and give each region one figure or chart.",
+            "Do strike and stamp abandoned games (`abandonedTitleClass` + `AbandonedStamp`, grayscale cover at 55%).",
+            "Do keep motion at 150–220ms, state-driven, with the ease-out-expo curve for entrances, and check it under `prefers-reduced-motion`.",
+            "Do keep the bottom tab bar below md and header nav from md for any new top-level section, and reserve the tab bar's height at the foot of the page.",
+            "Do use the custom stroke icons in `components/icons.tsx` (24px grid, 1.75 stroke) and add new ones in the same style."
+        ],
+        "donts": [
+            "Don't add new accent colours or hex literals; use the theme tokens in `resources/css/app.css`.",
+            "Don't use cyan for anything except \"Jugando\" / \"Jugando ahora\".",
+            "Don't colour a status with any ink but its own, or use red for anything but abandoned and errors.",
+            "Don't wrap lists or stats in cards or stat tiles; this is a ruled table, not a dashboard.",
+            "Don't grey out an abandoned game without the strike and the stamp.",
+            "Don't write half ratings as decimals in scores (use 3½, not 3.5) or set numbers in Hanken Grotesk.",
+            "Don't put small Faint Ink text on Cabinet High (4.12:1).",
+            "Don't add decorative or looping motion, or animations longer than 220ms.",
+            "Don't load fonts from a CDN; Anybody and Hanken Grotesk are self-hosted woff2 subsets."
+        ]
+    }
+}

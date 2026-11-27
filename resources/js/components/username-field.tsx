@@ -1,5 +1,7 @@
 import { useId } from 'react';
 import { useTranslation } from '@/lib/i18n';
+import { errorClass, hintClass, labelClass } from '@/lib/ui';
+import { cn } from '@/lib/utils';
 
 interface UsernameFieldProps {
     value: string;
@@ -18,14 +20,20 @@ export default function UsernameField({
     const id = useId();
     const hintId = `${id}-hint`;
     const errorId = `${id}-error`;
+    const invalid = error !== undefined;
 
     return (
         <div>
-            <label htmlFor={id} className="block text-sm font-medium">
+            <label htmlFor={id} className={labelClass}>
                 {t('onboarding.label')}
             </label>
-            <div className="mt-1 flex rounded-md border border-stone-300 focus-within:ring-2 focus-within:ring-stone-400 dark:border-stone-700">
-                <span className="flex items-center pl-3 text-stone-500 select-none">
+            <div
+                className={cn(
+                    'mt-1.5 flex h-11 rounded-md border bg-cabinet transition-colors duration-150 focus-within:border-gold focus-within:ring-3 focus-within:ring-gold/20 hover:border-ink-faint',
+                    invalid ? 'border-red' : 'border-rule-strong',
+                )}
+            >
+                <span className="flex items-center pl-3.5 font-score text-base text-gold select-none">
                     @
                 </span>
                 <input
@@ -42,23 +50,17 @@ export default function UsernameField({
                     autoCapitalize="none"
                     spellCheck={false}
                     required
-                    aria-invalid={error !== undefined}
-                    aria-describedby={error !== undefined ? errorId : hintId}
-                    className="w-full bg-transparent px-1 py-2 outline-none"
+                    aria-invalid={invalid}
+                    aria-describedby={invalid ? errorId : hintId}
+                    className="w-full bg-transparent px-1.5 text-ink outline-none"
                 />
             </div>
-            {error !== undefined ? (
-                <p
-                    id={errorId}
-                    className="mt-1 text-sm text-red-700 dark:text-red-400"
-                >
+            {invalid ? (
+                <p id={errorId} className={errorClass}>
                     {error}
                 </p>
             ) : (
-                <p
-                    id={hintId}
-                    className="mt-1 text-sm text-stone-500 dark:text-stone-400"
-                >
+                <p id={hintId} className={hintClass}>
                     {t('onboarding.hint', rules)}
                 </p>
             )}

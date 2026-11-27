@@ -14,6 +14,13 @@ return [
         'intro' => 'Apunta los juegos que empiezas, los que terminas y los que abandonas. Ponles nota, fechas y plataforma, y repasa tu año en listas.',
     ],
 
+    'nav' => [
+        'main' => 'Navegación principal',
+        'search_short' => 'Buscar',
+        'library_short' => 'Biblioteca',
+        'profile' => 'Perfil',
+    ],
+
     'auth' => [
         'login_with' => 'Entrar con :provider',
         'logout' => 'Cerrar sesión',
@@ -58,8 +65,9 @@ return [
         'title' => 'Journal :year',
         'year_label' => 'Año',
         'platform_label' => 'Plataforma',
-        'all_platforms' => 'Todas',
+        'any_platform' => 'Plataforma: todas',
         'include_abandoned' => 'Incluir abandonados',
+        'include_abandoned_short' => 'Abandonados',
         'finished_count' => '{0} Ningún juego terminado|{1} 1 juego terminado|[2,*] :count juegos terminados',
         'abandoned_count' => '{1} 1 abandonado|[2,*] :count abandonados',
         'average_rating' => 'Nota media: :stars',
@@ -69,6 +77,12 @@ return [
         'took_days' => '{0} en el mismo día|{1} en 1 día|[2,*] en :count días',
         'empty' => 'No hay juegos terminados en :year con estos filtros.',
         'empty_all' => 'Aún no has terminado ningún juego. Cuando marques uno como terminado con su fecha, aparecerá aquí.',
+        'now_playing' => 'Jugando ahora',
+        'figures' => [
+            'finished' => 'terminados',
+            'abandoned' => 'abandonados',
+            'average' => 'nota media',
+        ],
     ],
 
     'library' => [

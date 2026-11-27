@@ -142,3 +142,21 @@ test('invalid filters are rejected', function (array $query) {
     'non numeric platform' => [['platform' => 'switch']],
     'non boolean abandoned' => [['abandoned' => 'maybe']],
 ]);
+
+test('the journal lists what the user is playing now, latest started first', function () {
+    $older = LibraryEntry::factory()->playing()->for($this->user)->create(['started_on' => '2026-10-01']);
+    $newer = LibraryEntry::factory()->playing()->for($this->user)->create(['started_on' => '2026-11-20']);
+    finishedEntry($this->user, '2026-05-20');
+    LibraryEntry::factory()->playing()->for(User::factory()->create())->create();
+
+    $this->actingAs($this->user)
+        ->get(route('journal.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('journal/index')
+            ->has('playing', 2)
+            ->where('playing.0.id', $newer->id)
+            ->where('playing.1.id', $older->id)
+            ->where('playing.0.status', 'playing')
+            ->has('playing.0.game.slug'));
+});
