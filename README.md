@@ -40,6 +40,23 @@ App: http://localhost · Mailpit: http://localhost:8025
 
 Tip: `alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'`
 
+## Google sign-in (local)
+
+There are no passwords: users sign in with Google (Socialite). Tests fake the provider, so this is only needed to sign in from the browser.
+
+1. In [Google Cloud Console](https://console.cloud.google.com/apis/credentials), create an **OAuth client ID** of type _Web application_ (configure the consent screen first if asked; _External_ + test users is enough).
+2. Authorized redirect URI: `http://localhost/auth/google/callback`
+3. Put the credentials in `.env` (never commit them):
+
+    ```dotenv
+    GOOGLE_CLIENT_ID=...
+    GOOGLE_CLIENT_SECRET=...
+    ```
+
+4. `sail artisan config:clear`, open http://localhost and click _Entrar con Google_. On first sign-in you'll be asked to pick a username.
+
+Enabled providers are listed in `AUTH_SOCIAL_PROVIDERS` (comma-separated). Adding another one means installing its Socialite driver, adding its credentials to `config/services.php` and listing it there.
+
 ## Everyday commands
 
 ```bash
