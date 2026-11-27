@@ -1,3 +1,12 @@
+// Mirrors App\Http\Resources\Games\GameSummaryResource.
+export interface GameSummary {
+    slug: string;
+    name: string;
+    year: number | null;
+    cover_image_id: string | null;
+    platforms: string[];
+}
+
 // Mirrors App\Http\Resources\Games\GameResource.
 export interface GamePlatform {
     name: string;

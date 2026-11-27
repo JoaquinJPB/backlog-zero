@@ -40,6 +40,16 @@ return [
         'genres' => 'Géneros',
         'no_summary' => 'Todavía no hay descripción para este juego.',
         'view_on_igdb' => 'Ver en IGDB',
+        'search' => [
+            'nav' => 'Buscar juegos',
+            'title' => 'Buscar juegos',
+            'label' => 'Nombre del juego',
+            'placeholder' => 'Zelda, Hollow Knight, Final Fantasy…',
+            'hint' => 'Escribe al menos :min caracteres.',
+            'searching' => 'Buscando…',
+            'empty' => 'No hemos encontrado juegos para «:query».',
+            'failed' => 'La búsqueda no está disponible ahora mismo. Inténtalo de nuevo en un rato.',
+        ],
     ],
 
     'settings' => [

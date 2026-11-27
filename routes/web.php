@@ -2,12 +2,19 @@
 
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\Games\GameSearchController;
 use App\Http\Controllers\Games\ShowGameController;
 use App\Http\Controllers\Onboarding\UsernameController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
+
+// Search hits IGDB, so it needs an account and is rate limited per user.
+// Declared before games/{game} so "search" is never read as a slug.
+Route::get('games/search', GameSearchController::class)
+    ->middleware(['auth', 'throttle:game-search'])
+    ->name('games.search');
 
 // Public: reads only our local catalog.
 Route::get('games/{game}', ShowGameController::class)->name('games.show');

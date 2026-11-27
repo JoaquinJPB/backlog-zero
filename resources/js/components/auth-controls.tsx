@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from '@/lib/i18n';
 import { logout } from '@/routes';
 import { redirect as providerRedirect } from '@/routes/auth';
+import { search } from '@/routes/games';
 import { profile } from '@/routes/settings';
 
 const buttonClass =
@@ -32,6 +33,9 @@ export default function AuthControls() {
 
     return (
         <>
+            <Link href={search()} className="text-sm hover:underline">
+                {t('games.search.nav')}
+            </Link>
             <Link
                 href={profile()}
                 className="flex items-center gap-2 text-sm hover:underline"
