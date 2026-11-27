@@ -21,6 +21,11 @@ return Application::configure(basePath: dirname(__DIR__))
             EnsureUsernameIsSet::class,
         ]);
 
+        // Production runs behind Render's TLS-terminating proxy, the only way
+        // in. Trusting it makes Laravel see https (OAuth callback URLs,
+        // secure cookies). Harmless locally: nothing sends these headers.
+        $middleware->trustProxies(at: '*');
+
         // There is no login page: signing in starts from the home page.
         $middleware->redirectGuestsTo('/');
         $middleware->redirectUsersTo('/');
