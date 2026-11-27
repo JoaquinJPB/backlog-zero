@@ -62,7 +62,7 @@ The project owner started it; **friends now contribute through GitHub**. These r
 - Covers are hot-linked from IGDB's CDN by `image_id` (`@/lib/igdb`), never downloaded.
 - Footer shows "Game data provided by IGDB.com" with a link.
 - Tests never hit real APIs: `Http::preventStrayRequests()` is on for the whole suite. Use `Http::fake()` with fixtures in `tests/Fixtures/igdb` (recorded from the real API; the token fixture is fake).
-- Search results include bundles/remasters/expansions (only `version_parent = null` is filtered). Intentional for now.
+- Search = IGDB full-text search **plus** a `name ~ *"…"*` match (full-text drops common words: "We Were Here" found nothing), merged and ordered by `IgdbSearchRanker`: main/remake/remaster first, then ports/expansions, then bundles/DLC/packs/mods/updates; exact name and dated games first within a tier. Nothing is filtered except `version_parent != null` (editions). One uncached search = 2 IGDB requests.
 
 ## What exists (status 2026-11-27)
 
