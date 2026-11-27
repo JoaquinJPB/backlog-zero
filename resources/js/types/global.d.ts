@@ -8,6 +8,7 @@ declare module '@inertiajs/core' {
             locale: string;
             auth: Auth;
             translations: Translations;
+            authProviders: string[];
             [key: string]: unknown;
         };
         flashDataType: {

@@ -61,6 +61,7 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::shareOnce($request),
             'translations' => fn (): mixed => trans('ui'),
+            'authProviders' => fn (): mixed => config('auth.social_providers'),
         ];
     }
 }
