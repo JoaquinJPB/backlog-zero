@@ -129,4 +129,11 @@ return [
         explode(',', (string) env('AUTH_SOCIAL_PROVIDERS', 'google')),
     )),
 
+    // Who may create an account (comma-separated emails). Empty means anyone
+    // with a provider account can sign up. Existing users are never blocked.
+    'allowed_emails' => array_values(array_filter(array_map(
+        fn (string $email): string => strtolower(trim($email)),
+        explode(',', (string) env('ALLOWED_EMAILS', '')),
+    ))),
+
 ];

@@ -117,3 +117,39 @@ test('logout requires POST', function () {
         ->get('/logout')
         ->assertMethodNotAllowed();
 });
+
+describe('allowed emails', function () {
+    test('listed emails can register, ignoring case and spaces', function () {
+        config(['auth.allowed_emails' => ['bob@example.com', 'ada@example.com']]);
+        Socialite::fake('google', fakeGoogleUser(['email' => ' Ada@Example.com ']));
+
+        $this->get(route('auth.callback', 'google'))->assertRedirect(route('home'));
+
+        $this->assertAuthenticatedAs(User::query()->sole());
+    });
+
+    test('emails not on the list cannot register', function () {
+        Event::fake([UserRegistered::class]);
+        config(['auth.allowed_emails' => ['bob@example.com']]);
+        Socialite::fake('google', fakeGoogleUser());
+
+        $this->get(route('auth.callback', 'google'))
+            ->assertRedirect(route('home'))
+            ->assertInertiaFlash('error', __('ui.auth.not_invited'));
+
+        $this->assertGuest();
+        expect(User::query()->count())->toBe(0)
+            ->and(SocialAccount::query()->count())->toBe(0);
+        Event::assertNotDispatched(UserRegistered::class);
+    });
+
+    test('existing users keep signing in even if they are not on the list', function () {
+        $user = User::factory()->withGoogleAccount('google-42')->create();
+        config(['auth.allowed_emails' => ['bob@example.com']]);
+        Socialite::fake('google', fakeGoogleUser());
+
+        $this->get(route('auth.callback', 'google'))->assertRedirect(route('home'));
+
+        $this->assertAuthenticatedAs($user);
+    });
+});

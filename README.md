@@ -118,9 +118,11 @@ Production runs on a [Render](https://render.com) free web service (Docker) with
     | `DB_URL`                  | the Neon connection string from step 1                                                   |
     | `GOOGLE_CLIENT_ID/SECRET` | same OAuth client as local is fine (see step 3)                                          |
     | `IGDB_CLIENT_ID/SECRET`   | same Twitch app as local is fine                                                         |
+    | `ALLOWED_EMAILS`          | comma-separated emails allowed to sign up, e.g. `ana@gmail.com,luis@gmail.com`           |
 
-3. **Google OAuth:** in the OAuth client, add the authorized redirect URI `https://<your-service>.onrender.com/auth/google/callback`. Who can sign up is controlled here: keep the consent screen in **Testing** and add each friend's Google email under _Test users_ (max. 100). Anyone else is rejected by Google.
-4. **Keep it awake (optional, recommended):** free services sleep after ~15 min without traffic and take about a minute to wake up. A free monitor such as [cron-job.org](https://cron-job.org) calling `https://<your-service>.onrender.com/up` every 10 minutes keeps it awake.
+3. **Google OAuth:** in the OAuth client, add the authorized redirect URI `https://<your-service>.onrender.com/auth/google/callback`.
+4. **Who can sign up:** only the emails in `ALLOWED_EMAILS` can create an account; anyone else sees a message and nothing is stored. Users who already have an account can always sign in (to remove someone, delete their user). Empty `ALLOWED_EMAILS` means open sign-up, which is what local development uses. Don't rely on Google's _Testing_ mode for this: it depends on the consent screen's publishing status and is easy to change by accident.
+5. **Keep it awake (optional, recommended):** free services sleep after ~15 min without traffic and take about a minute to wake up. A free monitor such as [cron-job.org](https://cron-job.org) calling `https://<your-service>.onrender.com/up` every 10 minutes keeps it awake.
 
 Logs: Render dashboard → service → _Logs_ (everything goes to stderr).
 

@@ -20,6 +20,7 @@ return [
         'failed' => 'No se pudo iniciar sesión. Inténtalo de nuevo.',
         'missing_email' => 'Tu cuenta no nos ha facilitado un email, así que no podemos registrarte.',
         'email_taken' => 'Ya existe una cuenta con ese email, creada con otro método de acceso. Entra con el método que usaste la primera vez.',
+        'not_invited' => 'Backlog Zero es solo para un grupo de amigos y tu email no está en la lista. Si te han invitado, pide que lo añadan.',
     ],
 
     'onboarding' => [

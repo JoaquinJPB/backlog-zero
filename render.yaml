@@ -46,6 +46,9 @@ services:
             value: log
           - key: AUTH_SOCIAL_PROVIDERS
             value: google
+          # Comma-separated emails allowed to create an account (kept out of the repo).
+          - key: ALLOWED_EMAILS
+            sync: false
           - key: GOOGLE_CLIENT_ID
             sync: false
           - key: GOOGLE_CLIENT_SECRET
