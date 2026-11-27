@@ -9,7 +9,7 @@ Personal web app to log the video games I play: what I'm playing, what I finishe
 - I'm a backend developer (PHP/Laravel, TypeScript, AWS). Don't explain Laravel basics; do explain non-obvious decisions.
 - Talk to me in Spanish. Code, identifiers, commits and docs inside the repo are in English. User-facing UI strings in Spanish, through Laravel's translation files (`lang/`), never hard-coded.
 - Propose a short plan before any change that touches more than one module or the database schema, and wait for my OK.
-- Small, focused commits (Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `chore:`). Never push or force-push unless I ask.
+- Small, focused commits (Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `chore:`, `ci:`, `docs:`). **No `Co-Authored-By` / Claude attribution trailer.** Never push or force-push unless I ask.
 
 ## Environment (important)
 
