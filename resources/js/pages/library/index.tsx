@@ -1,6 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/components/app-layout';
 import GameCover from '@/components/game-cover';
+import PaginationNav from '@/components/pagination-nav';
+import type { Pagination } from '@/components/pagination-nav';
 import { StarRatingDisplay } from '@/components/star-rating';
 import { useTranslation } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
@@ -8,13 +10,6 @@ import { show } from '@/routes/games';
 import { index } from '@/routes/library';
 import type { GameStatus, LibraryEntry } from '@/types/library';
 import { GAME_STATUSES } from '@/types/library';
-
-interface Pagination {
-    current_page: number;
-    last_page: number;
-    prev_url: string | null;
-    next_url: string | null;
-}
 
 interface LibraryPageProps {
     status: GameStatus | null;
@@ -90,36 +85,7 @@ export default function LibraryPage({
                 </ul>
             )}
 
-            {pagination.last_page > 1 && (
-                <nav className="mt-8 flex items-center justify-between text-sm">
-                    {pagination.prev_url !== null ? (
-                        <Link
-                            href={pagination.prev_url}
-                            className="underline underline-offset-4"
-                        >
-                            {t('library.previous_page')}
-                        </Link>
-                    ) : (
-                        <span />
-                    )}
-                    <span className="text-stone-500">
-                        {t('library.page_of', {
-                            current: pagination.current_page,
-                            last: pagination.last_page,
-                        })}
-                    </span>
-                    {pagination.next_url !== null ? (
-                        <Link
-                            href={pagination.next_url}
-                            className="underline underline-offset-4"
-                        >
-                            {t('library.next_page')}
-                        </Link>
-                    ) : (
-                        <span />
-                    )}
-                </nav>
-            )}
+            <PaginationNav pagination={pagination} />
         </AppLayout>
     );
 }

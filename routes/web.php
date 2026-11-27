@@ -8,6 +8,7 @@ use App\Http\Controllers\Journal\ShowJournalController;
 use App\Http\Controllers\Library\LibraryEntryController;
 use App\Http\Controllers\Library\ShowLibraryController;
 use App\Http\Controllers\Onboarding\UsernameController;
+use App\Http\Controllers\Profile\ShowProfileController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,11 @@ Route::get('journal', ShowJournalController::class)
 Route::get('library', ShowLibraryController::class)
     ->middleware('auth')
     ->name('library.index');
+
+// Owner-only for now (UserPolicy::viewProfile); public profiles come later.
+Route::get('u/{user:username}', ShowProfileController::class)
+    ->middleware('auth')
+    ->name('profile.show');
 
 Route::middleware(['auth', 'throttle:60,1'])
     ->controller(LibraryEntryController::class)
