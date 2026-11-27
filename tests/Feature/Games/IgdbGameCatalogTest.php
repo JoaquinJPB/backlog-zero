@@ -27,7 +27,7 @@ test('search sends a sanitized Apicalypse query and maps the results', function 
 
     $games = app(GameCatalog::class)->search("  The \"Witcher\";\n 3\\ ");
 
-    expect($games)->toHaveCount(2)
+    expect($games)->toHaveCount(4)
         ->and($games[0]->name)->toBe('The Witcher 3: Wild Hunt');
 
     Http::assertSent(fn (Request $request) => str_starts_with($request->body(), 'search "The Witcher 3"; fields name,slug,')
@@ -47,7 +47,8 @@ test('find queries by id and returns the game', function () {
 
     $game = app(GameCatalog::class)->find(1942);
 
-    expect($game?->summary)->toBe('Updated summary.');
+    expect($game?->igdbId)->toBe(1942)
+        ->and($game?->summary)->toStartWith('The Witcher 3: Wild Hunt is an open-world');
     Http::assertSent(fn (Request $request) => str_contains($request->body(), 'where id = 1942; limit 1;'));
 });
 

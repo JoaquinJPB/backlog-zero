@@ -1,23 +1,60 @@
 [
     {
         "id": 1942,
-        "cover": { "id": 89386, "image_id": "co1wyy-new" },
+        "cover": {
+            "id": 480513,
+            "image_id": "coaarl"
+        },
         "first_release_date": 1431993600,
-        "game_type": 0,
         "genres": [
             {
                 "id": 12,
                 "name": "Role-playing (RPG)",
                 "slug": "role-playing-rpg"
+            },
+            {
+                "id": 31,
+                "name": "Adventure",
+                "slug": "adventure"
             }
         ],
         "name": "The Witcher 3: Wild Hunt",
         "platforms": [
             {
+                "id": 169,
+                "abbreviation": "Series X|S",
+                "name": "Xbox Series X|S",
+                "slug": "series-x-s"
+            },
+            {
+                "id": 48,
+                "abbreviation": "PS4",
+                "name": "PlayStation 4",
+                "slug": "ps4--1"
+            },
+            {
+                "id": 508,
+                "abbreviation": "Switch 2",
+                "name": "Nintendo Switch 2",
+                "slug": "switch-2"
+            },
+            {
                 "id": 6,
                 "abbreviation": "PC",
                 "name": "PC (Microsoft Windows)",
                 "slug": "win"
+            },
+            {
+                "id": 167,
+                "abbreviation": "PS5",
+                "name": "PlayStation 5",
+                "slug": "ps5"
+            },
+            {
+                "id": 49,
+                "abbreviation": "XONE",
+                "name": "Xbox One",
+                "slug": "xboxone"
             },
             {
                 "id": 130,
@@ -27,7 +64,8 @@
             }
         ],
         "slug": "the-witcher-3-wild-hunt",
-        "summary": "Updated summary.",
-        "updated_at": 1740000000
+        "summary": "The Witcher 3: Wild Hunt is an open-world action role-playing game developed by CD Projekt Red.\n\nSet in a dark fantasy world, the game follows Geralt of Rivia, a monster hunter searching for his adopted daughter, Ciri, while navigating political conflicts and supernatural threats. Gameplay features exploration, combat, character progression, and branching narratives shaped by player choices. Widely acclaimed for its writing, world-building, and depth, it is considered one of the most influential RPGs of its generation.",
+        "updated_at": 1795782323,
+        "game_type": 0
     }
 ]

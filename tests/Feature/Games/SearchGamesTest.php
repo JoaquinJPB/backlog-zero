@@ -61,19 +61,19 @@ test('search imports results locally and returns them in IGDB order', function (
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->where('query', 'witcher 3')
-            ->has('results', 2)
+            ->has('results', 4)
             ->where('results.0', [
                 'slug' => 'the-witcher-3-wild-hunt',
                 'name' => 'The Witcher 3: Wild Hunt',
                 'year' => 2015,
-                'cover_image_id' => 'co1wyy',
-                'platforms' => ['PC', 'PS4', 'XONE'],
+                'cover_image_id' => 'coaarl',
+                'platforms' => ['Switch', 'Switch 2', 'PC', 'PS4', 'PS5', 'XONE', 'Series X|S'],
             ])
-            ->where('results.1.slug', 'the-witcher-3-wild-hunt-hearts-of-stone')
-            ->where('results.1.year', null)
+            ->where('results.1.slug', 'the-witcher-3-wild-hunt-plus-dark-souls-iii')
+            ->where('results.1.year', 2018)
         );
 
-    expect(Game::query()->pluck('igdb_id')->sort()->values()->all())->toBe([1942, 11169]);
+    expect(Game::query()->pluck('igdb_id')->sort()->values()->all())->toBe([1942, 13166, 141472, 415005]);
 });
 
 test('repeated searches are served from cache', function () {
@@ -81,7 +81,7 @@ test('repeated searches are served from cache', function () {
 
     $this->actingAs($this->user)->get(route('games.search', ['q' => 'Witcher 3']));
     $this->actingAs($this->user)->get(route('games.search', ['q' => '  witcher   3 ']))
-        ->assertInertia(fn (Assert $page) => $page->has('results', 2));
+        ->assertInertia(fn (Assert $page) => $page->has('results', 4));
 
     // One token request plus a single IGDB search.
     Http::assertSentCount(2);

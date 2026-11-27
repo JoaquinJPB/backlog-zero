@@ -27,9 +27,9 @@ test('the job updates a game from the catalog', function () {
     RefreshGameJob::dispatchSync($game);
 
     $game->refresh();
-    expect($game->summary)->toBe('Updated summary.')
+    expect($game->summary)->toStartWith('The Witcher 3: Wild Hunt is an open-world')
         ->and($game->isStale())->toBeFalse()
-        ->and($game->platforms->pluck('abbreviation')->all())->toBe(['Switch', 'PC']);
+        ->and($game->platforms)->toHaveCount(7);
 });
 
 test('games that vanished from the catalog are kept and not retried daily', function () {

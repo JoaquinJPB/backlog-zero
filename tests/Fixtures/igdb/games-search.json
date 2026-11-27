@@ -1,25 +1,94 @@
 [
     {
         "id": 1942,
-        "cover": { "id": 89386, "image_id": "co1wyy" },
+        "cover": {
+            "id": 480513,
+            "image_id": "coaarl"
+        },
         "first_release_date": 1431993600,
-        "game_type": 0,
         "genres": [
             {
                 "id": 12,
                 "name": "Role-playing (RPG)",
                 "slug": "role-playing-rpg"
             },
-            { "id": 31, "name": "Adventure", "slug": "adventure" }
+            {
+                "id": 31,
+                "name": "Adventure",
+                "slug": "adventure"
+            }
         ],
         "name": "The Witcher 3: Wild Hunt",
         "platforms": [
+            {
+                "id": 169,
+                "abbreviation": "Series X|S",
+                "name": "Xbox Series X|S",
+                "slug": "series-x-s"
+            },
+            {
+                "id": 48,
+                "abbreviation": "PS4",
+                "name": "PlayStation 4",
+                "slug": "ps4--1"
+            },
+            {
+                "id": 508,
+                "abbreviation": "Switch 2",
+                "name": "Nintendo Switch 2",
+                "slug": "switch-2"
+            },
             {
                 "id": 6,
                 "abbreviation": "PC",
                 "name": "PC (Microsoft Windows)",
                 "slug": "win"
             },
+            {
+                "id": 167,
+                "abbreviation": "PS5",
+                "name": "PlayStation 5",
+                "slug": "ps5"
+            },
+            {
+                "id": 49,
+                "abbreviation": "XONE",
+                "name": "Xbox One",
+                "slug": "xboxone"
+            },
+            {
+                "id": 130,
+                "abbreviation": "Switch",
+                "name": "Nintendo Switch",
+                "slug": "switch"
+            }
+        ],
+        "slug": "the-witcher-3-wild-hunt",
+        "summary": "The Witcher 3: Wild Hunt is an open-world action role-playing game developed by CD Projekt Red.\n\nSet in a dark fantasy world, the game follows Geralt of Rivia, a monster hunter searching for his adopted daughter, Ciri, while navigating political conflicts and supernatural threats. Gameplay features exploration, combat, character progression, and branching narratives shaped by player choices. Widely acclaimed for its writing, world-building, and depth, it is considered one of the most influential RPGs of its generation.",
+        "updated_at": 1795782323,
+        "game_type": 0
+    },
+    {
+        "id": 141472,
+        "cover": {
+            "id": 372851,
+            "image_id": "co7zoz"
+        },
+        "first_release_date": 1540512000,
+        "genres": [
+            {
+                "id": 12,
+                "name": "Role-playing (RPG)",
+                "slug": "role-playing-rpg"
+            },
+            {
+                "id": 31,
+                "name": "Adventure",
+                "slug": "adventure"
+            }
+        ],
+        "name": "The Witcher 3: Wild Hunt + Dark Souls III",
+        "platforms": [
             {
                 "id": 48,
                 "abbreviation": "PS4",
@@ -33,27 +102,123 @@
                 "slug": "xboxone"
             }
         ],
-        "slug": "the-witcher-3-wild-hunt",
-        "summary": "RPG and sequel to The Witcher 2 (2011), The Witcher 3 follows witcher Geralt of Rivia as he seeks out his former lover and his young subject.",
-        "updated_at": 1730000000
+        "slug": "the-witcher-3-wild-hunt-plus-dark-souls-iii",
+        "summary": "A bundle containing The Witcher 3: Wild Hunt and Dark Souls III.",
+        "updated_at": 1794328687,
+        "game_type": 3
     },
     {
-        "id": 11169,
-        "name": "The Witcher 3: Wild Hunt - Hearts of Stone",
-        "slug": "the-witcher-3-wild-hunt-hearts-of-stone",
-        "game_type": 2,
+        "id": 415005,
+        "cover": {
+            "id": 595561,
+            "image_id": "cocrjd"
+        },
+        "first_release_date": 1790640000,
+        "genres": [
+            {
+                "id": 12,
+                "name": "Role-playing (RPG)",
+                "slug": "role-playing-rpg"
+            },
+            {
+                "id": 31,
+                "name": "Adventure",
+                "slug": "adventure"
+            }
+        ],
+        "name": "The Witcher 3: Wild Hunt Remastered",
         "platforms": [
+            {
+                "id": 169,
+                "abbreviation": "Series X|S",
+                "name": "Xbox Series X|S",
+                "slug": "series-x-s"
+            },
+            {
+                "id": 508,
+                "abbreviation": "Switch 2",
+                "name": "Nintendo Switch 2",
+                "slug": "switch-2"
+            },
             {
                 "id": 6,
                 "abbreviation": "PC",
                 "name": "PC (Microsoft Windows)",
                 "slug": "win"
+            },
+            {
+                "id": 167,
+                "abbreviation": "PS5",
+                "name": "PlayStation 5",
+                "slug": "ps5"
             }
         ],
-        "updated_at": 1720000000
+        "slug": "the-witcher-3-wild-hunt-remastered",
+        "summary": "The Witcher 3: Wild Hunt — Remastered modernizes the acclaimed role-playing game with a range of upgrades and enhancements. Become monster slayer for hire Geralt of Rivia and journey across a dark fantasy open world in an epic quest to find your adopted daughter Ciri.\n\nThe Remastered update is free for players who own The Witcher 3 and includes both Hearts of Stone and Blood and Wine expansions.",
+        "updated_at": 1794882381,
+        "game_type": 14
     },
     {
-        "id": 999,
-        "slug": "row-without-name-is-skipped"
+        "id": 13166,
+        "cover": {
+            "id": 121128,
+            "image_id": "co2lgo"
+        },
+        "first_release_date": 1464566400,
+        "genres": [
+            {
+                "id": 12,
+                "name": "Role-playing (RPG)",
+                "slug": "role-playing-rpg"
+            },
+            {
+                "id": 31,
+                "name": "Adventure",
+                "slug": "adventure"
+            }
+        ],
+        "name": "The Witcher 3: Wild Hunt - Blood and Wine",
+        "platforms": [
+            {
+                "id": 169,
+                "abbreviation": "Series X|S",
+                "name": "Xbox Series X|S",
+                "slug": "series-x-s"
+            },
+            {
+                "id": 48,
+                "abbreviation": "PS4",
+                "name": "PlayStation 4",
+                "slug": "ps4--1"
+            },
+            {
+                "id": 6,
+                "abbreviation": "PC",
+                "name": "PC (Microsoft Windows)",
+                "slug": "win"
+            },
+            {
+                "id": 167,
+                "abbreviation": "PS5",
+                "name": "PlayStation 5",
+                "slug": "ps5"
+            },
+            {
+                "id": 49,
+                "abbreviation": "XONE",
+                "name": "Xbox One",
+                "slug": "xboxone"
+            },
+            {
+                "id": 130,
+                "abbreviation": "Switch",
+                "name": "Nintendo Switch",
+                "slug": "switch"
+            }
+        ],
+        "slug": "the-witcher-3-wild-hunt-blood-and-wine",
+        "summary": "Blood and Wine is the second major expansion to The Witcher 3: Wild Hunt.\n\nThe players will accompany Geralt of Rivia to the region of Toussaint, one of the few places in the Witcher universe which has remained largely untouched by the war. The calm, laid-back atmosphere holds a dark and bloody secret that only the White Wolf can uncover; the expansion features new items for players to collect on their adventure and introduces previously unknown characters.",
+        "updated_at": 1795286299,
+        "game_type": 2
     }
 ]

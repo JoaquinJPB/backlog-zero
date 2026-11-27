@@ -21,34 +21,44 @@ test('it imports a catalog game with platforms and genres', function () {
 
     expect($game->igdb_id)->toBe(1942)
         ->and($game->slug)->toBe('the-witcher-3-wild-hunt')
-        ->and($game->cover_image_id)->toBe('co1wyy')
+        ->and($game->cover_image_id)->toBe('coaarl')
         ->and($game->first_release_date?->toDateString())->toBe('2015-05-19')
         ->and($game->synced_at->isToday())->toBeTrue()
-        ->and($game->platforms->pluck('abbreviation')->all())->toBe(['PC', 'PS4', 'XONE'])
+        // Sorted by platform name.
+        ->and($game->platforms->pluck('abbreviation')->all())
+        ->toBe(['Switch', 'Switch 2', 'PC', 'PS4', 'PS5', 'XONE', 'Series X|S'])
         ->and($game->genres->pluck('name')->all())->toBe(['Adventure', 'Role-playing (RPG)']);
 });
 
 test('re-importing updates the same row and re-syncs relations', function () {
     $this->travelTo(now()->subDays(10));
-    app(UpsertGameAction::class)->execute(catalogGameFromFixture('games-search'));
+    $original = catalogGameFromFixture('games-search');
+    app(UpsertGameAction::class)->execute($original);
     $this->travelBack();
 
-    $game = app(UpsertGameAction::class)->execute(catalogGameFromFixture('game-find'));
+    $game = app(UpsertGameAction::class)->execute(new CatalogGame(
+        igdbId: $original->igdbId,
+        slug: $original->slug,
+        name: $original->name,
+        summary: 'Updated summary.',
+        coverImageId: 'new-cover',
+        platforms: [new CatalogTerm(igdbId: 6, name: 'PC (Microsoft Windows)', slug: 'win', abbreviation: 'PC')],
+    ));
 
     expect(Game::query()->count())->toBe(1)
         ->and($game->summary)->toBe('Updated summary.')
-        ->and($game->cover_image_id)->toBe('co1wyy-new')
+        ->and($game->cover_image_id)->toBe('new-cover')
         ->and($game->isStale())->toBeFalse()
-        // Sorted by name: "Nintendo Switch" < "PC (Microsoft Windows)".
-        ->and($game->platforms->pluck('abbreviation')->all())->toBe(['Switch', 'PC'])
-        ->and($game->genres->pluck('name')->all())->toBe(['Role-playing (RPG)']);
+        ->and($game->platforms->pluck('abbreviation')->all())->toBe(['PC'])
+        ->and($game->genres)->toHaveCount(0);
 });
 
 test('platforms shared by several games are stored once', function () {
     app(UpsertGameAction::class)->execute(catalogGameFromFixture('games-search', 0));
     app(UpsertGameAction::class)->execute(catalogGameFromFixture('games-search', 1));
 
-    expect(Platform::query()->where('igdb_id', 6)->count())->toBe(1)
+    // PlayStation 4 (igdb 48) belongs to both games.
+    expect(Platform::query()->where('igdb_id', 48)->count())->toBe(1)
         ->and(Game::query()->count())->toBe(2);
 });
 
