@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Library;
 
-use App\Domain\Library\Enums\GameStatus;
 use App\Domain\Library\Models\LibraryEntry;
+use App\Domain\Library\Queries\LibraryStatsQuery;
 use App\Domain\Users\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Library\ShowLibraryRequest;
@@ -19,7 +19,7 @@ class ShowLibraryController extends Controller
 {
     private const PER_PAGE = 48;
 
-    public function __invoke(ShowLibraryRequest $request): Response
+    public function __invoke(ShowLibraryRequest $request, LibraryStatsQuery $stats): Response
     {
         /** @var User $user */
         $user = $request->user();
@@ -36,7 +36,7 @@ class ShowLibraryController extends Controller
 
         return Inertia::render('library/index', [
             'status' => $status?->value,
-            'counts' => $this->counts($user),
+            'counts' => $stats->countsByStatus($user),
             'entries' => LibraryEntryResource::collection($entries->getCollection())->resolve($request),
             'pagination' => [
                 'current_page' => $entries->currentPage(),
@@ -45,26 +45,5 @@ class ShowLibraryController extends Controller
                 'next_url' => $entries->nextPageUrl(),
             ],
         ]);
-    }
-
-    /**
-     * @return array<string, int>
-     */
-    private function counts(User $user): array
-    {
-        $byStatus = LibraryEntry::query()
-            ->where('user_id', $user->id)
-            ->toBase()
-            ->selectRaw('status, count(*) as total')
-            ->groupBy('status')
-            ->pluck('total', 'status');
-
-        $counts = ['all' => (int) $byStatus->sum()];
-
-        foreach (GameStatus::cases() as $case) {
-            $counts[$case->value] = (int) ($byStatus[$case->value] ?? 0);
-        }
-
-        return $counts;
     }
 }

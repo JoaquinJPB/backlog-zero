@@ -5,6 +5,7 @@ import { redirect as providerRedirect } from '@/routes/auth';
 import { search } from '@/routes/games';
 import { index as journalIndex } from '@/routes/journal';
 import { index as libraryIndex } from '@/routes/library';
+import { show as profileShow } from '@/routes/profile';
 import { profile } from '@/routes/settings';
 
 const buttonClass =
@@ -45,7 +46,11 @@ export default function AuthControls() {
                 {t('journal.nav')}
             </Link>
             <Link
-                href={profile()}
+                href={
+                    auth.user.username !== null
+                        ? profileShow(auth.user.username)
+                        : profile()
+                }
                 className="flex items-center gap-2 text-sm hover:underline"
             >
                 {auth.user.avatar_url !== null && (

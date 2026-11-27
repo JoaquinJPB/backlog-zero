@@ -2,10 +2,12 @@
 
 namespace App\Domain\Users\Models;
 
+use App\Domain\Users\Policies\UserPolicy;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +30,7 @@ use Illuminate\Support\Carbon;
 #[Fillable(['name', 'username', 'email', 'avatar_url'])]
 #[Hidden(['remember_token'])]
 #[UseFactory(UserFactory::class)]
+#[UsePolicy(UserPolicy::class)]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

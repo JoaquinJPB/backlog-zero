@@ -108,6 +108,31 @@ return [
         ],
     ],
 
+    'profile' => [
+        'edit' => 'Editar perfil',
+        'private_note' => 'Por ahora solo tú puedes ver esta página.',
+        'counts' => [
+            'library' => 'En la biblioteca',
+            'finished' => 'Terminados',
+            'finished_this_year' => 'Terminados en :year',
+            'playing' => 'Jugando',
+            'backlog' => 'Pendientes',
+            'abandoned' => 'Abandonados',
+        ],
+        'average_rating' => 'Nota media',
+        'no_ratings' => 'Sin notas',
+        'ratings_title' => 'Notas',
+        'rated_count' => '{0} Ningún juego puntuado|{1} 1 juego puntuado|[2,*] :count juegos puntuados',
+        'rating_bar' => ':stars estrellas: :count',
+        'per_year_title' => 'Terminados por año',
+        'top_platforms' => 'Plataformas más jugadas',
+        'top_genres' => 'Géneros más jugados',
+        'game_count' => '{1} 1 juego|[2,*] :count juegos',
+        'nothing_yet' => 'Todavía no hay datos.',
+        'games_title' => 'Juegos jugados',
+        'games_empty' => 'Aún no hay juegos jugados. Los que marques como jugando, terminados o abandonados aparecerán aquí.',
+    ],
+
     'settings' => [
         'title' => 'Tu perfil',
         'name_label' => 'Nombre visible',

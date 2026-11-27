@@ -19,6 +19,16 @@ enum GameStatus: string
     }
 
     /**
+     * Statuses of games you actually played (everything but the backlog).
+     *
+     * @return list<self>
+     */
+    public static function played(): array
+    {
+        return [self::Playing, self::Finished, self::Abandoned];
+    }
+
+    /**
      * @return list<string>
      */
     public static function values(): array
