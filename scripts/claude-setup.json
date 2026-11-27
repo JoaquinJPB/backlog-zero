@@ -1,0 +1,156 @@
+{
+    "skills": [
+        {
+            "name": "impeccable",
+            "repo": "pbakaus/impeccable",
+            "ref": "main",
+            "path": ".claude/skills/impeccable"
+        },
+        {
+            "name": "taste-skill",
+            "repo": "leonxlnx/taste-skill",
+            "ref": "main",
+            "path": "skills/taste-skill"
+        },
+        {
+            "name": "animate",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/animate"
+        },
+        {
+            "name": "animation-performance",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/animation-performance"
+        },
+        {
+            "name": "animation-vocabulary",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/animation-vocabulary"
+        },
+        {
+            "name": "apple-design",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/apple-design"
+        },
+        {
+            "name": "ask-emil",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/ask-emil"
+        },
+        {
+            "name": "ask-sonner",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/ask-sonner"
+        },
+        {
+            "name": "break-ui",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/break-ui"
+        },
+        {
+            "name": "choreograph",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/choreograph"
+        },
+        {
+            "name": "emil-design-eng",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/emil-design-eng"
+        },
+        {
+            "name": "find-animation-opportunities",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/find-animation-opportunities"
+        },
+        {
+            "name": "gestures",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/gestures"
+        },
+        {
+            "name": "improve-animations",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/improve-animations"
+        },
+        {
+            "name": "learn-taste",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/learn-taste"
+        },
+        {
+            "name": "mobile-native",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/mobile-native"
+        },
+        {
+            "name": "pick-ui-library",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/pick-ui-library"
+        },
+        {
+            "name": "prototype",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/prototype"
+        },
+        {
+            "name": "remove-animations",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/remove-animations"
+        },
+        {
+            "name": "review-animations",
+            "repo": "emilkowalski/skills",
+            "ref": "main",
+            "path": "skills/review-animations"
+        }
+    ],
+    "agents": [
+        {
+            "name": "impeccable-asset-producer",
+            "repo": "pbakaus/impeccable",
+            "ref": "main",
+            "path": ".claude/agents/impeccable-asset-producer.md"
+        },
+        {
+            "name": "impeccable-documenter",
+            "repo": "pbakaus/impeccable",
+            "ref": "main",
+            "path": ".claude/agents/impeccable-documenter.md"
+        },
+        {
+            "name": "impeccable-finish-reviewer",
+            "repo": "pbakaus/impeccable",
+            "ref": "main",
+            "path": ".claude/agents/impeccable-finish-reviewer.md"
+        },
+        {
+            "name": "impeccable-manual-edit-applier",
+            "repo": "pbakaus/impeccable",
+            "ref": "main",
+            "path": ".claude/agents/impeccable-manual-edit-applier.md"
+        },
+        {
+            "name": "impeccable-motion-reviewer",
+            "repo": "pbakaus/impeccable",
+            "ref": "main",
+            "path": ".claude/agents/impeccable-motion-reviewer.md"
+        }
+    ]
+}
