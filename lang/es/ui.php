@@ -52,6 +52,24 @@ return [
         ],
     ],
 
+    'journal' => [
+        'nav' => 'Journal',
+        'title' => 'Journal :year',
+        'year_label' => 'Año',
+        'platform_label' => 'Plataforma',
+        'all_platforms' => 'Todas',
+        'include_abandoned' => 'Incluir abandonados',
+        'finished_count' => '{0} Ningún juego terminado|{1} 1 juego terminado|[2,*] :count juegos terminados',
+        'abandoned_count' => '{1} 1 abandonado|[2,*] :count abandonados',
+        'average_rating' => 'Nota media: :stars',
+        'month_count' => '{1} 1 juego|[2,*] :count juegos',
+        'finished_on' => 'Terminado el :date',
+        'abandoned_on' => 'Abandonado el :date',
+        'took_days' => '{0} en el mismo día|{1} en 1 día|[2,*] en :count días',
+        'empty' => 'No hay juegos terminados en :year con estos filtros.',
+        'empty_all' => 'Aún no has terminado ningún juego. Cuando marques uno como terminado con su fecha, aparecerá aquí.',
+    ],
+
     'library' => [
         'nav' => 'Mi biblioteca',
         'title' => 'Mi biblioteca',

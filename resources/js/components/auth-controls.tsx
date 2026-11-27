@@ -3,6 +3,7 @@ import { useTranslation } from '@/lib/i18n';
 import { logout } from '@/routes';
 import { redirect as providerRedirect } from '@/routes/auth';
 import { search } from '@/routes/games';
+import { index as journalIndex } from '@/routes/journal';
 import { index as libraryIndex } from '@/routes/library';
 import { profile } from '@/routes/settings';
 
@@ -39,6 +40,9 @@ export default function AuthControls() {
             </Link>
             <Link href={libraryIndex()} className="text-sm hover:underline">
                 {t('library.nav')}
+            </Link>
+            <Link href={journalIndex()} className="text-sm hover:underline">
+                {t('journal.nav')}
             </Link>
             <Link
                 href={profile()}

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Games\GameSearchController;
 use App\Http\Controllers\Games\ShowGameController;
+use App\Http\Controllers\Journal\ShowJournalController;
 use App\Http\Controllers\Library\LibraryEntryController;
 use App\Http\Controllers\Library\ShowLibraryController;
 use App\Http\Controllers\Onboarding\UsernameController;
@@ -20,6 +21,10 @@ Route::get('games/search', GameSearchController::class)
 
 // Public: reads only our local catalog.
 Route::get('games/{game}', ShowGameController::class)->name('games.show');
+
+Route::get('journal', ShowJournalController::class)
+    ->middleware('auth')
+    ->name('journal.index');
 
 Route::get('library', ShowLibraryController::class)
     ->middleware('auth')
