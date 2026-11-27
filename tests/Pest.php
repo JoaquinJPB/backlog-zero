@@ -44,7 +44,14 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * Decoded JSON fixture from tests/Fixtures/igdb (shaped like IGDB v4 responses).
+ *
+ * @return array<mixed>
+ */
+function igdbFixture(string $name): array
 {
-    // ..
+    $json = file_get_contents(__DIR__."/Fixtures/igdb/{$name}.json");
+
+    return json_decode((string) $json, true, flags: JSON_THROW_ON_ERROR);
 }

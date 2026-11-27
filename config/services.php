@@ -42,4 +42,14 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI', '/auth/google/callback'),
     ],
 
+    // Game catalog. Credentials come from a Twitch developer app (client
+    // credentials flow). Only used server-side by App\Domain\Games\Igdb.
+    'igdb' => [
+        'client_id' => env('IGDB_CLIENT_ID'),
+        'client_secret' => env('IGDB_CLIENT_SECRET'),
+        'base_url' => 'https://api.igdb.com/v4',
+        'token_url' => 'https://id.twitch.tv/oauth2/token',
+        'requests_per_second' => 4,
+    ],
+
 ];
