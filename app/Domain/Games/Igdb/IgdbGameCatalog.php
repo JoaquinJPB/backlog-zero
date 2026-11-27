@@ -12,9 +12,12 @@ final class IgdbGameCatalog implements GameCatalog
 
     private const MAX_QUERY_LENGTH = 100;
 
+    private const NAME_MATCH_LIMIT = 50;
+
     public function __construct(
         private readonly IgdbClient $client,
         private readonly IgdbGameMapper $mapper,
+        private readonly IgdbSearchRanker $ranker,
     ) {}
 
     public function search(string $query, int $limit = 20): array
@@ -25,16 +28,32 @@ final class IgdbGameCatalog implements GameCatalog
             return [];
         }
 
-        // version_parent = null drops editions/bundles of the same game
-        // (the filter IGDB's own docs use for search).
-        $body = sprintf(
+        $limit = max(1, min($limit, 50));
+
+        // version_parent = null drops editions of the same game (the filter
+        // IGDB's own docs use for search).
+        $searchBody = sprintf(
             'search "%s"; fields %s; where version_parent = null; limit %d;',
             $term,
             self::GAME_FIELDS,
-            max(1, min($limit, 50)),
+            $limit,
         );
 
-        return $this->map($this->client->query('games', $body));
+        // IGDB's full-text search drops very common words, so a title like
+        // "We Were Here" finds nothing. A name match catches those.
+        $nameBody = sprintf(
+            'fields %s; where name ~ *"%s"* & version_parent = null; limit %d;',
+            self::GAME_FIELDS,
+            $term,
+            self::NAME_MATCH_LIMIT,
+        );
+
+        $games = [
+            ...$this->map($this->client->query('games', $searchBody)),
+            ...$this->map($this->client->query('games', $nameBody)),
+        ];
+
+        return $this->ranker->rank($games, $term, $limit);
     }
 
     public function find(int $igdbId): ?CatalogGame

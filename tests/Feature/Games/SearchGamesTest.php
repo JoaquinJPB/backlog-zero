@@ -53,7 +53,7 @@ test('queries shorter than the minimum do not call IGDB', function () {
     Http::assertNothingSent();
 });
 
-test('search imports results locally and returns them in IGDB order', function () {
+test('search imports results locally and returns them ranked', function () {
     fakeIgdbSearch(igdbFixture('games-search'));
 
     $this->actingAs($this->user)
@@ -69,8 +69,10 @@ test('search imports results locally and returns them in IGDB order', function (
                 'cover_image_id' => 'coaarl',
                 'platforms' => ['Switch', 'Switch 2', 'PC', 'PS4', 'PS5', 'XONE', 'Series X|S'],
             ])
-            ->where('results.1.slug', 'the-witcher-3-wild-hunt-plus-dark-souls-iii')
-            ->where('results.1.year', 2018)
+            // Expansion before bundle and update (see IgdbSearchRanker).
+            ->where('results.1.slug', 'the-witcher-3-wild-hunt-blood-and-wine')
+            ->where('results.2.slug', 'the-witcher-3-wild-hunt-plus-dark-souls-iii')
+            ->where('results.3.slug', 'the-witcher-3-wild-hunt-remastered')
         );
 
     expect(Game::query()->pluck('igdb_id')->sort()->values()->all())->toBe([1942, 13166, 141472, 415005]);
@@ -83,8 +85,8 @@ test('repeated searches are served from cache', function () {
     $this->actingAs($this->user)->get(route('games.search', ['q' => '  witcher   3 ']))
         ->assertInertia(fn (Assert $page) => $page->has('results', 4));
 
-    // One token request plus a single IGDB search.
-    Http::assertSentCount(2);
+    // One token request plus one IGDB search (full-text + name match).
+    Http::assertSentCount(3);
 });
 
 test('a catalog outage shows a friendly error and is reported', function () {
