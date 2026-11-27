@@ -5,14 +5,33 @@
         "first_release_date": 1431993600,
         "game_type": 0,
         "genres": [
-            { "id": 12, "name": "Role-playing (RPG)", "slug": "role-playing-rpg" },
+            {
+                "id": 12,
+                "name": "Role-playing (RPG)",
+                "slug": "role-playing-rpg"
+            },
             { "id": 31, "name": "Adventure", "slug": "adventure" }
         ],
         "name": "The Witcher 3: Wild Hunt",
         "platforms": [
-            { "id": 6, "abbreviation": "PC", "name": "PC (Microsoft Windows)", "slug": "win" },
-            { "id": 48, "abbreviation": "PS4", "name": "PlayStation 4", "slug": "ps4--1" },
-            { "id": 49, "abbreviation": "XONE", "name": "Xbox One", "slug": "xboxone" }
+            {
+                "id": 6,
+                "abbreviation": "PC",
+                "name": "PC (Microsoft Windows)",
+                "slug": "win"
+            },
+            {
+                "id": 48,
+                "abbreviation": "PS4",
+                "name": "PlayStation 4",
+                "slug": "ps4--1"
+            },
+            {
+                "id": 49,
+                "abbreviation": "XONE",
+                "name": "Xbox One",
+                "slug": "xboxone"
+            }
         ],
         "slug": "the-witcher-3-wild-hunt",
         "summary": "RPG and sequel to The Witcher 2 (2011), The Witcher 3 follows witcher Geralt of Rivia as he seeks out his former lover and his young subject.",
@@ -24,7 +43,12 @@
         "slug": "the-witcher-3-wild-hunt-hearts-of-stone",
         "game_type": 2,
         "platforms": [
-            { "id": 6, "abbreviation": "PC", "name": "PC (Microsoft Windows)", "slug": "win" }
+            {
+                "id": 6,
+                "abbreviation": "PC",
+                "name": "PC (Microsoft Windows)",
+                "slug": "win"
+            }
         ],
         "updated_at": 1720000000
     },

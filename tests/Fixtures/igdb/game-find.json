@@ -5,12 +5,26 @@
         "first_release_date": 1431993600,
         "game_type": 0,
         "genres": [
-            { "id": 12, "name": "Role-playing (RPG)", "slug": "role-playing-rpg" }
+            {
+                "id": 12,
+                "name": "Role-playing (RPG)",
+                "slug": "role-playing-rpg"
+            }
         ],
         "name": "The Witcher 3: Wild Hunt",
         "platforms": [
-            { "id": 6, "abbreviation": "PC", "name": "PC (Microsoft Windows)", "slug": "win" },
-            { "id": 130, "abbreviation": "Switch", "name": "Nintendo Switch", "slug": "switch" }
+            {
+                "id": 6,
+                "abbreviation": "PC",
+                "name": "PC (Microsoft Windows)",
+                "slug": "win"
+            },
+            {
+                "id": 130,
+                "abbreviation": "Switch",
+                "name": "Nintendo Switch",
+                "slug": "switch"
+            }
         ],
         "slug": "the-witcher-3-wild-hunt",
         "summary": "Updated summary.",
