@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Games\GameSearchController;
 use App\Http\Controllers\Games\ShowGameController;
+use App\Http\Controllers\Library\LibraryEntryController;
 use App\Http\Controllers\Onboarding\UsernameController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,14 @@ Route::get('games/search', GameSearchController::class)
 
 // Public: reads only our local catalog.
 Route::get('games/{game}', ShowGameController::class)->name('games.show');
+
+Route::middleware(['auth', 'throttle:60,1'])
+    ->controller(LibraryEntryController::class)
+    ->group(function () {
+        Route::post('games/{game}/library', 'store')->name('library.store');
+        Route::patch('library/{entry}', 'update')->name('library.update');
+        Route::delete('library/{entry}', 'destroy')->name('library.destroy');
+    });
 
 Route::middleware(['guest', 'throttle:10,1'])
     ->prefix('auth/{provider}')

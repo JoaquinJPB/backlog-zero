@@ -2,13 +2,22 @@ import { Head } from '@inertiajs/react';
 import AppLayout from '@/components/app-layout';
 import GameCover from '@/components/game-cover';
 import { useTranslation } from '@/lib/i18n';
+import LibraryEntryForm from '@/components/library-entry-form';
 import type { GameDetail } from '@/types/games';
+import type { LibraryEntry, PlatformOption } from '@/types/library';
+
+interface GameLibraryProps {
+    entry: LibraryEntry | null;
+    platforms: PlatformOption[];
+}
 
 interface ShowGameProps {
     game: GameDetail;
+    /** Null for guests. */
+    library: GameLibraryProps | null;
 }
 
-export default function ShowGame({ game }: ShowGameProps) {
+export default function ShowGame({ game, library }: ShowGameProps) {
     const { t } = useTranslation();
 
     return (
@@ -85,6 +94,18 @@ export default function ShowGame({ game }: ShowGameProps) {
                     >
                         {t('games.view_on_igdb')}
                     </a>
+
+                    {library !== null && (
+                        <div className="mt-8 max-w-xl">
+                            <LibraryEntryForm
+                                // Remount after add/remove so the form resets.
+                                key={library.entry?.id ?? 'new'}
+                                gameSlug={game.slug}
+                                entry={library.entry}
+                                platforms={library.platforms}
+                            />
+                        </div>
+                    )}
                 </div>
             </article>
         </AppLayout>
