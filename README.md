@@ -97,6 +97,41 @@ sail npm run types:check   # tsc --noEmit
 
 `.github/workflows/tests.yml` runs on every push and pull request: frontend checks, `tsc`, Pint, Larastan and Pest against a PostgreSQL 18 service container.
 
+## Deploy (Render + Neon, free plans)
+
+Production runs on a [Render](https://render.com) free web service (Docker) with a [Neon](https://neon.tech) free PostgreSQL database. Free-plan limits change; check both sites before relying on them.
+
+- `Dockerfile` builds the production image (PHP 8.5 + FrankenPHP; assets are built inside the image). Sail is not involved.
+- One container runs the web server, the queue worker and the scheduler under supervisord (`docker/supervisord.conf`): the free plan has no separate workers or cron jobs.
+- On every start `docker/start.sh` runs `migrate --force` and `optimize` (the free plan has no pre-deploy command). **Migrations must therefore be safe to run while the previous version is still serving.**
+- `render.yaml` (Blueprint) defines the service. Render deploys `main` automatically, but only once the GitHub checks (CI) pass.
+
+### First-time setup
+
+1. **Neon:** create a project in region _AWS Europe Central 1 (Frankfurt)_ and copy the **direct** (non-pooled) connection string. It looks like `postgresql://user:password@ep-xxx.eu-central-1.aws.neon.tech/neondb?sslmode=require`.
+2. **Render:** _New → Blueprint_, pick this GitHub repo; Render reads `render.yaml` and asks for the secret values:
+
+    | Variable                  | Value                                                                                    |
+    | ------------------------- | ---------------------------------------------------------------------------------------- |
+    | `APP_KEY`                 | output of `sail artisan key:generate --show` (a new key, not your local one)             |
+    | `APP_URL`                 | the service URL, e.g. `https://backlog-zero.onrender.com` (**https**, no trailing slash) |
+    | `DB_URL`                  | the Neon connection string from step 1                                                   |
+    | `GOOGLE_CLIENT_ID/SECRET` | same OAuth client as local is fine (see step 3)                                          |
+    | `IGDB_CLIENT_ID/SECRET`   | same Twitch app as local is fine                                                         |
+
+3. **Google OAuth:** in the OAuth client, add the authorized redirect URI `https://<your-service>.onrender.com/auth/google/callback`. Who can sign up is controlled here: keep the consent screen in **Testing** and add each friend's Google email under _Test users_ (max. 100). Anyone else is rejected by Google.
+4. **Keep it awake (optional, recommended):** free services sleep after ~15 min without traffic and take about a minute to wake up. A free monitor such as [cron-job.org](https://cron-job.org) calling `https://<your-service>.onrender.com/up` every 10 minutes keeps it awake.
+
+Logs: Render dashboard → service → _Logs_ (everything goes to stderr).
+
+### Testing the production image locally
+
+```bash
+docker build -t backlog-zero:prod .
+```
+
+To run it you need a database it can reach and a throwaway `APP_KEY`; pass the same variables as in `render.yaml` with `-e` and publish port 10000.
+
 ## How this project was bootstrapped
 
 For the record, these are the steps that actually worked (2026-11-27). They differ from the usual `laravel.build` one-liner because the React starter kit can only be installed when the app is created with `laravel new`, and the installer bundled in the `laravelsail/php84-composer` image is too old to know the `--react` flag.
