@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from '@/lib/i18n';
 import { logout } from '@/routes';
 import { redirect as providerRedirect } from '@/routes/auth';
+import { profile } from '@/routes/settings';
 
 const buttonClass =
     'rounded-md border border-stone-300 px-3 py-1.5 text-sm font-medium hover:bg-stone-100 dark:border-stone-700 dark:hover:bg-stone-800';
@@ -31,7 +32,10 @@ export default function AuthControls() {
 
     return (
         <>
-            <span className="flex items-center gap-2 text-sm">
+            <Link
+                href={profile()}
+                className="flex items-center gap-2 text-sm hover:underline"
+            >
                 {auth.user.avatar_url !== null && (
                     <img
                         src={auth.user.avatar_url}
@@ -40,8 +44,10 @@ export default function AuthControls() {
                         className="size-7 rounded-full"
                     />
                 )}
-                {auth.user.username ?? auth.user.name}
-            </span>
+                {auth.user.username !== null
+                    ? `@${auth.user.username}`
+                    : auth.user.name}
+            </Link>
             <Link href={logout()} as="button" className={buttonClass}>
                 {t('auth.logout')}
             </Link>

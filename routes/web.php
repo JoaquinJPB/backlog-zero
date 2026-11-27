@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Onboarding\UsernameController;
+use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -27,4 +28,13 @@ Route::middleware('auth')
     ->group(function () {
         Route::get('username', 'show')->name('username');
         Route::post('username', 'store')->middleware('throttle:20,1')->name('username.store');
+    });
+
+Route::middleware('auth')
+    ->prefix('settings')
+    ->name('settings.')
+    ->controller(ProfileController::class)
+    ->group(function () {
+        Route::get('profile', 'edit')->name('profile');
+        Route::patch('profile', 'update')->middleware('throttle:20,1')->name('profile.update');
     });

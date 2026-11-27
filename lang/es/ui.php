@@ -31,6 +31,17 @@ return [
         'done' => '¡Listo, @:username! Ya puedes empezar a apuntar juegos.',
     ],
 
+    'settings' => [
+        'title' => 'Tu perfil',
+        'name_label' => 'Nombre visible',
+        'name_hint' => 'Así te verán tus amigos. Máximo :max caracteres.',
+        'email_label' => 'Email',
+        'email_hint' => 'Viene de tu cuenta de acceso y no se puede cambiar aquí.',
+        'username_warning' => 'Si cambias tu nombre de usuario, cambiará tu dirección pública y los enlaces antiguos dejarán de funcionar.',
+        'submit' => 'Guardar cambios',
+        'saved' => 'Perfil actualizado.',
+    ],
+
     'providers' => [
         'google' => 'Google',
     ],
