@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Domain\Users\Actions\AuthenticateWithProviderAction;
 use App\Domain\Users\Data\ProviderIdentity;
 use App\Domain\Users\Exceptions\EmailAlreadyRegistered;
+use App\Domain\Users\Exceptions\RegistrationNotAllowed;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +46,8 @@ class SocialLoginController extends Controller
             $user = $authenticate->execute($identity);
         } catch (EmailAlreadyRegistered) {
             return $this->failed('ui.auth.email_taken');
+        } catch (RegistrationNotAllowed) {
+            return $this->failed('ui.auth.not_invited');
         }
 
         Auth::login($user, remember: true);
