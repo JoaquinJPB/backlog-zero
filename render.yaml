@@ -1,0 +1,56 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Secrets use `sync: false`: Render asks for them when the Blueprint is
+# created and never reads them from the repo. See README "Deploy".
+services:
+    - type: web
+      name: backlog-zero
+      runtime: docker
+      plan: free
+      region: frankfurt # same region as the Neon database (eu-central-1)
+      dockerfilePath: ./Dockerfile
+      healthCheckPath: /up
+      # Only deploy commits whose GitHub checks (the tests workflow) passed.
+      autoDeployTrigger: checksPass
+      envVars:
+          - key: APP_NAME
+            value: Backlog Zero
+          - key: APP_ENV
+            value: production
+          - key: APP_DEBUG
+            value: 'false'
+          - key: APP_KEY
+            sync: false
+          - key: APP_URL
+            sync: false
+          - key: APP_LOCALE
+            value: es
+          - key: APP_FALLBACK_LOCALE
+            value: en
+          - key: LOG_CHANNEL
+            value: stderr
+          - key: LOG_LEVEL
+            value: info
+          - key: DB_CONNECTION
+            value: pgsql
+          - key: DB_URL
+            sync: false
+          - key: SESSION_DRIVER
+            value: database
+          - key: SESSION_SECURE_COOKIE
+            value: 'true'
+          - key: CACHE_STORE
+            value: database
+          - key: QUEUE_CONNECTION
+            value: database
+          - key: MAIL_MAILER
+            value: log
+          - key: AUTH_SOCIAL_PROVIDERS
+            value: google
+          - key: GOOGLE_CLIENT_ID
+            sync: false
+          - key: GOOGLE_CLIENT_SECRET
+            sync: false
+          - key: IGDB_CLIENT_ID
+            sync: false
+          - key: IGDB_CLIENT_SECRET
+            sync: false

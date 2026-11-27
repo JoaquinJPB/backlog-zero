@@ -36,7 +36,7 @@ The project owner started it; **friends now contribute through GitHub**. These r
 | Tests         | Pest 5 (feature tests per endpoint, unit tests for pure domain logic)                                                     |
 | Quality       | Pint, Larastan level 7, vite-plus `vp check` (oxlint + oxfmt; replaces ESLint/Prettier), `tsc`                            |
 | CI            | `.github/workflows/tests.yml` on every push/PR, with a Postgres 18 service                                                |
-| Deploy        | Not decided (Laravel Cloud, or a VPS with Forge/Coolify)                                                                  |
+| Deploy        | Render free web service (Docker: `Dockerfile`, `render.yaml`) + Neon free Postgres. Setup in README "Deploy"              |
 
 ## Architecture rules
 
@@ -112,3 +112,6 @@ sail npm run types:check   # tsc --noEmit (run a build or `sail artisan wayfinde
 - Faker's `words()` is typed `array|string`; use `sentence()` in factories to keep Larastan happy.
 - Routes: `games/search` is declared before `games/{game}`; the slug `search` is reserved by `UpsertGameAction`.
 - `vp check` formats `*.md` and fixtures too: run `sail npm run check:fix` before committing docs.
+- Production = one container (`Dockerfile`): FrankenPHP + `queue:work` + `schedule:work` under supervisord. `docker/start.sh` runs `migrate --force` on every boot, so **migrations must be backward compatible** (the old version keeps serving during a deploy). Free plan sleeps after ~15 min idle (worker/scheduler sleep too); an external ping to `/up` keeps it awake.
+- `trustProxies(at: '*')` in `bootstrap/app.php` is needed behind Render's proxy (https URLs, OAuth callback). Sign-up is limited by the Google OAuth consent screen being in _Testing_ with friends as test users; there is no allowlist in code.
+- Any new env var used in production must be added to `render.yaml` (`sync: false` for secrets) and the README table.
