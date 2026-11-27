@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Domain\Users\Models\User;
 
 return [
 
@@ -113,5 +113,20 @@ return [
     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Social Login Providers
+    |--------------------------------------------------------------------------
+    |
+    | Socialite drivers users can sign in with. There are no passwords: adding
+    | a provider (e.g. discord, twitch) means installing its Socialite driver,
+    | adding its credentials to config/services.php and listing it here.
+    |
+    */
+
+    'social_providers' => array_values(array_filter(
+        explode(',', (string) env('AUTH_SOCIAL_PROVIDERS', 'google')),
+    )),
 
 ];
