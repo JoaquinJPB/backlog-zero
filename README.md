@@ -130,7 +130,7 @@ Logs: Render dashboard → service → _Logs_ (everything goes to stderr).
 docker build -t backlog-zero:prod .
 ```
 
-To run it you need a database it can reach and a throwaway `APP_KEY`; pass the same variables as in `render.yaml` with `-e` and publish port 10000.
+To run it you need a database it can reach and a throwaway `APP_KEY`; pass the same variables as in `render.yaml` with `-e` and publish port 10000. Add `--cap-drop=ALL --security-opt no-new-privileges` to mimic Render's restrictions (Docker's defaults are more permissive and hid an `EPERM` on the first deploy).
 
 ## How this project was bootstrapped
 
