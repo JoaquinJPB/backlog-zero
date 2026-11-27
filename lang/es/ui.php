@@ -54,6 +54,15 @@ return [
 
     'library' => [
         'nav' => 'Mi biblioteca',
+        'title' => 'Mi biblioteca',
+        'all' => 'Todos',
+        'empty' => 'Todavía no hay juegos aquí. Busca uno y añádelo desde su página.',
+        'started' => 'Empezado: :date',
+        'finished' => 'Terminado: :date',
+        'abandoned' => 'Abandonado: :date',
+        'previous_page' => 'Anterior',
+        'next_page' => 'Siguiente',
+        'page_of' => 'Página :current de :last',
         'section_title' => 'En tu biblioteca',
         'add' => 'Añadir a mi biblioteca',
         'save' => 'Guardar',

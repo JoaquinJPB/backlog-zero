@@ -3,6 +3,7 @@ import { useTranslation } from '@/lib/i18n';
 import { logout } from '@/routes';
 import { redirect as providerRedirect } from '@/routes/auth';
 import { search } from '@/routes/games';
+import { index as libraryIndex } from '@/routes/library';
 import { profile } from '@/routes/settings';
 
 const buttonClass =
@@ -35,6 +36,9 @@ export default function AuthControls() {
         <>
             <Link href={search()} className="text-sm hover:underline">
                 {t('games.search.nav')}
+            </Link>
+            <Link href={libraryIndex()} className="text-sm hover:underline">
+                {t('library.nav')}
             </Link>
             <Link
                 href={profile()}
