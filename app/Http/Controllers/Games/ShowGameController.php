@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Games;
 
+use App\Domain\Games\Jobs\RefreshGameJob;
 use App\Domain\Games\Models\Game;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Games\GameResource;
@@ -16,6 +17,11 @@ class ShowGameController extends Controller
 {
     public function __invoke(Request $request, Game $game): Response
     {
+        if ($game->isStale()) {
+            // Serve what we have now; the queue updates it in the background.
+            RefreshGameJob::dispatch($game);
+        }
+
         $game->loadMissing(['platforms', 'genres']);
 
         return Inertia::render('games/show', [

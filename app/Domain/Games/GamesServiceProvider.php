@@ -2,9 +2,11 @@
 
 namespace App\Domain\Games;
 
+use App\Domain\Games\Console\RefreshStaleGamesCommand;
 use App\Domain\Games\Contracts\GameCatalog;
 use App\Domain\Games\Igdb\IgdbClient;
 use App\Domain\Games\Igdb\IgdbGameCatalog;
+use App\Domain\Games\Jobs\RefreshGameJob;
 use Illuminate\Cache\RateLimiter as CacheRateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Cache\Repository as Cache;
@@ -16,6 +18,8 @@ use Illuminate\Support\ServiceProvider;
 class GamesServiceProvider extends ServiceProvider
 {
     private const SEARCHES_PER_MINUTE = 30;
+
+    private const BACKGROUND_REQUESTS_PER_SECOND = 2;
 
     public function register(): void
     {
@@ -41,6 +45,14 @@ class GamesServiceProvider extends ServiceProvider
         // Each search can spend IGDB quota, so cap it per user.
         RateLimiter::for('game-search', fn (Request $request): Limit => Limit::perMinute(self::SEARCHES_PER_MINUTE)
             ->by((string) ($request->user()?->getAuthIdentifier() ?? $request->ip())));
+
+        // Queue throttling for background refreshes: half of IGDB's 4 req/s,
+        // leaving the rest for interactive searches.
+        RateLimiter::for(RefreshGameJob::RATE_LIMITER, fn (): Limit => Limit::perSecond(self::BACKGROUND_REQUESTS_PER_SECOND));
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([RefreshStaleGamesCommand::class]);
+        }
     }
 
     private function stringOrNull(mixed $value): ?string
