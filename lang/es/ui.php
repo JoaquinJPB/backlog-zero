@@ -22,6 +22,15 @@ return [
         'email_taken' => 'Ya existe una cuenta con ese email, creada con otro método de acceso. Entra con el método que usaste la primera vez.',
     ],
 
+    'onboarding' => [
+        'title' => 'Elige tu nombre de usuario',
+        'intro' => 'Será tu dirección pública en Backlog Zero, así que elige uno que te guste: :url',
+        'label' => 'Nombre de usuario',
+        'hint' => 'Entre :min y :max caracteres: letras minúsculas, números y guiones bajos.',
+        'submit' => 'Continuar',
+        'done' => '¡Listo, @:username! Ya puedes empezar a apuntar juegos.',
+    ],
+
     'providers' => [
         'google' => 'Google',
     ],
