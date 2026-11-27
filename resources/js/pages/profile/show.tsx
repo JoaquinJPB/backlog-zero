@@ -1,11 +1,17 @@
 import { Head, Link } from '@inertiajs/react';
+import { Avatar } from '@/components/app-nav';
 import AppLayout from '@/components/app-layout';
-import GameCover from '@/components/game-cover';
+import GameRow from '@/components/game-row';
+import { LogOutIcon, SettingsIcon } from '@/components/icons';
 import PaginationNav from '@/components/pagination-nav';
 import type { Pagination } from '@/components/pagination-nav';
+import { starsDecimal, starsFraction } from '@/components/score';
 import { StarRatingDisplay } from '@/components/star-rating';
 import { useTranslation } from '@/lib/i18n';
-import { show as gameShow } from '@/routes/games';
+import { STATUS_INK } from '@/lib/status';
+import { buttonClass } from '@/lib/ui';
+import { cn } from '@/lib/utils';
+import { logout } from '@/routes';
 import { index as journalIndex } from '@/routes/journal';
 import { profile as settingsProfile } from '@/routes/settings';
 import type { LibraryEntry } from '@/types/library';
@@ -47,12 +53,9 @@ interface ProfilePageProps {
     pagination: Pagination;
 }
 
-const cardClass =
-    'rounded-lg border border-stone-200 p-4 dark:border-stone-800';
-
-function stars(rating: number): string {
-    return (rating / 2).toLocaleString('es-ES', { maximumFractionDigits: 1 });
-}
+/** Ruled section: the profile has no boxes, only rules, like the journal. */
+const sectionClass = 'border-t border-rule pt-4';
+const sectionTitleClass = 'font-label text-sm text-ink-muted';
 
 export default function ProfilePage({
     profile,
@@ -66,133 +69,192 @@ export default function ProfilePage({
         <AppLayout>
             <Head title={`${profile.name} (@${profile.username})`} />
 
-            <header className="flex flex-wrap items-center gap-4">
-                {profile.avatar_url !== null && (
-                    <img
-                        src={profile.avatar_url}
-                        alt=""
-                        referrerPolicy="no-referrer"
-                        className="size-16 rounded-full"
-                    />
-                )}
+            <header className="flex flex-wrap items-center gap-x-5 gap-y-4">
+                <Avatar
+                    url={profile.avatar_url}
+                    name={profile.name}
+                    className="size-16 shrink-0 text-2xl ring-2 ring-gold/60 sm:size-20"
+                />
                 <div className="min-w-0 flex-1">
-                    <h1 className="text-2xl font-semibold tracking-tight">
+                    <h1 className="line-clamp-2 font-marquee text-3xl break-words sm:text-4xl">
                         {profile.name}
                     </h1>
-                    <p className="text-stone-500">@{profile.username}</p>
+                    <p className="mt-1 font-score text-base text-gold">
+                        @{profile.username}
+                    </p>
                 </div>
-                <Link
-                    href={settingsProfile()}
-                    className="rounded-md border border-stone-300 px-3 py-1.5 text-sm font-medium hover:bg-stone-100 dark:border-stone-700 dark:hover:bg-stone-800"
-                >
-                    {t('profile.edit')}
-                </Link>
+                <div className="flex w-full gap-2 sm:w-auto">
+                    <Link
+                        href={settingsProfile()}
+                        className={buttonClass(
+                            'secondary',
+                            'sm',
+                            'flex-1 sm:flex-none',
+                        )}
+                    >
+                        <SettingsIcon className="size-4" />
+                        {t('profile.edit')}
+                    </Link>
+                    <Link
+                        href={logout()}
+                        as="button"
+                        className={buttonClass('ghost', 'sm', 'md:hidden')}
+                    >
+                        <LogOutIcon className="size-4" />
+                        {t('auth.logout')}
+                    </Link>
+                </div>
             </header>
-            <p className="mt-2 text-sm text-stone-500">
+            <p className="mt-3 text-sm text-ink-faint">
                 {t('profile.private_note')}
             </p>
 
-            <StatTiles stats={stats} />
+            <Scoreboard stats={stats} />
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-                <RatingHistogram histogram={stats.rating_histogram} />
-                <FinishedPerYear years={stats.finished_per_year} />
-                <RankedList
-                    title={t('profile.top_platforms')}
-                    items={stats.top_platforms}
+            <div className="mt-12 grid gap-x-14 gap-y-10 lg:grid-cols-[1.15fr_1fr]">
+                <RatingHistogram
+                    histogram={stats.rating_histogram}
+                    average={stats.average_rating}
                 />
-                <RankedList
-                    title={t('profile.top_genres')}
-                    items={stats.top_genres}
-                />
+                <div className="grid content-start gap-y-10">
+                    <FinishedPerYear years={stats.finished_per_year} />
+                    <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-1">
+                        <RankedList
+                            title={t('profile.top_platforms')}
+                            items={stats.top_platforms}
+                        />
+                        <RankedList
+                            title={t('profile.top_genres')}
+                            items={stats.top_genres}
+                        />
+                    </div>
+                </div>
             </div>
 
-            <h2 className="mt-10 text-lg font-semibold">
-                {t('profile.games_title')}
-            </h2>
-            {games.length === 0 ? (
-                <p className="mt-4 text-stone-600 dark:text-stone-400">
-                    {t('profile.games_empty')}
-                </p>
-            ) : (
-                <ul className="mt-4 grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
-                    {games.map((entry) => (
-                        <GameTile key={entry.id} entry={entry} />
-                    ))}
-                </ul>
-            )}
-            <PaginationNav pagination={pagination} />
+            <section className={cn(sectionClass, 'mt-14')}>
+                <h2 className={sectionTitleClass}>
+                    {t('profile.games_title')}
+                </h2>
+                {games.length === 0 ? (
+                    <p className="mt-4 rounded-xl border border-dashed border-rule-strong px-6 py-10 text-center text-ink-muted">
+                        {t('profile.games_empty')}
+                    </p>
+                ) : (
+                    <ul className="mt-2">
+                        {games.map((entry) => (
+                            <GameRow key={entry.id} entry={entry} />
+                        ))}
+                    </ul>
+                )}
+                <PaginationNav pagination={pagination} />
+            </section>
         </AppLayout>
     );
 }
 
-function StatTiles({ stats }: { stats: ProfileStats }) {
+/** The counts as ruled figures, each in its status ink. */
+function Scoreboard({ stats }: { stats: ProfileStats }) {
     const { t } = useTranslation();
     const { counts } = stats;
-    const tiles: { label: string; value: number }[] = [
-        { label: t('profile.counts.library'), value: counts.library },
-        { label: t('profile.counts.finished'), value: counts.finished },
+    const cells: { label: string; value: number; ink: string }[] = [
+        {
+            label: t('profile.counts.finished'),
+            value: counts.finished,
+            ink: STATUS_INK.finished.text,
+        },
         {
             label: t('profile.counts.finished_this_year', {
                 year: stats.current_year,
             }),
             value: counts.finished_this_year,
+            ink: STATUS_INK.finished.text,
         },
-        { label: t('profile.counts.playing'), value: counts.playing },
-        { label: t('profile.counts.backlog'), value: counts.backlog },
-        { label: t('profile.counts.abandoned'), value: counts.abandoned },
+        {
+            label: t('profile.counts.playing'),
+            value: counts.playing,
+            ink: STATUS_INK.playing.text,
+        },
+        {
+            label: t('profile.counts.backlog'),
+            value: counts.backlog,
+            ink: STATUS_INK.backlog.text,
+        },
+        {
+            label: t('profile.counts.abandoned'),
+            value: counts.abandoned,
+            ink: STATUS_INK.abandoned.text,
+        },
+        {
+            label: t('profile.counts.library'),
+            value: counts.library,
+            ink: 'text-ink',
+        },
     ];
 
     return (
-        <dl className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {tiles.map((tile) => (
-                <div key={tile.label} className={cardClass}>
-                    <dt className="text-sm text-stone-500">{tile.label}</dt>
-                    <dd className="mt-1 text-2xl font-semibold tabular-nums">
-                        {tile.value}
+        <dl className="mt-8 grid grid-cols-2 gap-x-6 sm:grid-cols-3 lg:grid-cols-6">
+            {cells.map((cell) => (
+                <div
+                    key={cell.label}
+                    className="flex flex-col border-t border-rule pt-3 pb-5"
+                >
+                    <dt className="order-2 mt-1.5 text-sm text-ink-muted">
+                        {cell.label}
+                    </dt>
+                    <dd
+                        className={cn(
+                            'order-1 font-score text-5xl lg:text-6xl',
+                            cell.value === 0 ? 'text-ink-faint' : cell.ink,
+                        )}
+                    >
+                        {cell.value}
                     </dd>
                 </div>
             ))}
-            <div className={`${cardClass} col-span-2`}>
-                <dt className="text-sm text-stone-500">
-                    {t('profile.average_rating')}
-                </dt>
-                <dd className="mt-1 flex items-center gap-3">
-                    {stats.average_rating === null ? (
-                        <span className="text-stone-500">
-                            {t('profile.no_ratings')}
-                        </span>
-                    ) : (
-                        <>
-                            <span className="text-2xl font-semibold tabular-nums">
-                                {stars(stats.average_rating)}
-                            </span>
-                            <StarRatingDisplay
-                                rating={Math.round(stats.average_rating)}
-                            />
-                        </>
-                    )}
-                </dd>
-            </div>
         </dl>
     );
 }
 
-function RatingHistogram({ histogram }: { histogram: number[] }) {
+function RatingHistogram({
+    histogram,
+    average,
+}: {
+    histogram: number[];
+    average: number | null;
+}) {
     const { t, tc } = useTranslation();
     const rated = histogram.reduce((sum, count) => sum + count, 0);
     const max = Math.max(...histogram, 1);
 
     return (
-        <section className={cardClass}>
-            <h2 className="font-semibold">{t('profile.ratings_title')}</h2>
-            <p className="text-sm text-stone-500">
-                {tc('profile.rated_count', rated)}
-            </p>
-            <ol className="mt-4 flex h-32 items-end gap-0.5">
+        <section className={sectionClass}>
+            <h2 className={sectionTitleClass}>{t('profile.ratings_title')}</h2>
+            <div className="mt-3 flex flex-wrap items-end gap-x-4 gap-y-2">
+                {average === null ? (
+                    <p className="text-ink-muted">{t('profile.no_ratings')}</p>
+                ) : (
+                    <>
+                        <span className="font-score text-7xl text-gold sm:text-8xl">
+                            {starsDecimal(average)}
+                        </span>
+                        <span className="pb-2">
+                            <StarRatingDisplay
+                                rating={Math.round(average)}
+                                starClassName="size-5"
+                            />
+                            <span className="mt-1 block text-sm text-ink-muted">
+                                {t('profile.average_rating')} ·{' '}
+                                {tc('profile.rated_count', rated)}
+                            </span>
+                        </span>
+                    </>
+                )}
+            </div>
+
+            <ol className="mt-8 flex h-48 items-end gap-1 sm:gap-1.5">
                 {histogram.map((count, index) => {
                     const label = t('profile.rating_bar', {
-                        stars: stars(index + 1),
+                        stars: starsDecimal(index + 1),
                         count,
                     });
 
@@ -200,15 +262,24 @@ function RatingHistogram({ histogram }: { histogram: number[] }) {
                         <li
                             key={index}
                             title={label}
-                            className="flex h-full flex-1 flex-col justify-end"
+                            className="flex h-full flex-1 flex-col items-center justify-end gap-1.5"
                         >
                             <span className="sr-only">{label}</span>
                             <span
                                 aria-hidden="true"
-                                className="block rounded-t bg-amber-500"
+                                className="font-score text-xs text-ink-faint"
+                            >
+                                {count > 0 ? count : ''}
+                            </span>
+                            <span
+                                aria-hidden="true"
+                                className={cn(
+                                    'block w-full rounded-t-[3px]',
+                                    count > 0 ? 'bg-gold' : 'bg-rule',
+                                )}
                                 style={{
                                     height: `${(count / max) * 100}%`,
-                                    minHeight: count > 0 ? 4 : 0,
+                                    minHeight: 3,
                                 }}
                             />
                         </li>
@@ -217,10 +288,16 @@ function RatingHistogram({ histogram }: { histogram: number[] }) {
             </ol>
             <div
                 aria-hidden="true"
-                className="mt-1 flex justify-between border-t border-stone-200 pt-1 text-xs text-stone-500 dark:border-stone-800"
+                className="mt-2 flex gap-1 border-t border-rule pt-2 sm:gap-1.5"
             >
-                <span>½★</span>
-                <span>5★</span>
+                {histogram.map((_, index) => (
+                    <span
+                        key={index}
+                        className="flex-1 text-center font-score text-[11px] text-ink-faint"
+                    >
+                        {starsFraction(index + 1)}
+                    </span>
+                ))}
             </div>
         </section>
     );
@@ -232,27 +309,38 @@ function FinishedPerYear({
     years: ProfileStats['finished_per_year'];
 }) {
     const { t, tc } = useTranslation();
+    const max = Math.max(...years.map((row) => row.count), 1);
 
     return (
-        <section className={cardClass}>
-            <h2 className="font-semibold">{t('profile.per_year_title')}</h2>
+        <section className={sectionClass}>
+            <h2 className={sectionTitleClass}>{t('profile.per_year_title')}</h2>
             {years.length === 0 ? (
-                <p className="mt-2 text-sm text-stone-500">
+                <p className="mt-3 text-sm text-ink-muted">
                     {t('profile.nothing_yet')}
                 </p>
             ) : (
-                <ul className="mt-2 divide-y divide-stone-200 dark:divide-stone-800">
+                <ul className="mt-3 space-y-1">
                     {years.map((row) => (
                         <li key={row.year}>
                             <Link
                                 href={journalIndex({
                                     query: { year: row.year },
                                 })}
-                                className="flex justify-between py-1.5 hover:underline"
+                                className="group -mx-2 grid grid-cols-[3.5rem_1fr_auto] items-center gap-3 rounded-md px-2 py-1.5 transition-colors hover:bg-cabinet-raised"
+                                aria-label={`${row.year}: ${tc('profile.game_count', row.count)}`}
                             >
-                                <span>{row.year}</span>
-                                <span className="text-stone-500 tabular-nums">
-                                    {tc('profile.game_count', row.count)}
+                                <span className="font-score text-lg text-ink group-hover:text-gold">
+                                    {row.year}
+                                </span>
+                                <span
+                                    aria-hidden="true"
+                                    className="h-2 rounded-full bg-gold/80 transition-colors group-hover:bg-gold"
+                                    style={{
+                                        width: `${(row.count / max) * 100}%`,
+                                    }}
+                                />
+                                <span className="font-score text-lg text-gold">
+                                    {row.count}
                                 </span>
                             </Link>
                         </li>
@@ -268,25 +356,43 @@ function RankedList({ title, items }: { title: string; items: RankedItem[] }) {
     const max = Math.max(...items.map((item) => item.count), 1);
 
     return (
-        <section className={cardClass}>
-            <h2 className="font-semibold">{title}</h2>
+        <section className={sectionClass}>
+            <h2 className={sectionTitleClass}>{title}</h2>
             {items.length === 0 ? (
-                <p className="mt-2 text-sm text-stone-500">
+                <p className="mt-3 text-sm text-ink-muted">
                     {t('profile.nothing_yet')}
                 </p>
             ) : (
-                <ol className="mt-2 space-y-2">
-                    {items.map((item) => (
-                        <li key={item.id}>
+                <ol className="mt-3 space-y-3">
+                    {items.map((item, index) => (
+                        <li
+                            key={item.id}
+                            className="grid grid-cols-[2rem_1fr] gap-x-2"
+                        >
+                            <span
+                                className={cn(
+                                    'row-span-2 font-score text-lg',
+                                    index === 0
+                                        ? 'text-gold'
+                                        : 'text-ink-faint',
+                                )}
+                            >
+                                {index + 1}º
+                            </span>
                             <div className="flex justify-between gap-2 text-sm">
-                                <span className="truncate">{item.name}</span>
-                                <span className="shrink-0 text-stone-500 tabular-nums">
+                                <span className="truncate font-semibold">
+                                    {item.name}
+                                </span>
+                                <span className="shrink-0 text-ink-muted">
                                     {tc('profile.game_count', item.count)}
                                 </span>
                             </div>
                             <div
                                 aria-hidden="true"
-                                className="mt-1 h-1.5 rounded-full bg-amber-500"
+                                className={cn(
+                                    'mt-1.5 h-1.5 rounded-full',
+                                    index === 0 ? 'bg-gold' : 'bg-rule-strong',
+                                )}
                                 style={{
                                     width: `${(item.count / max) * 100}%`,
                                 }}
@@ -296,33 +402,5 @@ function RankedList({ title, items }: { title: string; items: RankedItem[] }) {
                 </ol>
             )}
         </section>
-    );
-}
-
-function GameTile({ entry }: { entry: LibraryEntry }) {
-    const { t } = useTranslation();
-
-    if (entry.game === undefined) {
-        return null;
-    }
-
-    return (
-        <li>
-            <Link href={gameShow(entry.game.slug)} className="group block">
-                <GameCover
-                    imageId={entry.game.cover_image_id}
-                    name={entry.game.name}
-                    size="big"
-                    className="aspect-[264/374] h-auto w-full group-hover:opacity-80"
-                />
-                <p className="mt-1 truncate text-sm font-medium">
-                    {entry.game.name}
-                </p>
-                <p className="text-xs text-stone-500">
-                    {t(`library.statuses.${entry.status}`)}
-                    {entry.rating !== null && ` · ${stars(entry.rating)}★`}
-                </p>
-            </Link>
-        </li>
     );
 }

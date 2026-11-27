@@ -4,6 +4,8 @@ import { store } from '@/actions/App/Http/Controllers/Onboarding/UsernameControl
 import AppLayout from '@/components/app-layout';
 import UsernameField from '@/components/username-field';
 import { useTranslation } from '@/lib/i18n';
+import { buttonClass, panelClass } from '@/lib/ui';
+import { cn } from '@/lib/utils';
 
 interface UsernameRules {
     min: number;
@@ -28,34 +30,36 @@ export default function ChooseUsername({
     }
 
     return (
-        <AppLayout>
+        <AppLayout width="narrow">
             <Head title={t('onboarding.title')} />
-            <section className="mx-auto max-w-md">
-                <h1 className="text-2xl font-semibold tracking-tight">
-                    {t('onboarding.title')}
-                </h1>
-                <p className="mt-2 text-stone-600 dark:text-stone-400">
-                    {t('onboarding.intro', {
-                        url: `/u/${form.data.username || '…'}`,
-                    })}
-                </p>
+            <h1 className="font-marquee text-4xl leading-tight">
+                {t('onboarding.title')}
+            </h1>
+            <p className="mt-3 text-ink-muted">
+                {t('onboarding.intro', { url: '' })}
+                <span className="font-score text-gold">
+                    /u/{form.data.username || '…'}
+                </span>
+            </p>
 
-                <form onSubmit={submit} className="mt-8 space-y-6">
-                    <UsernameField
-                        value={form.data.username}
-                        onChange={(value) => form.setData('username', value)}
-                        error={form.errors.username}
-                        rules={rules}
-                    />
-                    <button
-                        type="submit"
-                        disabled={form.processing}
-                        className="w-full rounded-md bg-stone-900 px-4 py-2 font-medium text-white hover:bg-stone-700 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-300"
-                    >
-                        {t('onboarding.submit')}
-                    </button>
-                </form>
-            </section>
+            <form
+                onSubmit={submit}
+                className={cn(panelClass, 'mt-8 space-y-6 p-5 sm:p-6')}
+            >
+                <UsernameField
+                    value={form.data.username}
+                    onChange={(value) => form.setData('username', value)}
+                    error={form.errors.username}
+                    rules={rules}
+                />
+                <button
+                    type="submit"
+                    disabled={form.processing}
+                    className={buttonClass('primary', 'md', 'w-full')}
+                >
+                    {t('onboarding.submit')}
+                </button>
+            </form>
         </AppLayout>
     );
 }

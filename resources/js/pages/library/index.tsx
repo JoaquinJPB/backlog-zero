@@ -1,12 +1,14 @@
 import { Head, Link } from '@inertiajs/react';
 import AppLayout from '@/components/app-layout';
-import GameCover from '@/components/game-cover';
+import GameRow from '@/components/game-row';
+import { LibraryIcon, SearchIcon } from '@/components/icons';
 import PaginationNav from '@/components/pagination-nav';
 import type { Pagination } from '@/components/pagination-nav';
-import { StarRatingDisplay } from '@/components/star-rating';
 import { useTranslation } from '@/lib/i18n';
+import { STATUS_INK } from '@/lib/status';
+import { buttonClass, pillClass } from '@/lib/ui';
 import { cn } from '@/lib/utils';
-import { show } from '@/routes/games';
+import { search } from '@/routes/games';
 import { index } from '@/routes/library';
 import type { GameStatus, LibraryEntry } from '@/types/library';
 import { GAME_STATUSES } from '@/types/library';
@@ -16,13 +18,6 @@ interface LibraryPageProps {
     counts: Record<GameStatus | 'all', number>;
     entries: LibraryEntry[];
     pagination: Pagination;
-}
-
-function formatDate(date: string): string {
-    return new Date(`${date}T00:00:00Z`).toLocaleDateString('es-ES', {
-        dateStyle: 'medium',
-        timeZone: 'UTC',
-    });
 }
 
 export default function LibraryPage({
@@ -44,43 +39,57 @@ export default function LibraryPage({
     return (
         <AppLayout>
             <Head title={t('library.title')} />
-            <h1 className="text-2xl font-semibold tracking-tight">
-                {t('library.title')}
-            </h1>
+            <header className="flex items-baseline justify-between gap-4">
+                <h1 className="font-marquee text-[1.7rem] leading-tight sm:text-5xl">
+                    {t('library.title')}
+                </h1>
+                <span className="font-score text-3xl text-ink-faint sm:text-5xl">
+                    {counts.all}
+                </span>
+            </header>
 
             <nav
-                className="mt-6 flex flex-wrap gap-2"
+                className="-mx-4 mt-6 flex [scrollbar-width:none] gap-2 overflow-x-auto border-b border-rule px-4 pb-5 sm:mx-0 sm:flex-wrap sm:px-0"
                 aria-label={t('library.status_label')}
             >
-                {tabs.map((tab) => (
-                    <Link
-                        key={tab.key ?? 'all'}
-                        href={index({
-                            query: tab.key === null ? {} : { status: tab.key },
-                        })}
-                        aria-current={tab.key === status ? 'page' : undefined}
-                        preserveScroll
-                        className={cn(
-                            'rounded-full border px-3 py-1 text-sm',
-                            tab.key === status
-                                ? 'border-stone-900 bg-stone-900 text-white dark:border-stone-100 dark:bg-stone-100 dark:text-stone-900'
-                                : 'border-stone-300 hover:bg-stone-100 dark:border-stone-700 dark:hover:bg-stone-800',
-                        )}
-                    >
-                        {tab.label}{' '}
-                        <span className="opacity-60">{tab.count}</span>
-                    </Link>
-                ))}
+                {tabs.map((tab) => {
+                    const current = tab.key === status;
+
+                    return (
+                        <Link
+                            key={tab.key ?? 'all'}
+                            href={index({
+                                query:
+                                    tab.key === null ? {} : { status: tab.key },
+                            })}
+                            aria-current={current ? 'page' : undefined}
+                            preserveScroll
+                            className={pillClass(current)}
+                        >
+                            {tab.key !== null && (
+                                <span
+                                    aria-hidden="true"
+                                    className={cn(
+                                        'size-2 rounded-full',
+                                        STATUS_INK[tab.key].dot,
+                                    )}
+                                />
+                            )}
+                            {tab.label}
+                            <span className="font-score text-xs opacity-60">
+                                {tab.count}
+                            </span>
+                        </Link>
+                    );
+                })}
             </nav>
 
             {entries.length === 0 ? (
-                <p className="mt-10 text-stone-600 dark:text-stone-400">
-                    {t('library.empty')}
-                </p>
+                <LibraryEmpty />
             ) : (
-                <ul className="mt-6 divide-y divide-stone-200 dark:divide-stone-800">
+                <ul>
                     {entries.map((entry) => (
-                        <LibraryRow key={entry.id} entry={entry} />
+                        <GameRow key={entry.id} entry={entry} />
                     ))}
                 </ul>
             )}
@@ -90,63 +99,20 @@ export default function LibraryPage({
     );
 }
 
-function LibraryRow({ entry }: { entry: LibraryEntry }) {
+function LibraryEmpty() {
     const { t } = useTranslation();
 
-    if (entry.game === undefined) {
-        return null;
-    }
-
-    const endLabel =
-        entry.status === 'abandoned' ? 'library.abandoned' : 'library.finished';
-
     return (
-        <li>
+        <div className="mt-8 flex flex-col items-center rounded-xl border border-dashed border-rule-strong px-6 py-12 text-center">
+            <LibraryIcon className="size-9 text-ink-faint" />
+            <p className="mt-4 max-w-sm text-ink-muted">{t('library.empty')}</p>
             <Link
-                href={show(entry.game.slug)}
-                className="flex items-center gap-4 py-3 hover:bg-stone-100 dark:hover:bg-stone-900"
+                href={search()}
+                className={buttonClass('primary', 'md', 'mt-6')}
             >
-                <GameCover
-                    imageId={entry.game.cover_image_id}
-                    name={entry.game.name}
-                />
-                <div className="min-w-0 flex-1">
-                    <p className="font-medium">
-                        {entry.game.name}
-                        {entry.game.year !== null && (
-                            <span className="ml-1 font-normal text-stone-500">
-                                ({entry.game.year})
-                            </span>
-                        )}
-                    </p>
-                    <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-stone-500 dark:text-stone-400">
-                        <span className="rounded bg-stone-200 px-1.5 py-0.5 text-xs font-medium text-stone-700 dark:bg-stone-800 dark:text-stone-300">
-                            {t(`library.statuses.${entry.status}`)}
-                        </span>
-                        {entry.platform && <span>{entry.platform}</span>}
-                        {entry.started_on !== null && (
-                            <span>
-                                {t('library.started', {
-                                    date: formatDate(entry.started_on),
-                                })}
-                            </span>
-                        )}
-                        {entry.finished_on !== null && (
-                            <span>
-                                {t(endLabel, {
-                                    date: formatDate(entry.finished_on),
-                                })}
-                            </span>
-                        )}
-                    </p>
-                </div>
-                {entry.rating !== null && (
-                    <StarRatingDisplay
-                        rating={entry.rating}
-                        className="shrink-0"
-                    />
-                )}
+                <SearchIcon className="size-[18px]" />
+                {t('games.search.nav')}
             </Link>
-        </li>
+        </div>
     );
 }
