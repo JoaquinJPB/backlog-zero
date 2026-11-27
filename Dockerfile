@@ -47,7 +47,15 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/app.conf
 COPY docker/start.sh /usr/local/bin/start
 
 # Run as an unprivileged user; Render's port (10000) needs no extra capability.
-RUN useradd --create-home --uid 1000 app \
+# The base image grants frankenphp cap_net_bind_service (for ports 80/443).
+# Render runs containers with capabilities dropped, and the kernel then
+# refuses to exec a binary carrying that file capability (EPERM), so strip it.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libcap2-bin \
+    && setcap -r /usr/local/bin/frankenphp \
+    && apt-get purge -y libcap2-bin \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --create-home --uid 1000 app \
     && chown -R app:app /app/storage /app/bootstrap/cache /data/caddy /config/caddy \
     && chmod +x /usr/local/bin/start
 
