@@ -4,6 +4,7 @@ import GameCover from '@/components/game-cover';
 import { ExternalIcon } from '@/components/icons';
 import LibraryEntryForm from '@/components/library-entry-form';
 import Score from '@/components/score';
+import CompletedBadge from '@/components/completed-badge';
 import StatusBadge from '@/components/status-badge';
 import { igdbImageUrl } from '@/lib/igdb';
 import { useTranslation } from '@/lib/i18n';
@@ -123,6 +124,7 @@ function EntrySummary({ entry }: { entry: LibraryEntry }) {
     return (
         <div className="mt-4 flex flex-wrap items-center gap-4">
             <StatusBadge status={entry.status} />
+            {entry.completed && <CompletedBadge variant="pill" />}
             {entry.rating !== null && (
                 <Score
                     rating={entry.rating}

@@ -1,10 +1,12 @@
 import { router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import {
     destroy,
     store,
     update,
 } from '@/actions/App/Http/Controllers/Library/LibraryEntryController';
+import { TrophyIcon } from '@/components/icons';
 import Select from '@/components/select';
 import { StarRatingInput } from '@/components/star-rating';
 import { useTranslation } from '@/lib/i18n';
@@ -29,6 +31,7 @@ interface LibraryEntryFormProps {
 interface EntryFormData {
     status: GameStatus;
     rating: number | null;
+    completed: boolean;
     platform_id: number | null;
     started_on: string;
     finished_on: string;
@@ -51,6 +54,7 @@ export default function LibraryEntryForm({
     const form = useForm<EntryFormData>({
         status: entry?.status ?? 'backlog',
         rating: entry?.rating ?? null,
+        completed: entry?.completed ?? false,
         platform_id: entry?.platform_id ?? null,
         started_on: entry?.started_on ?? '',
         finished_on: entry?.finished_on ?? '',
@@ -61,6 +65,8 @@ export default function LibraryEntryForm({
         form.setData((data) => ({
             ...data,
             status,
+            // A backlog game can't be at 100% (the server rejects it too).
+            completed: status === 'backlog' ? false : data.completed,
             // Finishing pre-fills today; statuses without an end clear it.
             finished_on: allowsFinishDate(status)
                 ? data.finished_on || (status === 'finished' ? today() : '')
@@ -124,6 +130,18 @@ export default function LibraryEntryForm({
                 </div>
                 <FieldError message={form.errors.rating} />
             </div>
+
+            {form.data.status !== 'backlog' && (
+                <div className="animate-rise">
+                    <CompletedToggle
+                        checked={form.data.completed}
+                        onChange={(completed) =>
+                            form.setData('completed', completed)
+                        }
+                    />
+                    <FieldError message={form.errors.completed} />
+                </div>
+            )}
 
             {platforms.length > 0 && (
                 <div>
@@ -262,6 +280,64 @@ function StatusOption({
                 )}
             />
             {children}
+        </label>
+    );
+}
+
+interface CompletedToggleProps {
+    checked: boolean;
+    onChange: (checked: boolean) => void;
+}
+
+/**
+ * "100%": a checkbox dressed as a gold key. Off, the trophy is an outline;
+ * on, it fills with gold and pops (only when toggled, not on page load).
+ */
+function CompletedToggle({ checked, onChange }: CompletedToggleProps) {
+    const { t } = useTranslation();
+    const [pops, setPops] = useState(0);
+
+    return (
+        <label
+            className={cn(
+                'flex min-h-14 w-full cursor-pointer items-center gap-3.5 rounded-lg border px-4 py-2.5 transition-[background-color,border-color,color,transform] duration-150 ease-out select-none active:scale-[0.98] has-focus-visible:ring-2 has-focus-visible:ring-gold',
+                checked
+                    ? 'border-gold/45 bg-gold/12 text-ink'
+                    : 'border-rule-strong text-ink-muted hover:border-ink-faint hover:text-ink',
+            )}
+        >
+            <input
+                type="checkbox"
+                name="completed"
+                checked={checked}
+                onChange={(event) => {
+                    onChange(event.target.checked);
+                    setPops((count) => count + 1);
+                }}
+                className="sr-only"
+            />
+            <TrophyIcon
+                key={pops}
+                filled={checked}
+                className={cn(
+                    'size-7 shrink-0 transition-colors duration-150',
+                    checked ? 'text-gold' : 'text-ink-faint',
+                    checked && pops > 0 && 'animate-trophy-pop',
+                )}
+            />
+            <span className="flex flex-col">
+                <span className="text-sm font-semibold">
+                    {t('library.completed_toggle')}
+                </span>
+                <span
+                    className={cn(
+                        'text-sm',
+                        checked ? 'text-gold-pale' : 'text-ink-muted',
+                    )}
+                >
+                    {t('library.completed_hint')}
+                </span>
+            </span>
         </label>
     );
 }

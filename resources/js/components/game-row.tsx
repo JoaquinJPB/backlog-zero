@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import AbandonedStamp, {
     abandonedTitleClass,
 } from '@/components/abandoned-stamp';
+import CompletedBadge from '@/components/completed-badge';
 import GameCover from '@/components/game-cover';
 import Score from '@/components/score';
 import StatusBadge from '@/components/status-badge';
@@ -40,19 +41,24 @@ export default function GameRow({ entry }: { entry: LibraryEntry }) {
                     )}
                 />
                 <div className="min-w-0 flex-1">
-                    <p
-                        className={cn(
-                            'line-clamp-2 leading-snug font-semibold sm:line-clamp-1 sm:text-[17px]',
-                            abandoned && abandonedTitleClass,
+                    <div className="flex items-start gap-2">
+                        <p
+                            className={cn(
+                                'line-clamp-2 min-w-0 leading-snug font-semibold sm:line-clamp-1 sm:text-[17px]',
+                                abandoned && abandonedTitleClass,
+                            )}
+                        >
+                            {entry.game.name}
+                            {entry.game.year !== null && (
+                                <span className="ml-2 font-score text-sm font-normal text-ink-faint no-underline">
+                                    {entry.game.year}
+                                </span>
+                            )}
+                        </p>
+                        {entry.completed && (
+                            <CompletedBadge className="mt-px shrink-0 sm:mt-0.5" />
                         )}
-                    >
-                        {entry.game.name}
-                        {entry.game.year !== null && (
-                            <span className="ml-2 font-score text-sm font-normal text-ink-faint no-underline">
-                                {entry.game.year}
-                            </span>
-                        )}
-                    </p>
+                    </div>
                     <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-ink-muted">
                         {!abandoned && <StatusBadge status={entry.status} />}
                         {entry.platform && (

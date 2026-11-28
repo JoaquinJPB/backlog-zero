@@ -1,4 +1,5 @@
 import type { ReactNode, SVGProps } from 'react';
+import { cn } from '@/lib/utils';
 
 // One stroke icon set for the whole app: 24px grid, 1.75 stroke, round caps.
 type IconProps = SVGProps<SVGSVGElement>;
@@ -133,6 +134,34 @@ export function AlertIcon(props: IconProps) {
         <Icon {...props}>
             <path d="M12 3.5 21.5 20h-19z" />
             <path d="M12 10v4M12 17.2v.1" />
+        </Icon>
+    );
+}
+
+/**
+ * A trophy: the 100% mark. `filled` floods the cup and foot with the
+ * current colour (transitionable), the outline stays the same.
+ */
+export function TrophyIcon({
+    filled = false,
+    ...props
+}: IconProps & { filled?: boolean }) {
+    const fill = cn(
+        'transition-[fill] duration-200 ease-out',
+        filled ? 'fill-current' : 'fill-transparent',
+    );
+
+    return (
+        <Icon {...props}>
+            <path d="M7.5 6H5.25a.75.75 0 0 0-.75.75v.5a3.5 3.5 0 0 0 3.4 3.5" />
+            <path d="M16.5 6h2.25a.75.75 0 0 1 .75.75v.5a3.5 3.5 0 0 1-3.4 3.5" />
+            <path className={fill} d="M7.5 4h9v5a4.5 4.5 0 0 1-9 0z" />
+            <path d="M12 13.5V17" />
+            <path
+                className={fill}
+                d="M9.25 20.5c0-1.95 1.2-3.5 2.75-3.5s2.75 1.55 2.75 3.5z"
+            />
+            <path d="M8 20.5h8" />
         </Icon>
     );
 }

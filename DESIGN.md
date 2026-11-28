@@ -206,10 +206,10 @@ A violet-black cabinet with violet-tinted inks, lit by four status inks that eac
 
 ### Primary
 
-- **Marquee Gold** (#ffcf40): finished games, every score of a finished game, the primary button, the current-nav indicator, the header rule (at 55%), focus outlines, caret, selection and form accent. Gold is the app's voice.
+- **Marquee Gold** (#ffcf40): finished games, every score of a finished game, the primary button, the current-nav indicator, the header rule (at 55%), focus outlines, caret, selection, form accent and the 100% trophy. Gold is the app's voice.
 - **Hot Gold** (#ffd95f): primary button hover only.
 - **Deep Gold** (#e0ac12): declared in the theme as the darker step of gold; reserved, currently unused in components.
-- **Pale Gold** (#ffe7a0): text of gold-tinted notices (success flash, search notice, settings warning) on a 10% gold wash.
+- **Pale Gold** (#ffe7a0): text of gold-tinted notices (success flash, search notice, settings warning) on a 10% gold wash, and the hint of the checked 100% key.
 
 ### Secondary
 
@@ -234,7 +234,7 @@ A violet-black cabinet with violet-tinted inks, lit by four status inks that eac
 
 ### Named Rules
 
-**The One Ink, One Job Rule.** Each status owns exactly one ink, mapped once in `resources/js/lib/status.ts` (text, 12% background, 45% border, solid dot). Never colour a status any other way, and never use a status ink for something that is not that status, except gold, which also carries primary action and focus.
+**The One Ink, One Job Rule.** Each status owns exactly one ink, mapped once in `resources/js/lib/status.ts` (text, 12% background, 45% border, solid dot). Never colour a status any other way, and never use a status ink for something that is not that status, except gold, which also carries primary action, focus and the 100% trophy (whatever the game's status).
 
 **The Cyan Is Playing Rule.** Cyan appears only where a game is currently being played. No links, info states, charts or highlights in cyan.
 
@@ -356,6 +356,10 @@ Built with `buttonClass(variant, size)` from `resources/js/lib/ui.ts`; never res
 
 `StarRatingInput`: five gold stars (36–40px) overlaid by ten invisible radio halves, so taps hit a left or right half and arrow keys work. Beside it the chosen score in `font-score` 36px gold remounts on every change and plays `score-tick` (220ms ease-out-expo: from 0.18em lower, 92% scale and 40% opacity to rest). Empty stars sit at 45% opacity. A "Quitar" text button clears the rating.
 
+### The 100% Trophy
+
+"100%" (every achievement) is one drawn trophy (`TrophyIcon`, same stroke set) and the only trophy in the app. In the library form, `CompletedToggle` is a checkbox dressed as a key below the rating, hidden for backlog games: min 56px tall, 8px radius, a 28px trophy, "Completado al 100 %" over a "Todos los logros conseguidos" hint. Off: Strong Rule border, muted text, outlined trophy in Faint Ink. On: 45% gold border, 12% gold wash, ink title, Pale Gold hint, and the trophy fills with gold (200ms fill transition) and plays `trophy-pop` (220ms ease-out-expo: from 70% scale and -14° through 114% to rest), only when toggled, never on load. Press scales to 0.98; keyboard focus shows the 2px gold ring. Where entries are listed (library, profile, journal), a completed game carries an 18px filled gold trophy right after its title (an image role labelled "Completado al 100 %"); the game page shows it as a pill beside the status badge with "100 %" in `font-score`.
+
 ### Abandoned Row (signature)
 
 Abandoning never erases a game. The title is struck through in red (2px decoration) and drops to Muted Ink; the cover goes grayscale at 55% opacity; the score slot holds `AbandonedStamp`, a red 2px-bordered `font-label` stamp at 10px, rotated -3°, with a 3px radius.
@@ -386,7 +390,7 @@ Flash messages enter with `flash-in` (220ms, from 6px above). Success: 40% gold 
 
 - 150ms ease-out: colour, border and background transitions; button and key press (scale 0.97).
 - 200ms ease-out: cover lift on row hover, status-dot scale.
-- 220ms `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out-expo): `score-tick`, `rise` (6px up, for the finish-date field appearing), `flash-in` (6px down).
+- 220ms `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out-expo): `score-tick`, `rise` (6px up, for the finish-date field and the 100% key appearing), `flash-in` (6px down), `trophy-pop` (marking 100%).
 - Skeleton rows and the searching icon use the standard pulse.
 - **Reduced motion:** every animation and transition collapses to 1ms; the score tick alone survives as a 150ms opacity fade so a change is still acknowledged.
 
