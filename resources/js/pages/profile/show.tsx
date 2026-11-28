@@ -1,7 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import { Avatar } from '@/components/app-nav';
 import AppLayout from '@/components/app-layout';
-import GameRow from '@/components/game-row';
+import GameTile from '@/components/game-tile';
 import { LogOutIcon, SettingsIcon } from '@/components/icons';
 import PaginationNav from '@/components/pagination-nav';
 import type { Pagination } from '@/components/pagination-nav';
@@ -140,9 +140,9 @@ export default function ProfilePage({
                         {t('profile.games_empty')}
                     </p>
                 ) : (
-                    <ul className="mt-2">
+                    <ul className="mt-5 grid grid-cols-3 gap-x-3 gap-y-7 sm:grid-cols-4 sm:gap-x-5 md:grid-cols-5 lg:gap-x-6">
                         {games.map((entry) => (
-                            <GameRow key={entry.id} entry={entry} />
+                            <GameTile key={entry.id} entry={entry} />
                         ))}
                     </ul>
                 )}

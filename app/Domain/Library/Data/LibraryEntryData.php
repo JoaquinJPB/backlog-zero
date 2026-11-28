@@ -23,6 +23,7 @@ final readonly class LibraryEntryData
         public ?int $platformId = null,
         public ?CarbonImmutable $startedOn = null,
         public ?CarbonImmutable $finishedOn = null,
+        public bool $completed = false,
     ) {
         if ($rating !== null && ($rating < self::MIN_RATING || $rating > self::MAX_RATING)) {
             throw new InvalidArgumentException('Rating must be between 1 and 10.');
@@ -32,19 +33,24 @@ final readonly class LibraryEntryData
             throw new InvalidArgumentException("A {$status->value} game can't have a finish date.");
         }
 
+        if ($completed && ! $status->allowsCompletion()) {
+            throw new InvalidArgumentException("A {$status->value} game can't be at 100%.");
+        }
+
         if ($startedOn !== null && $finishedOn !== null && $startedOn->gt($finishedOn)) {
             throw new InvalidArgumentException('Start date must be on or before the finish date.');
         }
     }
 
     /**
-     * @return array{status: GameStatus, rating: int|null, platform_id: int|null, started_on: string|null, finished_on: string|null}
+     * @return array{status: GameStatus, rating: int|null, completed: bool, platform_id: int|null, started_on: string|null, finished_on: string|null}
      */
     public function toAttributes(): array
     {
         return [
             'status' => $this->status,
             'rating' => $this->rating,
+            'completed' => $this->completed,
             'platform_id' => $this->platformId,
             'started_on' => $this->startedOn?->toDateString(),
             'finished_on' => $this->finishedOn?->toDateString(),

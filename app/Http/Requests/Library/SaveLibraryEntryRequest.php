@@ -48,6 +48,10 @@ class SaveLibraryEntryRequest extends FormRequest
         return [
             'status' => ['required', Rule::enum(GameStatus::class)],
             'rating' => ['nullable', 'integer', 'between:'.LibraryEntryData::MIN_RATING.','.LibraryEntryData::MAX_RATING],
+            'completed' => [
+                'boolean',
+                Rule::prohibitedIf(fn (): bool => $this->boolean('completed') && ! ($this->status()?->allowsCompletion() ?? true)),
+            ],
             'platform_id' => [
                 'nullable',
                 'integer',
@@ -65,6 +69,7 @@ class SaveLibraryEntryRequest extends FormRequest
     {
         return [
             'finished_on.prohibited' => __('validation.library.finish_date_not_allowed'),
+            'completed.prohibited' => __('validation.library.completed_not_allowed'),
         ];
     }
 
@@ -76,6 +81,7 @@ class SaveLibraryEntryRequest extends FormRequest
             platformId: $this->filled('platform_id') ? $this->integer('platform_id') : null,
             startedOn: $this->date('started_on', self::DATE_FORMAT)?->toImmutable(),
             finishedOn: $this->date('finished_on', self::DATE_FORMAT)?->toImmutable(),
+            completed: $this->boolean('completed'),
         );
     }
 

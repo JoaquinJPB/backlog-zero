@@ -25,6 +25,7 @@ class LibraryEntryFactory extends Factory
             'game_id' => Game::factory(),
             'status' => GameStatus::Backlog,
             'rating' => null,
+            'completed' => false,
             'platform_id' => null,
             'started_on' => null,
             'finished_on' => null,
@@ -46,6 +47,11 @@ class LibraryEntryFactory extends Factory
             'started_on' => now()->subMonth()->toDateString(),
             'finished_on' => $on ?? now()->subDay()->toDateString(),
         ]);
+    }
+
+    public function completed(): static
+    {
+        return $this->finished()->state(fn (array $attributes) => ['completed' => true]);
     }
 
     public function rated(int $rating): static

@@ -16,6 +16,7 @@ test('a valid entry maps to model attributes', function () {
     expect($data->toAttributes())->toBe([
         'status' => GameStatus::Finished,
         'rating' => 9,
+        'completed' => false,
         'platform_id' => 6,
         'started_on' => '2026-01-05',
         'finished_on' => '2026-02-10',
@@ -36,6 +37,19 @@ test('only finished or abandoned games can have a finish date', function (GameSt
     'finished' => [GameStatus::Finished, true],
     'abandoned' => [GameStatus::Abandoned, true],
     'playing' => [GameStatus::Playing, false],
+    'backlog' => [GameStatus::Backlog, false],
+]);
+
+test('only played games can be at 100%', function (GameStatus $status, bool $allowed) {
+    $build = fn () => new LibraryEntryData(status: $status, completed: true);
+
+    $allowed
+        ? expect($build()->toAttributes()['completed'])->toBeTrue()
+        : expect($build)->toThrow(InvalidArgumentException::class, '100%');
+})->with([
+    'finished' => [GameStatus::Finished, true],
+    'playing' => [GameStatus::Playing, true],
+    'abandoned' => [GameStatus::Abandoned, true],
     'backlog' => [GameStatus::Backlog, false],
 ]);
 

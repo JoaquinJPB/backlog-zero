@@ -15,6 +15,8 @@ export interface LibraryEntry {
     status: GameStatus;
     /** 1-10: half stars. */
     rating: number | null;
+    /** 100%: every achievement. */
+    completed: boolean;
     platform_id: number | null;
     platform?: string | null;
     started_on: string | null;

@@ -8,6 +8,7 @@ import GameCover from '@/components/game-cover';
 import { JournalIcon, SearchIcon } from '@/components/icons';
 import Score, { starsDecimal } from '@/components/score';
 import Select from '@/components/select';
+import CompletedBadge from '@/components/completed-badge';
 import { StarRatingDisplay } from '@/components/star-rating';
 import { useTranslation } from '@/lib/i18n';
 import { buttonClass, formatDate, pillClass } from '@/lib/ui';
@@ -391,14 +392,19 @@ function JournalRow({
                     )}
                 />
                 <div className="min-w-0">
-                    <p
-                        className={cn(
-                            'line-clamp-2 leading-snug font-semibold sm:line-clamp-1',
-                            abandoned && abandonedTitleClass,
+                    <div className="flex items-start gap-2">
+                        <p
+                            className={cn(
+                                'line-clamp-2 min-w-0 leading-snug font-semibold sm:line-clamp-1',
+                                abandoned && abandonedTitleClass,
+                            )}
+                        >
+                            {entry.game.name}
+                        </p>
+                        {entry.completed && (
+                            <CompletedBadge className="mt-px shrink-0" />
                         )}
-                    >
-                        {entry.game.name}
-                    </p>
+                    </div>
                     <p className="mt-0.5 truncate text-sm text-ink-muted">
                         {/* Phones keep one short line: date · days. */}
                         <span className="sm:hidden">{date}</span>

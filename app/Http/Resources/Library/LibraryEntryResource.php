@@ -21,6 +21,7 @@ class LibraryEntryResource extends JsonResource
             'id' => $this->id,
             'status' => $this->status->value,
             'rating' => $this->rating,
+            'completed' => $this->completed,
             'platform_id' => $this->platform_id,
             'platform' => $this->whenLoaded('platform', fn (): ?string => $this->platform?->name),
             'started_on' => $this->started_on?->toDateString(),

@@ -18,7 +18,8 @@ use Inertia\Response;
  */
 class ShowProfileController extends Controller
 {
-    private const PER_PAGE = 48;
+    // Fills whole rows of the 3-, 4- and 5-column grid.
+    private const PER_PAGE = 60;
 
     public function __invoke(
         Request $request,
