@@ -35,5 +35,7 @@
         <!-- Fake credentials: tests use Http::fake() and never reach IGDB. -->
         <env name="IGDB_CLIENT_ID" value="test-client-id"/>
         <env name="IGDB_CLIENT_SECRET" value="test-client-secret"/>
+        <!-- Open sign-up by default: a local .env allow-list must not leak into tests. -->
+        <env name="ALLOWED_EMAILS" value="" force="true"/>
     </php>
 </phpunit>
