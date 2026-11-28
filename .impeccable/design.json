@@ -429,7 +429,7 @@
             "kind": "custom",
             "refersTo": "game-row",
             "description": "The high-score table: ordinal, cover, title, score in status ink; abandoned rows struck and stamped.",
-            "html": "<ol class=\"ds-table\"><li class=\"ds-r\"><span class=\"ds-ord\">5º</span><span class=\"ds-cov\"></span><span class=\"ds-t\"><b>A Link Between Worlds</b><small>Terminado el 9 nov · en 10 días</small></span><span class=\"ds-score\">4½</span></li><li class=\"ds-r\"><span class=\"ds-ord ds-faint\">—</span><span class=\"ds-cov ds-gray\"></span><span class=\"ds-t\"><b class=\"ds-struck\">Crypt of the NecroDancer</b><small>Abandonado el 3 nov</small></span><span class=\"ds-stamp\">Abandonado</span></li></ol>",
+            "html": "<ol class=\"ds-table\"><li class=\"ds-r\"><span class=\"ds-ord\">5º</span><span class=\"ds-cov\"></span><span class=\"ds-t\"><b>A Link Between Worlds</b><small>Terminado el 9 nov · en 10 días</small></span><span class=\"ds-score\">9</span></li><li class=\"ds-r\"><span class=\"ds-ord ds-faint\">—</span><span class=\"ds-cov ds-gray\"></span><span class=\"ds-t\"><b class=\"ds-struck\">Crypt of the NecroDancer</b><small>Abandonado el 3 nov</small></span><span class=\"ds-stamp\">Abandonado</span></li></ol>",
             "css": ".ds-table{list-style:none;margin:0;padding:0;border-top:1px solid var(--color-rule, #2e2a42);max-width:560px}.ds-r{display:grid;grid-template-columns:3.5rem auto 1fr auto;align-items:center;gap:16px;padding:12px;border-bottom:1px solid var(--color-rule, #2e2a42);border-radius:8px;transition:background-color 150ms ease-out}.ds-r:hover{background:var(--color-cabinet-raised, #1a1726)}.ds-ord{font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:112%;font-weight:800;font-size:24px;line-height:1;color:var(--color-ink-muted, #aaa3c6)}.ds-faint{color:var(--color-ink-faint, #857ea2)}.ds-cov{width:46px;height:64px;border-radius:5px;background:var(--color-cabinet-high, #242036);box-shadow:0 8px 20px -10px rgb(0 0 0/.8),0 0 0 1px rgb(255 255 255/.08)}.ds-gray{opacity:.55;filter:grayscale(1)}.ds-t{display:flex;flex-direction:column;gap:2px;min-width:0;font-family:var(--font-sans, 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif);color:var(--color-ink, #f1edff)}.ds-t b{font-weight:600}.ds-t small{font-size:14px;color:var(--color-ink-muted, #aaa3c6)}.ds-struck{color:var(--color-ink-muted, #aaa3c6);text-decoration:line-through;text-decoration-color:var(--color-red, #ff6464);text-decoration-thickness:2px}.ds-score{font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:112%;font-weight:800;font-size:30px;line-height:1;color:var(--color-gold, #ffcf40);font-variant-numeric:tabular-nums}.ds-stamp{display:inline-block;transform:rotate(-3deg);border:2px solid rgb(255 100 100/.8);border-radius:3px;padding:1px 6px;font-family:var(--font-display, 'Anybody', 'Hanken Grotesk', sans-serif);font-stretch:125%;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-red, #ff6464)}"
         },
         {
@@ -463,7 +463,7 @@
         "keyCharacteristics": [
             "Dark cabinet ground (#110f18) with two raised layers and violet-tinted hairline rules.",
             "One ink per status: gold finished, cyan playing, red abandoned, lilac backlog.",
-            "Ratings shown as score numerals in the status ink, halves written as fractions (4½).",
+            "Ratings shown as whole score numerals out of 10 in the status ink (five stars is 10, four and a half is 9).",
             "Ruled rows, ordinals and big figures instead of cards and stat tiles.",
             "Anybody wide/heavy for display and every number; Hanken Grotesk for all UI text.",
             "Operate-mode motion: 150ms colour, 200ms lift, 220ms ease-out-expo entrances."
@@ -490,8 +490,8 @@
                 "section": "typography"
             },
             {
-                "name": "The Fraction Rule",
-                "body": "Ratings are stored 1–10 and shown as stars with a fraction glyph for halves: 4½, ½, 5. Averages keep one Spanish decimal (4,3). Use `starsFraction` / `starsDecimal` from `components/score.tsx`.",
+                "name": "The Whole Score Rule",
+                "body": "Ratings are stored 1–10 and every score shows that whole number: five stars is 10, four and a half is 9, one star is 2. Never halves, fractions or decimals on a single rating. Averages (also out of 10) keep one Spanish decimal (7,3). Use `formatScore` / `formatAverage` from `components/score.tsx`. Stars stay only as the input and as a small visual next to averages.",
                 "section": "typography"
             },
             {
@@ -504,7 +504,7 @@
             "Do put every user-facing string in `lang/es/ui.php` (or another `lang/es/*.php` file) and read it with `t()` / `tc()`; never hard-code Spanish text in a component.",
             "Do build buttons with `buttonClass`, inputs with `fieldClass`, selects with `Select`, tabs and filters with `pillClass`, containers with `panelClass`, and labels, hints and errors with `labelClass`, `hintClass`, `errorClass`.",
             "Do take status colours from `STATUS_INK` in `resources/js/lib/status.ts` (text, 12% wash, 45% border, dot).",
-            "Do set every data numeral in `font-score`, ratings via `Score` / `starsFraction`, and page titles in `font-marquee`.",
+            "Do set every data numeral in `font-score`, ratings via `Score` / `formatScore`, and page titles in `font-marquee`.",
             "Do divide lists with 1px Rule lines and give each region one figure or chart.",
             "Do strike and stamp abandoned games (`abandonedTitleClass` + `AbandonedStamp`, grayscale cover at 55%).",
             "Do keep motion at 150–220ms, state-driven, with the ease-out-expo curve for entrances, and check it under `prefers-reduced-motion`.",
@@ -517,7 +517,7 @@
             "Don't colour a status with any ink but its own, or use red for anything but abandoned and errors.",
             "Don't wrap lists or stats in cards or stat tiles; this is a ruled table, not a dashboard.",
             "Don't grey out an abandoned game without the strike and the stamp.",
-            "Don't write half ratings as decimals in scores (use 3½, not 3.5) or set numbers in Hanken Grotesk.",
+            "Don't show a single rating as stars-out-of-5, a fraction or a decimal (use 9, not 4½ or 4,5), or set numbers in Hanken Grotesk.",
             "Don't put small Faint Ink text on Cabinet High (4.12:1).",
             "Don't add decorative or looping motion, or animations longer than 220ms.",
             "Don't load fonts from a CDN; Anybody and Hanken Grotesk are self-hosted woff2 subsets."

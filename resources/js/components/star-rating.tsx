@@ -1,14 +1,10 @@
 import { useId } from 'react';
-import { starsFraction } from '@/components/score';
+import { formatScore } from '@/components/score';
 import { useTranslation } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
-const MAX_RATING = 10; // stored as 1-10, shown as 0.5-5 stars
+const MAX_RATING = 10; // stored and shown as 1-10; drawn as five stars
 const STARS = 5;
-
-function starsLabel(rating: number): string {
-    return (rating / 2).toLocaleString('es-ES');
-}
 
 type StarFill = 'full' | 'half' | 'empty';
 
@@ -65,7 +61,7 @@ export function StarRatingDisplay({
             className={cn('inline-flex text-gold', className)}
             role="img"
             aria-label={t('library.rating_value', {
-                stars: starsLabel(rating),
+                score: formatScore(rating),
             })}
         >
             {Array.from({ length: STARS }, (_, index) => (
@@ -85,7 +81,7 @@ interface StarRatingInputProps {
 }
 
 /**
- * Ten radio buttons (half stars) laid over five stars: keyboard users get
+ * Ten radio buttons (each half star is one point) laid over five stars: keyboard users get
  * arrow-key navigation for free, mouse and touch users tap the left or right
  * half. The score beside it ticks on every change (the app's signature move).
  */
@@ -116,7 +112,7 @@ export function StarRatingInput({ value, onChange }: StarRatingInputProps) {
                                 key={rating}
                                 className="h-full flex-1 cursor-pointer"
                                 title={t('library.rating_value', {
-                                    stars: starsLabel(rating),
+                                    score: formatScore(rating),
                                 })}
                             >
                                 <input
@@ -130,7 +126,7 @@ export function StarRatingInput({ value, onChange }: StarRatingInputProps) {
                                 <span className="block h-full rounded-sm peer-focus-visible:ring-2 peer-focus-visible:ring-gold" />
                                 <span className="sr-only">
                                     {t('library.rating_value', {
-                                        stars: starsLabel(rating),
+                                        score: formatScore(rating),
                                     })}
                                 </span>
                             </label>
@@ -149,7 +145,7 @@ export function StarRatingInput({ value, onChange }: StarRatingInputProps) {
                         value === null ? 'text-ink-faint' : 'text-gold',
                     )}
                 >
-                    {value === null ? '–' : starsFraction(value)}
+                    {value === null ? '–' : formatScore(value)}
                 </span>
                 {value === null ? (
                     <span className="text-sm text-ink-muted">
