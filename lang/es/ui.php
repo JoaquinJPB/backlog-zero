@@ -21,6 +21,17 @@ return [
         'profile' => 'Perfil',
     ],
 
+    'friends' => [
+        'nav' => 'Amigos',
+        'title' => 'Amigos',
+        'subtitle' => 'Todo el mundo con cuenta. Entra en un perfil o salta directo a su journal o a su biblioteca.',
+        'count' => '{0} Nadie más por aquí|{1} 1 persona|[2,*] :count personas',
+        'empty' => 'Por ahora no hay nadie más con cuenta.',
+        'go_to_profile' => 'Ver el perfil de :name',
+        'go_to_journal' => 'Ver el journal de :name',
+        'go_to_library' => 'Ver la biblioteca de :name',
+    ],
+
     'auth' => [
         'login_with' => 'Entrar con :provider',
         'logout' => 'Cerrar sesión',

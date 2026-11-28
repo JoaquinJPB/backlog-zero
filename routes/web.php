@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\Friends\ShowFriendsController;
 use App\Http\Controllers\Games\GameSearchController;
 use App\Http\Controllers\Games\ShowGameController;
 use App\Http\Controllers\Journal\ShowJournalController;
@@ -29,6 +30,8 @@ Route::get('games/{game}', ShowGameController::class)->name('games.show');
 // The :username key is only for URL generation and Wayfinder's types;
 // resolving it is AppServiceProvider's explicit binding, which wins.
 Route::middleware('auth')->group(function () {
+    Route::get('friends', ShowFriendsController::class)->name('friends.index');
+
     Route::get('journal', ShowJournalController::class)->name('journal.index');
     Route::get('library', ShowLibraryController::class)->name('library.index');
 
