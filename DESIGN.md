@@ -346,7 +346,11 @@ Built with `buttonClass(variant, size)` from `resources/js/lib/ui.ts`; never res
 
 ### Game Row
 
-`GameRow` (library, profile) and `JournalRow` (journal) are the high-score table. Cover (56×80, or 40×56 in the journal growing to ~46×64 from sm), title in Title type with the year in faint `font-score`, metadata line in Caption with status badge, platform and dates (dates hidden on phones), and the score on the right. Hover: Cabinet Raised fill over 150ms and the cover lifts 2px over 200ms. Journal rows lead with an ordinal (`6º`) in muted `font-score`: the newest finished game of the year carries the highest number; abandoned rows show a dash.
+`GameRow` (library) and `JournalRow` (journal) are the high-score table. Cover (56×80, or 40×56 in the journal growing to ~46×64 from sm), title in Title type with the year in faint `font-score`, metadata line in Caption with status badge, platform and dates (dates hidden on phones), and the score on the right. Hover: Cabinet Raised fill over 150ms and the cover lifts 2px over 200ms. Journal rows lead with an ordinal (`6º`) in muted `font-score`: the newest finished game of the year carries the highest number; abandoned rows show a dash.
+
+### Game Tile
+
+`GameTile` is the profile's "Juegos jugados" shelf: a grid of 3 columns on phones, 4 from sm and 5 from md (60 games a page fills whole rows at every width), 12–24px column gaps and 28px row gaps. Each tile is the fluid `big` cover, then the title (14px semibold, two lines max, turns gold on hover) and a line with the status badge on the left and the score (`text-xl`) on the right. Hover lifts the cover 4px over 200ms. Abandoned tiles keep the struck title, the grey 55% cover and the stamp in place of the badge and score. A 100% game carries its trophy on the cover's top-right corner, in a 32px Cabinet chip at 85% with a 45% gold ring.
 
 ### Score (signature)
 
