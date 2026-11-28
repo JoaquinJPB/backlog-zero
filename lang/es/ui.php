@@ -77,6 +77,7 @@ return [
         'took_days' => '{0} en el mismo día|{1} en 1 día|[2,*] en :count días',
         'empty' => 'No hay juegos terminados en :year con estos filtros.',
         'empty_all' => 'Aún no has terminado ningún juego. Cuando marques uno como terminado con su fecha, aparecerá aquí.',
+        'empty_all_of' => ':name todavía no ha terminado ningún juego.',
         'now_playing' => 'Jugando ahora',
         'figures' => [
             'finished' => 'terminados',
@@ -88,8 +89,10 @@ return [
     'library' => [
         'nav' => 'Mi biblioteca',
         'title' => 'Mi biblioteca',
+        'title_of' => 'Biblioteca de :name',
         'all' => 'Todos',
         'empty' => 'Todavía no hay juegos aquí. Busca uno y añádelo desde su página.',
+        'empty_of' => ':name todavía no tiene juegos aquí.',
         'started' => 'Empezado: :date',
         'finished' => 'Terminado: :date',
         'abandoned' => 'Abandonado: :date',
@@ -129,7 +132,7 @@ return [
 
     'profile' => [
         'edit' => 'Editar perfil',
-        'private_note' => 'Por ahora solo tú puedes ver esta página.',
+        'visible_note' => 'Cualquier usuario registrado puede ver esta página.',
         'counts' => [
             'library' => 'En la biblioteca',
             'finished' => 'Terminados',

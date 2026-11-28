@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import AppLayout from '@/components/app-layout';
 import GameRow from '@/components/game-row';
 import { LibraryIcon, SearchIcon } from '@/components/icons';
@@ -9,11 +9,17 @@ import { STATUS_INK } from '@/lib/status';
 import { buttonClass, pillClass } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 import { search } from '@/routes/games';
-import { index } from '@/routes/library';
+import { index, show } from '@/routes/library';
 import type { GameStatus, LibraryEntry } from '@/types/library';
+import type { RouteQueryOptions } from '@/wayfinder';
 import { GAME_STATUSES } from '@/types/library';
 
 interface LibraryPageProps {
+    owner: {
+        name: string;
+        username: string;
+        avatar_url: string | null;
+    };
     status: GameStatus | null;
     counts: Record<GameStatus | 'all', number>;
     entries: LibraryEntry[];
@@ -21,12 +27,21 @@ interface LibraryPageProps {
 }
 
 export default function LibraryPage({
+    owner,
     status,
     counts,
     entries,
     pagination,
 }: LibraryPageProps) {
     const { t } = useTranslation();
+    const { auth } = usePage().props;
+    const isOwn = auth.user?.username === owner.username;
+    const title = isOwn
+        ? t('library.title')
+        : t('library.title_of', { name: `@${owner.username}` });
+    // Keep the status tabs on the library being looked at.
+    const tabsRoute = (options: RouteQueryOptions) =>
+        isOwn ? index(options) : show(owner.username, options);
     const tabs: { key: GameStatus | null; label: string; count: number }[] = [
         { key: null, label: t('library.all'), count: counts.all },
         ...GAME_STATUSES.map((value) => ({
@@ -38,10 +53,10 @@ export default function LibraryPage({
 
     return (
         <AppLayout>
-            <Head title={t('library.title')} />
+            <Head title={title} />
             <header className="flex items-baseline justify-between gap-4">
                 <h1 className="font-marquee text-[1.7rem] leading-tight sm:text-5xl">
-                    {t('library.title')}
+                    {title}
                 </h1>
                 <span className="font-score text-3xl text-ink-faint sm:text-5xl">
                     {counts.all}
@@ -58,7 +73,7 @@ export default function LibraryPage({
                     return (
                         <Link
                             key={tab.key ?? 'all'}
-                            href={index({
+                            href={tabsRoute({
                                 query:
                                     tab.key === null ? {} : { status: tab.key },
                             })}
@@ -85,7 +100,7 @@ export default function LibraryPage({
             </nav>
 
             {entries.length === 0 ? (
-                <LibraryEmpty />
+                <LibraryEmpty owner={isOwn ? null : `@${owner.username}`} />
             ) : (
                 <ul>
                     {entries.map((entry) => (
@@ -99,20 +114,27 @@ export default function LibraryPage({
     );
 }
 
-function LibraryEmpty() {
+/** `owner` is the other user's @username, or null when it's your own. */
+function LibraryEmpty({ owner }: { owner: string | null }) {
     const { t } = useTranslation();
 
     return (
         <div className="mt-8 flex flex-col items-center rounded-xl border border-dashed border-rule-strong px-6 py-12 text-center">
             <LibraryIcon className="size-9 text-ink-faint" />
-            <p className="mt-4 max-w-sm text-ink-muted">{t('library.empty')}</p>
-            <Link
-                href={search()}
-                className={buttonClass('primary', 'md', 'mt-6')}
-            >
-                <SearchIcon className="size-[18px]" />
-                {t('games.search.nav')}
-            </Link>
+            <p className="mt-4 max-w-sm text-ink-muted">
+                {owner === null
+                    ? t('library.empty')
+                    : t('library.empty_of', { name: owner })}
+            </p>
+            {owner === null && (
+                <Link
+                    href={search()}
+                    className={buttonClass('primary', 'md', 'mt-6')}
+                >
+                    <SearchIcon className="size-[18px]" />
+                    {t('games.search.nav')}
+                </Link>
+            )}
         </div>
     );
 }
