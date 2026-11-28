@@ -195,7 +195,7 @@ The system refuses the category default of a cover grid on blue-grey slate with 
 
 - Dark cabinet ground (#110f18) with two raised layers and violet-tinted hairline rules.
 - One ink per status: gold finished, cyan playing, red abandoned, lilac backlog.
-- Ratings shown as score numerals in the status ink, halves written as fractions (4½).
+- Ratings shown as whole score numerals out of 10 in the status ink (five stars is 10, four and a half is 9).
 - Ruled rows, ordinals and big figures instead of cards and stat tiles.
 - Anybody wide/heavy for display and every number; Hanken Grotesk for all UI text.
 - Operate-mode motion: 150ms colour, 200ms lift, 220ms ease-out-expo entrances.
@@ -269,7 +269,7 @@ Three utilities carry the display voice; use them instead of setting Anybody by 
 
 **The Every Number Is a Score Rule.** Any numeral that is data (rating, count, year, ordinal, page number) is set in `font-score` with tabular figures. Numbers never appear in Hanken.
 
-**The Fraction Rule.** Ratings are stored 1–10 and shown as stars with a fraction glyph for halves: 4½, ½, 5. Averages keep one Spanish decimal (4,3). Use `starsFraction` / `starsDecimal` from `components/score.tsx`.
+**The Whole Score Rule.** Ratings are stored 1–10 and every score shows that whole number: five stars is 10, four and a half is 9, one star is 2. Never halves, fractions or decimals on a single rating. Averages (also out of 10) keep one Spanish decimal (7,3). Use `formatScore` / `formatAverage` from `components/score.tsx`. Stars stay only as the input and as a small visual next to averages.
 
 ## Layout
 
@@ -354,11 +354,11 @@ Built with `buttonClass(variant, size)` from `resources/js/lib/ui.ts`; never res
 
 ### Score (signature)
 
-`Score` sets a rating as large tabular numerals in the status ink of the game (gold for finished, cyan for playing, and so on), sizes sm–xl. No rating renders an en dash in Faint Ink. It is an image role with a Spanish aria-label ("4,5 estrellas"), so the fraction glyph is never read raw.
+`Score` sets a rating as large tabular numerals in the status ink of the game (gold for finished, cyan for playing, and so on), sizes sm–xl. No rating renders an en dash in Faint Ink. It is an image role with a Spanish aria-label ("9 de 10").
 
 ### Rating Input and the Tick (signature)
 
-`StarRatingInput`: five gold stars (36–40px) overlaid by ten invisible radio halves, so taps hit a left or right half and arrow keys work. Beside it the chosen score in `font-score` 36px gold remounts on every change and plays `score-tick` (220ms ease-out-expo: from 0.18em lower, 92% scale and 40% opacity to rest). Empty stars sit at 45% opacity. A "Quitar" text button clears the rating.
+`StarRatingInput`: five gold stars (36–40px) overlaid by ten invisible radio halves, so taps hit a left or right half and arrow keys work; each half star is one point. Beside it the chosen score, a whole number out of 10, in `font-score` 36px gold remounts on every change and plays `score-tick` (220ms ease-out-expo: from 0.18em lower, 92% scale and 40% opacity to rest). Empty stars sit at 45% opacity. A "Quitar" text button clears the rating.
 
 ### The 100% Trophy
 
@@ -405,7 +405,7 @@ Flash messages enter with `flash-in` (220ms, from 6px above). Success: 40% gold 
 - **Do** put every user-facing string in `lang/es/ui.php` (or another `lang/es/*.php` file) and read it with `t()` / `tc()`; never hard-code Spanish text in a component.
 - **Do** build buttons with `buttonClass`, inputs with `fieldClass`, selects with `Select`, tabs and filters with `pillClass`, containers with `panelClass`, and labels, hints and errors with `labelClass`, `hintClass`, `errorClass`.
 - **Do** take status colours from `STATUS_INK` in `resources/js/lib/status.ts` (text, 12% wash, 45% border, dot).
-- **Do** set every data numeral in `font-score`, ratings via `Score` / `starsFraction`, and page titles in `font-marquee`.
+- **Do** set every data numeral in `font-score`, ratings via `Score` / `formatScore`, and page titles in `font-marquee`.
 - **Do** divide lists with 1px Rule lines and give each region one figure or chart.
 - **Do** strike and stamp abandoned games (`abandonedTitleClass` + `AbandonedStamp`, grayscale cover at 55%).
 - **Do** keep motion at 150–220ms, state-driven, with the ease-out-expo curve for entrances, and check it under `prefers-reduced-motion`.
@@ -419,7 +419,7 @@ Flash messages enter with `flash-in` (220ms, from 6px above). Success: 40% gold 
 - **Don't** colour a status with any ink but its own, or use red for anything but abandoned and errors.
 - **Don't** wrap lists or stats in cards or stat tiles; this is a ruled table, not a dashboard.
 - **Don't** grey out an abandoned game without the strike and the stamp.
-- **Don't** write half ratings as decimals in scores (use 3½, not 3.5) or set numbers in Hanken Grotesk.
+- **Don't** show a single rating as stars-out-of-5, a fraction or a decimal (use 9, not 4½ or 4,5), or set numbers in Hanken Grotesk.
 - **Don't** put small Faint Ink text on Cabinet High (4.12:1).
 - **Don't** add decorative or looping motion, or animations longer than 220ms.
 - **Don't** load fonts from a CDN; Anybody and Hanken Grotesk are self-hosted woff2 subsets.

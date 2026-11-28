@@ -3,17 +3,17 @@ import { STATUS_INK } from '@/lib/status';
 import { cn } from '@/lib/utils';
 import type { GameStatus } from '@/types/library';
 
-/** 1-10 (half stars) → "4½", "5", "½". */
-export function starsFraction(rating: number): string {
-    const whole = Math.floor(rating / 2);
-    const half = rating % 2 === 1 ? '½' : '';
-
-    return whole === 0 ? half : `${whole}${half}`;
+/**
+ * Ratings are stored 1-10 and shown as that whole number: five stars is 10,
+ * four and a half is 9, one star is 2.
+ */
+export function formatScore(rating: number): string {
+    return String(rating);
 }
 
-/** Averages keep one decimal: 7.3 → "3,7". */
-export function starsDecimal(rating: number): string {
-    return (rating / 2).toLocaleString('es-ES', { maximumFractionDigits: 1 });
+/** Averages (also 1-10) keep one Spanish decimal: 7.25 → "7,3". */
+export function formatAverage(rating: number): string {
+    return rating.toLocaleString('es-ES', { maximumFractionDigits: 1 });
 }
 
 type ScoreSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -70,10 +70,10 @@ export default function Score({
             )}
             role="img"
             aria-label={t('library.rating_value', {
-                stars: (rating / 2).toLocaleString('es-ES'),
+                score: formatScore(rating),
             })}
         >
-            {starsFraction(rating)}
+            {formatScore(rating)}
         </span>
     );
 }

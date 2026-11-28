@@ -12,7 +12,7 @@ A small, closed group of friends who play video games. Each one logs what they a
 
 ## Product Purpose
 
-Backlog Zero is a personal record of the games you play: a library with status, rating (half stars, 0.5–5), platform and dates; a yearly journal of finished games grouped by month; and a profile with stats. Success is that logging a game takes seconds and looking back at a year of play is a pleasure. A social layer between friends (public profiles, then lists) comes next.
+Backlog Zero is a personal record of the games you play: a library with status, rating (1–10, entered with five half-stars), platform and dates; a yearly journal of finished games grouped by month; and a profile with stats. Success is that logging a game takes seconds and looking back at a year of play is a pleasure. A social layer between friends (public profiles, then lists) comes next.
 
 ## Positioning
 
@@ -27,7 +27,7 @@ Not a public catalogue or a social network: a private, friends-only logbook. Gam
 
 ## Capabilities and Constraints
 
-- Statuses: playing, finished, abandoned, backlog. Ratings are integers 1–10 shown as half stars.
+- Statuses: playing, finished, abandoned, backlog. Ratings are integers 1–10, entered as half stars and shown as the whole number out of 10.
 - Pages: welcome (guests), game search, game page with the library form, library with status tabs, journal per year with filters, profile with stats (owner-only for now), profile settings, username onboarding.
 - All user-facing strings are Spanish and live in `lang/es/*.php`.
 - Stack: Laravel 13 + Inertia 3 + React 19 + Tailwind 4. No UI component library.

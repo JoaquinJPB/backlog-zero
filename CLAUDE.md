@@ -46,7 +46,7 @@ The project owner started it; **friends now contribute through GitHub**. These r
 - **External providers sit behind interfaces.** `Games\Contracts\GameCatalog` → `IgdbGameCatalog`. Nothing outside `Games` talks to IGDB.
 - Authorization with Policies (`#[UsePolicy]`), validation with Form Requests, no business logic in React components.
 - Shared Inertia props (`HandleInertiaRequests`): `auth.user` (id, name, username, avatar_url only), `locale`, and once-props `translations` and `authProviders`. Flash messages via `Inertia::flash('success'|'error', …)`.
-- Ratings are integers 1–10 (half stars), shown as 0.5–5 stars.
+- Ratings are integers 1–10, entered as five half-stars and always shown as the whole number (5 stars = 10, 4½ = 9, 1 = 2). No fractions or decimals on a single rating; averages keep one decimal.
 
 ### i18n
 

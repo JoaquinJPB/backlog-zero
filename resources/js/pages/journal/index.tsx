@@ -6,7 +6,7 @@ import AbandonedStamp, {
 import AppLayout from '@/components/app-layout';
 import GameCover from '@/components/game-cover';
 import { JournalIcon, SearchIcon } from '@/components/icons';
-import Score, { starsDecimal } from '@/components/score';
+import Score, { formatAverage } from '@/components/score';
 import Select from '@/components/select';
 import CompletedBadge from '@/components/completed-badge';
 import { StarRatingDisplay } from '@/components/star-rating';
@@ -212,7 +212,7 @@ function Figures({ summary }: { summary: JournalProps['summary'] }) {
                 value={
                     summary.average_rating === null
                         ? '–'
-                        : starsDecimal(summary.average_rating)
+                        : formatAverage(summary.average_rating)
                 }
                 className="text-gold"
                 extra={

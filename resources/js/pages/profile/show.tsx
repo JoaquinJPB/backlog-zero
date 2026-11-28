@@ -5,7 +5,7 @@ import GameTile from '@/components/game-tile';
 import { LogOutIcon, SettingsIcon } from '@/components/icons';
 import PaginationNav from '@/components/pagination-nav';
 import type { Pagination } from '@/components/pagination-nav';
-import { starsDecimal, starsFraction } from '@/components/score';
+import { formatAverage, formatScore } from '@/components/score';
 import { StarRatingDisplay } from '@/components/star-rating';
 import { useTranslation } from '@/lib/i18n';
 import { STATUS_INK } from '@/lib/status';
@@ -235,7 +235,7 @@ function RatingHistogram({
                 ) : (
                     <>
                         <span className="font-score text-7xl text-gold sm:text-8xl">
-                            {starsDecimal(average)}
+                            {formatAverage(average)}
                         </span>
                         <span className="pb-2">
                             <StarRatingDisplay
@@ -254,7 +254,7 @@ function RatingHistogram({
             <ol className="mt-8 flex h-48 items-end gap-1 sm:gap-1.5">
                 {histogram.map((count, index) => {
                     const label = t('profile.rating_bar', {
-                        stars: starsDecimal(index + 1),
+                        score: formatScore(index + 1),
                         count,
                     });
 
@@ -295,7 +295,7 @@ function RatingHistogram({
                         key={index}
                         className="flex-1 text-center font-score text-[11px] text-ink-faint"
                     >
-                        {starsFraction(index + 1)}
+                        {formatScore(index + 1)}
                     </span>
                 ))}
             </div>
