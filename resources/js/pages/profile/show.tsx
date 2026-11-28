@@ -2,7 +2,12 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { Avatar } from '@/components/app-nav';
 import AppLayout from '@/components/app-layout';
 import GameTile from '@/components/game-tile';
-import { LogOutIcon, SettingsIcon } from '@/components/icons';
+import {
+    JournalIcon,
+    LibraryIcon,
+    LogOutIcon,
+    SettingsIcon,
+} from '@/components/icons';
 import PaginationNav from '@/components/pagination-nav';
 import type { Pagination } from '@/components/pagination-nav';
 import { formatAverage, formatScore } from '@/components/score';
@@ -13,6 +18,7 @@ import { buttonClass } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 import { logout } from '@/routes';
 import { index as journalIndex, show as journalOf } from '@/routes/journal';
+import { show as libraryOf } from '@/routes/library';
 import { profile as settingsProfile } from '@/routes/settings';
 import type { LibraryEntry } from '@/types/library';
 import type { RouteDefinition } from '@/wayfinder';
@@ -86,7 +92,7 @@ export default function ProfilePage({
                         @{profile.username}
                     </p>
                 </div>
-                {isOwn && (
+                {isOwn ? (
                     <div className="flex w-full gap-2 sm:w-auto">
                         <Link
                             href={settingsProfile()}
@@ -106,6 +112,31 @@ export default function ProfilePage({
                         >
                             <LogOutIcon className="size-4" />
                             {t('auth.logout')}
+                        </Link>
+                    </div>
+                ) : (
+                    <div className="flex w-full gap-2 sm:w-auto">
+                        <Link
+                            href={journalOf(profile.username)}
+                            className={buttonClass(
+                                'secondary',
+                                'sm',
+                                'flex-1 sm:flex-none',
+                            )}
+                        >
+                            <JournalIcon className="size-4" />
+                            {t('journal.nav')}
+                        </Link>
+                        <Link
+                            href={libraryOf(profile.username)}
+                            className={buttonClass(
+                                'secondary',
+                                'sm',
+                                'flex-1 sm:flex-none',
+                            )}
+                        >
+                            <LibraryIcon className="size-4" />
+                            {t('nav.library_short')}
                         </Link>
                     </div>
                 )}
