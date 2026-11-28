@@ -160,3 +160,50 @@ test('the journal lists what the user is playing now, latest started first', fun
             ->where('playing.0.status', 'playing')
             ->has('playing.0.game.slug'));
 });
+
+test('guests cannot see someone else\'s journal', function () {
+    $this->get(route('journal.show', $this->user->username))->assertRedirect('/');
+});
+
+test('an unknown username has no journal', function () {
+    $this->actingAs(User::factory()->create())
+        ->get('/u/nobody/journal')
+        ->assertNotFound();
+});
+
+test("someone else's journal shows that user's finished games", function () {
+    finishedEntry($this->user, '2026-05-10');
+    finishedEntry(User::factory()->create(), '2026-05-11'); // the visitor's own
+
+    $visitor = User::factory()->create();
+
+    $this->actingAs($visitor)
+        ->get(route('journal.show', $this->user->username))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('journal/index')
+            ->where('owner', [
+                'name' => $this->user->name,
+                'username' => $this->user->username,
+                'avatar_url' => $this->user->avatar_url,
+            ])
+            ->where('year', 2026)
+            ->where('summary.finished', 1)
+        );
+});
+
+test('the year filter works on someone else\'s journal', function () {
+    finishedEntry($this->user, '2024-03-01');
+    finishedEntry($this->user, '2026-05-10');
+
+    $this->actingAs(User::factory()->create())
+        ->get(route('journal.show', [$this->user->username, 'year' => 2024]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->where('year', 2024)->where('summary.finished', 1));
+});
+
+test('the own journal route reports the signed-in user as the owner', function () {
+    $this->actingAs($this->user)
+        ->get(route('journal.index'))
+        ->assertInertia(fn (Assert $page) => $page->where('owner.username', $this->user->username));
+});

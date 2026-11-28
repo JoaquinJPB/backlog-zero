@@ -95,3 +95,50 @@ test('large libraries are paginated', function () {
         ->get(route('library.index', ['page' => 2]))
         ->assertInertia(fn (Assert $page) => $page->has('entries', 2));
 });
+
+test('guests cannot see someone else\'s library', function () {
+    $this->get(route('library.show', $this->user->username))->assertRedirect('/');
+});
+
+test('an unknown username has no library', function () {
+    $this->actingAs(User::factory()->create())
+        ->get('/u/nobody/library')
+        ->assertNotFound();
+});
+
+test("someone else's library shows that user's entries, not the viewer's", function () {
+    $visitor = User::factory()->create();
+    $mine = LibraryEntry::factory()->for($this->user)->create();
+    LibraryEntry::factory()->playing()->for($visitor)->create();
+
+    $this->actingAs($visitor)
+        ->get(route('library.show', $this->user->username))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('library/index')
+            ->where('owner', [
+                'name' => $this->user->name,
+                'username' => $this->user->username,
+                'avatar_url' => $this->user->avatar_url,
+            ])
+            ->has('entries', 1)
+            ->where('entries.0.id', $mine->id)
+            ->where('counts', ['all' => 1, 'playing' => 0, 'finished' => 0, 'abandoned' => 0, 'backlog' => 1])
+        );
+});
+
+test('the status filter works on someone else\'s library', function () {
+    LibraryEntry::factory()->playing()->for($this->user)->create();
+    LibraryEntry::factory()->for($this->user)->create();
+
+    $this->actingAs(User::factory()->create())
+        ->get(route('library.show', [$this->user->username, 'status' => 'playing']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->where('status', 'playing')->has('entries', 1));
+});
+
+test('the own library route reports the signed-in user as the owner', function () {
+    $this->actingAs($this->user)
+        ->get(route('library.index'))
+        ->assertInertia(fn (Assert $page) => $page->where('owner.username', $this->user->username));
+});

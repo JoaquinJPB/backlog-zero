@@ -6,15 +6,16 @@ use App\Domain\Games\Models\Platform;
 use App\Domain\Journal\Actions\BuildYearJournalAction;
 use App\Domain\Library\Queries\FinishedGamesQuery;
 use App\Domain\Library\Queries\PlayingGamesQuery;
-use App\Domain\Users\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Journal\ShowJournalRequest;
 use App\Http\Resources\Library\LibraryEntryResource;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Games finished in a year, grouped by month, with filters.
+ * Games finished in a year, grouped by month, with filters. Serves both
+ * /journal (the signed-in user's) and /u/{username}/journal.
  */
 class ShowJournalController extends Controller
 {
@@ -24,8 +25,10 @@ class ShowJournalController extends Controller
         PlayingGamesQuery $playingGames,
         BuildYearJournalAction $buildJournal,
     ): Response {
-        /** @var User $user */
-        $user = $request->user();
+        $user = $request->profileOwner();
+
+        Gate::authorize('viewProfile', $user);
+
         $includeAbandoned = $request->includeAbandoned();
         $years = $finishedGames->years($user, $includeAbandoned);
 
@@ -45,6 +48,11 @@ class ShowJournalController extends Controller
         }
 
         return Inertia::render('journal/index', [
+            'owner' => [
+                'name' => $user->name,
+                'username' => $user->username,
+                'avatar_url' => $user->avatar_url,
+            ],
             'year' => $year,
             'years' => array_map(
                 fn (int $value, int $count): array => ['year' => $value, 'count' => $count],

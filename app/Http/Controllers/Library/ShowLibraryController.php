@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Library;
 
 use App\Domain\Library\Models\LibraryEntry;
 use App\Domain\Library\Queries\LibraryStatsQuery;
-use App\Domain\Users\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Library\ShowLibraryRequest;
 use App\Http\Resources\Library\LibraryEntryResource;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * The signed-in user's library, filterable by status, most recently
- * touched first.
+ * A user's library, filterable by status, most recently touched first.
+ * Serves both /library (the signed-in user's) and /u/{username}/library.
  */
 class ShowLibraryController extends Controller
 {
@@ -21,8 +21,10 @@ class ShowLibraryController extends Controller
 
     public function __invoke(ShowLibraryRequest $request, LibraryStatsQuery $stats): Response
     {
-        /** @var User $user */
-        $user = $request->user();
+        $user = $request->profileOwner();
+
+        Gate::authorize('viewProfile', $user);
+
         $status = $request->statusFilter();
 
         $entries = LibraryEntry::query()
@@ -35,6 +37,11 @@ class ShowLibraryController extends Controller
             ->withQueryString();
 
         return Inertia::render('library/index', [
+            'owner' => [
+                'name' => $user->name,
+                'username' => $user->username,
+                'avatar_url' => $user->avatar_url,
+            ],
             'status' => $status?->value,
             'counts' => $stats->countsByStatus($user),
             'entries' => LibraryEntryResource::collection($entries->getCollection())->resolve($request),
