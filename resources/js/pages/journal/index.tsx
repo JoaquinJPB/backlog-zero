@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import type { ReactNode } from 'react';
 import AbandonedStamp, {
     abandonedTitleClass,
@@ -14,8 +14,10 @@ import { useTranslation } from '@/lib/i18n';
 import { buttonClass, formatDate, pillClass } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 import { search, show } from '@/routes/games';
-import { index } from '@/routes/journal';
+import { index, show as journalOf } from '@/routes/journal';
+import { show as profileOf } from '@/routes/profile';
 import type { LibraryEntry, PlatformOption } from '@/types/library';
+import type { RouteQueryOptions } from '@/wayfinder';
 
 interface JournalFilters {
     platform: number | null;
@@ -28,6 +30,11 @@ interface JournalMonth {
 }
 
 interface JournalProps {
+    owner: {
+        name: string;
+        username: string;
+        avatar_url: string | null;
+    };
     year: number;
     years: { year: number; count: number }[];
     filters: JournalFilters;
@@ -87,6 +94,7 @@ function ordinals(
 }
 
 export default function Journal({
+    owner,
     year,
     years,
     filters,
@@ -96,12 +104,19 @@ export default function Journal({
     playing,
 }: JournalProps) {
     const { t } = useTranslation();
+    const { auth } = usePage().props;
     const ranks = ordinals(months, summary.finished);
+    const isOwn = auth.user?.username === owner.username;
+    const handle = `@${owner.username}`;
+    const title = t('journal.title', { year });
+    // Year pills and filters stay on the journal being looked at.
+    const journalRoute = (options: RouteQueryOptions) =>
+        isOwn ? index(options) : journalOf(owner.username, options);
 
     // Filters apply within the selected year; switching year (the pills
     // below) drops the platform, which may not exist in the other year.
     function applyFilters(next: Partial<JournalFilters>): void {
-        router.get(index.url(), query(year, { ...filters, ...next }), {
+        router.get(journalRoute({}).url, query(year, { ...filters, ...next }), {
             preserveScroll: true,
             preserveState: true,
             replace: true,
@@ -111,20 +126,28 @@ export default function Journal({
     if (years.length === 0) {
         return (
             <AppLayout>
-                <Head title={t('journal.title', { year })} />
+                <Head title={isOwn ? title : `${title} · ${handle}`} />
                 <div className="mx-auto max-w-md">
                     <NowPlaying entries={playing} />
                 </div>
-                <JournalEmpty />
+                <JournalEmpty owner={isOwn ? null : handle} />
             </AppLayout>
         );
     }
 
     return (
         <AppLayout>
-            <Head title={t('journal.title', { year })} />
+            <Head title={isOwn ? title : `${title} · ${handle}`} />
             <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:gap-14">
                 <aside className="lg:sticky lg:top-28 lg:self-start">
+                    {!isOwn && (
+                        <Link
+                            href={profileOf(owner.username)}
+                            className="font-score text-base text-gold hover:underline"
+                        >
+                            {handle}
+                        </Link>
+                    )}
                     <h1 className="font-marquee text-[2.05rem] leading-none sm:text-6xl sm:leading-[0.9] lg:text-[3.4rem]">
                         {t('journal.nav')}{' '}
                         <span className="text-gold lg:block">{year}</span>
@@ -137,7 +160,7 @@ export default function Journal({
                         {years.map((option) => (
                             <Link
                                 key={option.year}
-                                href={index({
+                                href={journalRoute({
                                     query: query(option.year, {
                                         platform: null,
                                         abandoned: filters.abandoned,
@@ -498,7 +521,8 @@ function NowPlaying({ entries }: { entries: LibraryEntry[] }) {
     );
 }
 
-function JournalEmpty() {
+/** `owner` is the other user's @username, or null when it's your own. */
+function JournalEmpty({ owner }: { owner: string | null }) {
     const { t } = useTranslation();
 
     return (
@@ -506,15 +530,23 @@ function JournalEmpty() {
             <span className="mx-auto grid size-16 place-items-center rounded-2xl border border-rule-strong bg-cabinet-raised text-gold">
                 <JournalIcon className="size-8" />
             </span>
-            <h1 className="mt-6 font-marquee text-4xl">{t('journal.nav')}</h1>
-            <p className="mt-3 text-ink-muted">{t('journal.empty_all')}</p>
-            <Link
-                href={search()}
-                className={buttonClass('primary', 'md', 'mt-8')}
-            >
-                <SearchIcon className="size-[18px]" />
-                {t('games.search.nav')}
-            </Link>
+            <h1 className="mt-6 font-marquee text-4xl">
+                {owner === null ? t('journal.nav') : owner}
+            </h1>
+            <p className="mt-3 text-ink-muted">
+                {owner === null
+                    ? t('journal.empty_all')
+                    : t('journal.empty_all_of', { name: owner })}
+            </p>
+            {owner === null && (
+                <Link
+                    href={search()}
+                    className={buttonClass('primary', 'md', 'mt-8')}
+                >
+                    <SearchIcon className="size-[18px]" />
+                    {t('games.search.nav')}
+                </Link>
+            )}
         </section>
     );
 }

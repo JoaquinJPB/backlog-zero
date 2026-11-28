@@ -3,17 +3,20 @@
 namespace App\Domain\Users\Policies;
 
 use App\Domain\Users\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
     /**
-     * Profiles are private until public profiles (with a privacy setting)
-     * land: only the owner sees theirs. Others get a 404, so the page
-     * doesn't confirm which usernames exist.
+     * Covers the three profile sections (profile, journal, library): any
+     * signed-in user may look at anyone's. Guests are kept out by the
+     * routes' auth middleware, and unknown usernames are a 404 from
+     * route-model binding, so nothing here confirms who exists.
+     *
+     * A per-user privacy setting (and guest access) will narrow this down;
+     * this is the single place it has to change.
      */
-    public function viewProfile(User $viewer, User $owner): Response
+    public function viewProfile(User $viewer, User $owner): bool
     {
-        return $viewer->is($owner) ? Response::allow() : Response::denyAsNotFound();
+        return true;
     }
 }

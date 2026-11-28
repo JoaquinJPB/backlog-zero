@@ -13,10 +13,20 @@ test('guests are sent home', function () {
     $this->get(route('profile.show', 'ada'))->assertRedirect('/');
 });
 
-test('other users get a 404 while profiles are private', function () {
+test('any signed-in user can see someone else\'s profile', function () {
+    LibraryEntry::factory()->for($this->user)->create([
+        'status' => 'finished', 'rating' => 8, 'finished_on' => '2026-05-01',
+    ]);
+
     $this->actingAs(User::factory()->create(['username' => 'bob']))
         ->get(route('profile.show', 'ada'))
-        ->assertNotFound();
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('profile/show')
+            ->where('profile.username', 'ada')
+            ->where('stats.counts.finished', 1)
+            ->has('games', 1)
+        );
 });
 
 test('unknown usernames are a 404', function () {

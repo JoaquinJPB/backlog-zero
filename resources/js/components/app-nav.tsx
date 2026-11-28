@@ -6,12 +6,14 @@ import {
     LogOutIcon,
     SearchIcon,
     UserIcon,
+    UsersIcon,
 } from '@/components/icons';
 import { useTranslation } from '@/lib/i18n';
 import { buttonClass } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 import { logout } from '@/routes';
 import { redirect as providerRedirect } from '@/routes/auth';
+import { index as friendsIndex } from '@/routes/friends';
 import { search } from '@/routes/games';
 import { index as journalIndex } from '@/routes/journal';
 import { index as libraryIndex } from '@/routes/library';
@@ -67,9 +69,18 @@ function useNavItems(): NavItem[] {
             icon: JournalIcon,
         },
         {
+            key: 'friends',
+            href: friendsIndex().url,
+            match: [friendsIndex().url],
+            label: t('friends.nav'),
+            shortLabel: t('friends.nav'),
+            icon: UsersIcon,
+        },
+        {
             key: 'profile',
             href: profileHref,
-            match: ['/u/', settingsProfile().url],
+            // Only your own: another user's /u/ pages are reached from Amigos.
+            match: [profileHref, settingsProfile().url],
             label: t('nav.profile'),
             shortLabel: t('nav.profile'),
             icon: UserIcon,
@@ -149,7 +160,7 @@ export function MobileTabBar() {
             aria-label={t('nav.main')}
             className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-cabinet/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
         >
-            <ul className="mx-auto grid max-w-md grid-cols-4">
+            <ul className="mx-auto grid max-w-md grid-cols-5">
                 {items.map((item) => {
                     const current = isCurrent(item, url);
 

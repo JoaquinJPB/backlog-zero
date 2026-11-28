@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Journal;
 
+use App\Domain\Users\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,6 +25,24 @@ class ShowJournalRequest extends FormRequest
             'platform' => ['nullable', 'integer', 'min:1'],
             'abandoned' => ['nullable', 'boolean'],
         ];
+    }
+
+    /**
+     * Whose section is being viewed: the {user} in the URL, or the
+     * signed-in user on the own-section routes (/journal, /library).
+     */
+    public function profileOwner(): User
+    {
+        $owner = $this->route('user');
+
+        if ($owner instanceof User) {
+            return $owner;
+        }
+
+        /** @var User $user */
+        $user = $this->user();
+
+        return $user;
     }
 
     public function year(): ?int

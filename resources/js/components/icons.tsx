@@ -61,6 +61,16 @@ export function UserIcon(props: IconProps) {
     );
 }
 
+export function UsersIcon(props: IconProps) {
+    return (
+        <Icon {...props}>
+            <circle cx="9" cy="8.5" r="3.5" />
+            <path d="M2.5 20.5c1-3.2 3.4-5 6.5-5s5.5 1.8 6.5 5" />
+            <path d="M16 5.2a3.5 3.5 0 0 1 0 6.6M18 15.8c2 .7 3.2 2.3 3.5 4.7" />
+        </Icon>
+    );
+}
+
 export function LogOutIcon(props: IconProps) {
     return (
         <Icon {...props}>

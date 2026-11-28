@@ -1,8 +1,13 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Avatar } from '@/components/app-nav';
 import AppLayout from '@/components/app-layout';
 import GameTile from '@/components/game-tile';
-import { LogOutIcon, SettingsIcon } from '@/components/icons';
+import {
+    JournalIcon,
+    LibraryIcon,
+    LogOutIcon,
+    SettingsIcon,
+} from '@/components/icons';
 import PaginationNav from '@/components/pagination-nav';
 import type { Pagination } from '@/components/pagination-nav';
 import { formatAverage, formatScore } from '@/components/score';
@@ -12,9 +17,11 @@ import { STATUS_INK } from '@/lib/status';
 import { buttonClass } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 import { logout } from '@/routes';
-import { index as journalIndex } from '@/routes/journal';
+import { index as journalIndex, show as journalOf } from '@/routes/journal';
+import { show as libraryOf } from '@/routes/library';
 import { profile as settingsProfile } from '@/routes/settings';
 import type { LibraryEntry } from '@/types/library';
+import type { RouteDefinition } from '@/wayfinder';
 
 interface RankedItem {
     id: number;
@@ -64,6 +71,8 @@ export default function ProfilePage({
     pagination,
 }: ProfilePageProps) {
     const { t } = useTranslation();
+    const { auth } = usePage().props;
+    const isOwn = auth.user?.username === profile.username;
 
     return (
         <AppLayout>
@@ -83,31 +92,60 @@ export default function ProfilePage({
                         @{profile.username}
                     </p>
                 </div>
-                <div className="flex w-full gap-2 sm:w-auto">
-                    <Link
-                        href={settingsProfile()}
-                        className={buttonClass(
-                            'secondary',
-                            'sm',
-                            'flex-1 sm:flex-none',
-                        )}
-                    >
-                        <SettingsIcon className="size-4" />
-                        {t('profile.edit')}
-                    </Link>
-                    <Link
-                        href={logout()}
-                        as="button"
-                        className={buttonClass('ghost', 'sm', 'md:hidden')}
-                    >
-                        <LogOutIcon className="size-4" />
-                        {t('auth.logout')}
-                    </Link>
-                </div>
+                {isOwn ? (
+                    <div className="flex w-full gap-2 sm:w-auto">
+                        <Link
+                            href={settingsProfile()}
+                            className={buttonClass(
+                                'secondary',
+                                'sm',
+                                'flex-1 sm:flex-none',
+                            )}
+                        >
+                            <SettingsIcon className="size-4" />
+                            {t('profile.edit')}
+                        </Link>
+                        <Link
+                            href={logout()}
+                            as="button"
+                            className={buttonClass('ghost', 'sm', 'md:hidden')}
+                        >
+                            <LogOutIcon className="size-4" />
+                            {t('auth.logout')}
+                        </Link>
+                    </div>
+                ) : (
+                    <div className="flex w-full gap-2 sm:w-auto">
+                        <Link
+                            href={journalOf(profile.username)}
+                            className={buttonClass(
+                                'secondary',
+                                'sm',
+                                'flex-1 sm:flex-none',
+                            )}
+                        >
+                            <JournalIcon className="size-4" />
+                            {t('journal.nav')}
+                        </Link>
+                        <Link
+                            href={libraryOf(profile.username)}
+                            className={buttonClass(
+                                'secondary',
+                                'sm',
+                                'flex-1 sm:flex-none',
+                            )}
+                        >
+                            <LibraryIcon className="size-4" />
+                            {t('nav.library_short')}
+                        </Link>
+                    </div>
+                )}
             </header>
-            <p className="mt-3 text-sm text-ink-faint">
-                {t('profile.private_note')}
-            </p>
+            {isOwn && (
+                <p className="mt-3 text-sm text-ink-faint">
+                    {t('profile.visible_note')}
+                </p>
+            )}
 
             <Scoreboard stats={stats} />
 
@@ -117,7 +155,16 @@ export default function ProfilePage({
                     average={stats.average_rating}
                 />
                 <div className="grid content-start gap-y-10">
-                    <FinishedPerYear years={stats.finished_per_year} />
+                    <FinishedPerYear
+                        years={stats.finished_per_year}
+                        journalHref={(year) =>
+                            isOwn
+                                ? journalIndex({ query: { year } })
+                                : journalOf(profile.username, {
+                                      query: { year },
+                                  })
+                        }
+                    />
                     <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-1">
                         <RankedList
                             title={t('profile.top_platforms')}
@@ -305,8 +352,10 @@ function RatingHistogram({
 
 function FinishedPerYear({
     years,
+    journalHref,
 }: {
     years: ProfileStats['finished_per_year'];
+    journalHref: (year: number) => RouteDefinition<'get'>;
 }) {
     const { t, tc } = useTranslation();
     const max = Math.max(...years.map((row) => row.count), 1);
@@ -323,9 +372,7 @@ function FinishedPerYear({
                     {years.map((row) => (
                         <li key={row.year}>
                             <Link
-                                href={journalIndex({
-                                    query: { year: row.year },
-                                })}
+                                href={journalHref(row.year)}
                                 className="group -mx-2 grid grid-cols-[3.5rem_1fr_auto] items-center gap-3 rounded-md px-2 py-1.5 transition-colors hover:bg-cabinet-raised"
                                 aria-label={`${row.year}: ${tc('profile.game_count', row.count)}`}
                             >

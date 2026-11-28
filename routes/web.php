@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\Friends\ShowFriendsController;
 use App\Http\Controllers\Games\GameSearchController;
 use App\Http\Controllers\Games\ShowGameController;
 use App\Http\Controllers\Journal\ShowJournalController;
@@ -23,18 +24,21 @@ Route::get('games/search', GameSearchController::class)
 // Public: reads only our local catalog.
 Route::get('games/{game}', ShowGameController::class)->name('games.show');
 
-Route::get('journal', ShowJournalController::class)
-    ->middleware('auth')
-    ->name('journal.index');
+// Profile sections. Without a {user} the controller falls back to the
+// signed-in user, so the own and the someone-else's version of a section
+// share one controller. Who may look is UserPolicy::viewProfile.
+// The :username key is only for URL generation and Wayfinder's types;
+// resolving it is AppServiceProvider's explicit binding, which wins.
+Route::middleware('auth')->group(function () {
+    Route::get('friends', ShowFriendsController::class)->name('friends.index');
 
-Route::get('library', ShowLibraryController::class)
-    ->middleware('auth')
-    ->name('library.index');
+    Route::get('journal', ShowJournalController::class)->name('journal.index');
+    Route::get('library', ShowLibraryController::class)->name('library.index');
 
-// Owner-only for now (UserPolicy::viewProfile); public profiles come later.
-Route::get('u/{user:username}', ShowProfileController::class)
-    ->middleware('auth')
-    ->name('profile.show');
+    Route::get('u/{user:username}', ShowProfileController::class)->name('profile.show');
+    Route::get('u/{user:username}/journal', ShowJournalController::class)->name('journal.show');
+    Route::get('u/{user:username}/library', ShowLibraryController::class)->name('library.show');
+});
 
 Route::middleware(['auth', 'throttle:60,1'])
     ->controller(LibraryEntryController::class)
