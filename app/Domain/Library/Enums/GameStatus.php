@@ -19,6 +19,14 @@ enum GameStatus: string
     }
 
     /**
+     * Only games you actually played can be at 100% (all achievements).
+     */
+    public function allowsCompletion(): bool
+    {
+        return $this !== self::Backlog;
+    }
+
+    /**
      * Statuses of games you actually played (everything but the backlog).
      *
      * @return list<self>

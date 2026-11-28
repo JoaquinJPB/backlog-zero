@@ -17,13 +17,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * A game in a user's library. Rating is 1-10 (half stars).
+ * A game in a user's library. Rating is 1-10 (half stars); completed means
+ * 100% (every achievement).
  *
  * @property int $id
  * @property int $user_id
  * @property int $game_id
  * @property GameStatus $status
  * @property int|null $rating
+ * @property bool $completed
  * @property int|null $platform_id
  * @property Carbon|null $started_on
  * @property Carbon|null $finished_on
@@ -33,7 +35,7 @@ use Illuminate\Support\Carbon;
  * @property-read Game $game
  * @property-read Platform|null $platform
  */
-#[Fillable(['user_id', 'game_id', 'status', 'rating', 'platform_id', 'started_on', 'finished_on'])]
+#[Fillable(['user_id', 'game_id', 'status', 'rating', 'completed', 'platform_id', 'started_on', 'finished_on'])]
 #[UseFactory(LibraryEntryFactory::class)]
 #[UsePolicy(LibraryEntryPolicy::class)]
 class LibraryEntry extends Model
@@ -49,6 +51,7 @@ class LibraryEntry extends Model
         return [
             'status' => GameStatus::class,
             'rating' => 'integer',
+            'completed' => 'boolean',
             'started_on' => 'date',
             'finished_on' => 'date',
         ];

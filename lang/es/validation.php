@@ -26,6 +26,7 @@ return [
 
     'library' => [
         'finish_date_not_allowed' => 'Solo los juegos terminados o abandonados pueden tener fecha de fin.',
+        'completed_not_allowed' => 'Un juego pendiente no puede estar al 100 %.',
     ],
 
     'username' => [
